@@ -38,12 +38,50 @@ const CTASection = () => {
               Amazon business?
             </span>
           </h2>
-          <p className="text-muted-foreground font-body text-base mb-4 font-light max-w-lg mx-auto leading-relaxed">
+          <p className="text-muted-foreground font-body text-base mb-6 font-light max-w-lg mx-auto leading-relaxed">
             Book a free 30-minute audit call. We&apos;ll review your account,
             identify your biggest growth opportunities, and give you a custom
             roadmap — whether you work with us or not.
           </p>
-          <p className="text-muted-foreground/60 font-body text-xs mb-10 font-light">
+
+          {/* What the audit includes */}
+          <div className="flex flex-wrap justify-center gap-3 mb-4">
+            {[
+              "Listing Analysis",
+              "PPC Review",
+              "Competitor Mapping",
+              "Revenue Projections",
+              "Custom Roadmap",
+            ].map((item) => (
+              <span
+                key={item}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/5 border border-primary/10 text-[11px] font-mono tracking-wider text-primary/80"
+              >
+                <svg
+                  className="w-3 h-3"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                {item}
+              </span>
+            ))}
+          </div>
+
+          {/* Urgency */}
+          <p className="text-primary/70 font-mono text-xs mb-8 tracking-wider">
+            We take on 5 new clients per month to ensure quality. Limited spots
+            available.
+          </p>
+
+          <p className="text-muted-foreground/50 font-body text-xs mb-10 font-light">
             No commitment required. No credit card. Just a conversation.
           </p>
         </motion.div>

@@ -140,6 +140,25 @@ const ServicesSection = () => {
             );
           })}
         </div>
+
+        {/* Mid-page CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "100px" }}
+          transition={{ duration: 0.7, delay: 0.2, ease: easeOutExpo }}
+          className="mt-16 text-center"
+        >
+          <a
+            href="#contact"
+            className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground font-body font-semibold text-sm tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_40px_-8px_hsl(265_85%_65%/0.5)] hover:scale-[1.03]"
+          >
+            Get a Free Growth Audit
+          </a>
+          <p className="text-muted-foreground/50 font-body text-xs mt-3">
+            No commitment. Results in 48 hours.
+          </p>
+        </motion.div>
       </div>
     </section>
   );
