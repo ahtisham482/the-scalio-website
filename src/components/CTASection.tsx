@@ -26,20 +26,25 @@ const CTASection = () => {
           transition={{ duration: 0.8, ease: easeOutExpo }}
         >
           <span className="text-[11px] tracking-[0.2em] uppercase text-primary font-mono">
-            Ready to scale?
+            Let&apos;s talk growth
           </span>
           <h2
             id="cta-heading"
-            className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mt-4 mb-8 leading-[1.05]"
+            className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mt-4 mb-6 leading-[1.05]"
           >
-            Let&apos;s dominate
+            Ready to scale your
             <br />
             <span className="italic text-gradient-primary font-medium">
-              Amazon together
+              Amazon business?
             </span>
           </h2>
-          <p className="text-muted-foreground font-body text-sm mb-10 font-light">
-            No commitment. Free 30-minute account audit &amp; growth roadmap.
+          <p className="text-muted-foreground font-body text-base mb-4 font-light max-w-lg mx-auto leading-relaxed">
+            Book a free 30-minute audit call. We&apos;ll review your account,
+            identify your biggest growth opportunities, and give you a custom
+            roadmap — whether you work with us or not.
+          </p>
+          <p className="text-muted-foreground/60 font-body text-xs mb-10 font-light">
+            No commitment required. No credit card. Just a conversation.
           </p>
         </motion.div>
 

@@ -339,8 +339,13 @@ const CaseStudiesSection = () => {
             </span>
           </h2>
           <p className="text-muted-foreground font-body text-base md:text-lg max-w-xl leading-relaxed">
-            Every number below is from a real Amazon seller we partnered with.
-            No fluff, no vanity metrics — just revenue impact.
+            Here&apos;s what our process delivers. These results represent
+            typical outcomes for brands we partner with across different
+            categories and starting points.
+          </p>
+          <p className="text-muted-foreground/60 font-body text-xs mt-3 max-w-xl leading-relaxed italic">
+            * Brand names changed for client confidentiality. Metrics reflect
+            actual performance ranges across our portfolio.
           </p>
         </motion.div>
 

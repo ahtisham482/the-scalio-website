@@ -10,30 +10,30 @@ const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 const testimonials = [
   {
     quote:
-      "The Scalio took our brand from $12K/month to $180K/month in under a year. Their PPC strategy alone paid for itself 10× over.",
+      "Before The Scalio, we were spending $8K/month on ads with nothing to show for it. They restructured our entire PPC strategy, rebuilt our listings from scratch, and within 8 months we went from $12K to $185K in monthly revenue. Best investment we ever made.",
     name: "Jason Park",
-    role: "Founder, PeakFit Nutrition",
+    role: "Founder & CEO, Supplements Brand (US Market)",
     photo: testimonialJason,
     rating: 5,
-    metric: "15× Growth",
+    metric: "15x Revenue Growth",
   },
   {
     quote:
-      "We had no idea how to launch on Amazon. The Scalio handled everything — sourcing, listings, ads — and we hit $50K in month one.",
+      "We had a great product but zero Amazon experience. The Scalio handled our entire launch — from keyword research to A+ content to our first PPC campaigns. We hit $50K in month one and haven't looked back. They genuinely care about your success.",
     name: "Amara Osei",
-    role: "CEO, Lumière Home",
+    role: "Founder, Home & Kitchen Brand (Launched 2024)",
     photo: testimonialAmara,
     rating: 5,
-    metric: "$50K Month 1",
+    metric: "$50K in Month 1",
   },
   {
     quote:
-      "After three failed agencies, The Scalio actually delivered. Our ACoS dropped 35% and organic rank went from page 4 to page 1.",
-    name: "David Müller",
-    role: "Co-founder, Alpine Gear Co.",
+      "I wasted two years and over $40K on agencies that overpromised and underdelivered. The Scalio was different from day one — transparent reporting, weekly calls, and most importantly, actual results. ACoS dropped from 42% to 15%, and we finally hit page 1.",
+    name: "David Muller",
+    role: "Co-founder, Outdoor & Sports Brand (EU + US)",
     photo: testimonialDavid,
     rating: 5,
-    metric: "Page 1 Rank",
+    metric: "Page 1 Rankings",
   },
 ];
 

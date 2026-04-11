@@ -23,39 +23,39 @@ const services: ServiceCard[] = [
     icon: Search,
     title: "Product Research & Launch",
     description:
-      "We identify high-demand, low-competition products and execute full launch strategies to get you ranked fast.",
+      "We identify high-demand, low-competition opportunities using proprietary data tools, then execute a full go-to-market strategy. Includes: market analysis, competitor mapping, keyword architecture, listing creation, launch PPC campaigns, and review generation strategy. Typical timeline: 4-6 weeks to first sale.",
     span: "md:col-span-2",
   },
   {
     icon: Megaphone,
     title: "Amazon PPC Management",
     description:
-      "Precision-targeted ad campaigns that maximize ACoS and drive profitable organic ranking growth.",
+      "Daily-optimized ad campaigns across Sponsored Products, Sponsored Brands, Sponsored Display, and DSP. We structure campaigns for maximum ACoS efficiency while building organic rank. Includes: campaign architecture, bid optimization, negative keyword mining, search term analysis, and weekly performance reports.",
   },
   {
     icon: BarChart3,
     title: "Listing Optimization",
     description:
-      "Conversion-optimized titles, bullet points, A+ Content, and backend keywords that turn browsers into buyers.",
+      "Conversion-focused copywriting backed by keyword research and split testing. Includes: SEO-optimized titles, benefit-driven bullet points, A+ Content design, backend keyword optimization, and main image strategy. Average conversion rate improvement: 25-40%.",
   },
   {
     icon: Package,
     title: "Supply Chain & Logistics",
     description:
-      "End-to-end inventory management, freight forwarding, and FBA prep to keep your supply chain running smoothly.",
+      "End-to-end inventory management so you never stock out or over-order. Includes: demand forecasting, freight forwarding coordination, FBA prep and labeling, restock alerts, and multi-warehouse distribution planning. We work with your existing suppliers or help you find new ones.",
     span: "md:col-span-2",
   },
   {
     icon: ShieldCheck,
     title: "Account Health & Compliance",
     description:
-      "Protect your seller account with proactive monitoring, reinstatement support, and policy compliance management.",
+      "Proactive protection for your seller account. Includes: policy compliance monitoring, listing suppression resolution, intellectual property protection, review management, and reinstatement support if anything goes wrong. Prevention is cheaper than cure.",
   },
   {
     icon: TrendingUp,
     title: "Brand Growth & Expansion",
     description:
-      "Scale beyond Amazon with multi-marketplace expansion, Walmart integration, and omnichannel strategies.",
+      "Once your US Amazon business is profitable, we scale you into new markets. Includes: Walmart marketplace launch, Amazon EU/UK/CA expansion, brand registry optimization, and omnichannel strategy to diversify your revenue beyond a single platform.",
   },
 ];
 

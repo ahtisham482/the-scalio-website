@@ -8,33 +8,33 @@ const steps = [
   {
     icon: ClipboardCheck,
     number: "01",
-    title: "Free Audit",
+    title: "Free Account Audit",
     description:
-      "We deep-dive into your account — listings, PPC, keywords, competitors — and deliver a full growth roadmap within 48 hours.",
+      "We analyze your listings, PPC campaigns, keyword gaps, and competitor landscape. Within 48 hours, you receive a detailed report showing exactly where you're leaving money on the table — with specific revenue projections for each opportunity. No cost, no obligation.",
     accent: "265 85% 65%",
   },
   {
     icon: Crosshair,
     number: "02",
-    title: "Custom Strategy",
+    title: "90-Day Growth Blueprint",
     description:
-      "Your dedicated team builds a tailored launch or scaling plan — product positioning, keyword architecture, and ad structure mapped out.",
+      "Based on the audit, your dedicated strategist builds a custom 90-day plan with monthly milestones. We map out keyword architecture, PPC campaign structure, listing optimizations, and A+ content strategy — all with projected ROI so you know what to expect before we start.",
     accent: "310 70% 60%",
   },
   {
     icon: Rocket,
     number: "03",
-    title: "Launch & Optimize",
+    title: "Execute & Iterate Weekly",
     description:
-      "We execute across every lever — listings go live, PPC campaigns launch, and we iterate daily on data to accelerate rank and sales.",
+      "Your team executes the plan across every lever — optimized listings go live, PPC campaigns launch, and we iterate based on real data every week. You get a weekly report + a 30-minute strategy call so you're never in the dark. Most clients see ranking improvements within 30 days.",
     accent: "42 80% 60%",
   },
   {
     icon: TrendingUp,
     number: "04",
-    title: "Scale & Dominate",
+    title: "Scale What Works",
     description:
-      "Once we hit profitability, we pour fuel on the fire — expanding SKUs, entering new markets, and compounding your revenue month over month.",
+      "Once we establish profitable campaigns and strong organic rank, we reinvest into scaling — expanding to new keywords, launching additional SKUs, entering international markets, and growing your brand beyond Amazon. This is where the real compounding happens.",
     accent: "265 85% 65%",
   },
 ];

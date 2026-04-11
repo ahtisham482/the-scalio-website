@@ -12,33 +12,48 @@ const faqs = [
   {
     question: "How long before I see results?",
     answer:
-      "Most clients see measurable improvements within 30–60 days. Keyword rankings and organic traffic typically move first, followed by revenue growth at 60–90 days. We set clear milestones so you always know where you stand.",
+      "Most clients see measurable improvements within 30–60 days. Keyword rankings and organic traffic typically move first, followed by revenue growth at 60–90 days. We set clear milestones so you always know where you stand. Typical timeline: Month 1 = audit & optimization, Month 2 = ranking improvements, Month 3+ = revenue growth.",
+  },
+  {
+    question: "What does pricing look like? Do you have packages?",
+    answer:
+      "We offer three tiers based on your catalog size and goals. Starter plans begin at $2,500/month for brands doing under $50K in monthly revenue. Growth and Enterprise tiers are custom-quoted based on SKU count, ad spend, and marketplace coverage. Every engagement starts with a free audit — no commitment required to get a custom quote.",
+  },
+  {
+    question: "Do I need to sign a long-term contract?",
+    answer:
+      "No. We work on month-to-month agreements. No lock-ins, no cancellation fees. We believe in earning your business every month with results, not holding you hostage with contracts. That said, most clients stay for 12+ months because the ROI speaks for itself.",
   },
   {
     question:
       "Do you work with new product launches or only existing listings?",
     answer:
-      "Both. Whether you're launching your first SKU or scaling an established catalog with 100+ ASINs, our process adapts. New launches get a full go-to-market strategy; existing listings get optimized for maximum conversion and rank.",
+      "Both. Whether you're launching your first SKU or scaling an established catalog with 100+ ASINs, our process adapts. New launches get a full go-to-market strategy including product positioning, keyword architecture, launch PPC, and review generation. Existing listings get optimized for maximum conversion and rank.",
   },
   {
     question: "What makes you different from other Amazon agencies?",
     answer:
-      "We're operators, not consultants. Our team has managed over $120M in Amazon revenue across 200+ brands. We combine proprietary data tools, daily PPC optimization, and a dedicated account team — not a junior VA checking in once a week.",
+      "We're operators, not consultants. Our team has managed over $50M in Amazon revenue across 200+ brands. We combine proprietary data tools, daily PPC optimization, and a dedicated account manager — not a junior VA checking in once a week. You'll have direct access to the people doing the work, not a sales team.",
   },
   {
-    question: "How much does it cost?",
+    question: "What results can I realistically expect in 30, 60, and 90 days?",
     answer:
-      "Our pricing is performance-aligned and depends on your catalog size, ad spend, and goals. Every engagement starts with a free audit so we can scope the opportunity before any commitment. No long-term contracts — we earn your business monthly.",
+      "30 days: Listings fully optimized, PPC restructured, keyword gaps identified and targeted. 60 days: 15-30% improvement in conversion rate, ACoS reduction of 10-25%, organic ranking improvements. 90 days: 2-5x revenue growth trajectory established, profitable PPC structure, page 1 rankings for primary keywords. These are typical ranges — your actual results depend on your product, category, and starting point.",
   },
   {
     question: "Will I have visibility into what you're doing?",
     answer:
-      "Absolutely. You get a real-time dashboard with all KPIs, weekly strategy calls, and a dedicated Slack channel with your team. Full transparency is non-negotiable for us.",
+      "Absolutely. You get a real-time dashboard with all KPIs, weekly strategy calls, and a dedicated Slack channel with your team. You'll see exactly what we're spending, what we're testing, and what's working. Full transparency is non-negotiable for us.",
   },
   {
     question: "Do you manage PPC, or just listings?",
     answer:
-      "We manage the full stack — listing copywriting, A+ Content, PPC (Sponsored Products, Brands, Display, DSP), keyword strategy, inventory planning, and marketplace expansion. Everything under one roof.",
+      "We manage the full stack — listing copywriting, A+ Content, PPC (Sponsored Products, Brands, Display, DSP), keyword strategy, inventory planning, and marketplace expansion. You don't need to hire separate specialists — everything is handled under one roof by one integrated team.",
+  },
+  {
+    question: "What if I'm not happy with the results?",
+    answer:
+      "Since we're month-to-month, you can pause or cancel anytime — no penalties. But before that, we'll work with you to diagnose the issue and adjust strategy. In our experience, most performance concerns come from misaligned expectations rather than poor execution, which is why we set clear milestones upfront during your free audit.",
   },
 ];
 
