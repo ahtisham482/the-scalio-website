@@ -7,7 +7,7 @@ const ThemeToggle = () => {
     if (typeof window === "undefined") return true;
     const stored = localStorage.getItem("theme");
     if (stored) return stored === "dark";
-    return true; // default dark
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
   });
 
   useEffect(() => {
@@ -33,7 +33,11 @@ const ThemeToggle = () => {
         exit={{ scale: 0.5, opacity: 0, rotate: 90 }}
         transition={{ duration: 0.3 }}
       >
-        {dark ? <Moon className="w-[18px] h-[18px]" /> : <Sun className="w-[18px] h-[18px]" />}
+        {dark ? (
+          <Moon className="w-[18px] h-[18px]" />
+        ) : (
+          <Sun className="w-[18px] h-[18px]" />
+        )}
       </motion.div>
     </button>
   );

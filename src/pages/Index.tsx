@@ -65,7 +65,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <a href="#hero" className="skip-to-content">
         Skip to content
       </a>
