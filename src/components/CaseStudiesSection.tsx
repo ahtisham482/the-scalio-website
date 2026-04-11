@@ -96,7 +96,11 @@ const MiniChart = ({ data, accent }: { data: number[]; accent: string }) => {
   const areaPoints = `0,60 ${points} 200,60`;
 
   return (
-    <svg viewBox="0 0 200 65" className="w-full h-full" preserveAspectRatio="none">
+    <svg
+      viewBox="0 0 200 65"
+      className="w-full h-full"
+      preserveAspectRatio="none"
+    >
       <defs>
         <linearGradient id={`grad-${accent}`} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor={`hsl(${accent})`} stopOpacity="0.3" />
@@ -114,7 +118,7 @@ const MiniChart = ({ data, accent }: { data: number[]; accent: string }) => {
       />
       {/* End dot */}
       <circle
-        cx={(data.length - 1) / (data.length - 1) * 200}
+        cx={((data.length - 1) / (data.length - 1)) * 200}
         cy={60 - (data[data.length - 1] / max) * 55}
         r="3"
         fill={`hsl(${accent})`}
@@ -123,7 +127,15 @@ const MiniChart = ({ data, accent }: { data: number[]; accent: string }) => {
   );
 };
 
-const AnimatedMetricPill = ({ label, metric, type }: { label: string; metric: MetricData; type: "before" | "after" }) => {
+const AnimatedMetricPill = ({
+  label,
+  metric,
+  type,
+}: {
+  label: string;
+  metric: MetricData;
+  type: "before" | "after";
+}) => {
   const shouldAnimate = type === "after" && metric.raw > 0;
   const countUp = useCountUp({
     end: shouldAnimate ? metric.raw : 0,
@@ -133,12 +145,20 @@ const AnimatedMetricPill = ({ label, metric, type }: { label: string; metric: Me
   });
 
   return (
-    <div className={`flex items-center justify-between py-2 px-3 rounded-lg ${
-      type === "before" ? "bg-muted/50" : "bg-primary/[0.08]"
-    }`}>
-      <span className="text-[11px] font-mono tracking-wider uppercase text-muted-foreground">{label}</span>
+    <div
+      className={`flex items-center justify-between py-2 px-3 rounded-lg ${
+        type === "before" ? "bg-muted/50" : "bg-primary/[0.08]"
+      }`}
+    >
+      <span className="text-[11px] font-mono tracking-wider uppercase text-muted-foreground">
+        {label}
+      </span>
       <span
-        ref={shouldAnimate ? countUp.ref as React.RefObject<HTMLSpanElement> : undefined}
+        ref={
+          shouldAnimate
+            ? (countUp.ref as React.RefObject<HTMLSpanElement>)
+            : undefined
+        }
         className={`text-sm font-body font-semibold tabular-nums ${
           type === "before" ? "text-muted-foreground" : "text-foreground"
         }`}
@@ -149,14 +169,30 @@ const AnimatedMetricPill = ({ label, metric, type }: { label: string; metric: Me
   );
 };
 
-const StaticMetricPill = ({ label, value, type }: { label: string; value: string; type: "before" | "after" }) => (
-  <div className={`flex items-center justify-between py-2 px-3 rounded-lg ${
-    type === "before" ? "bg-muted/50" : "bg-primary/[0.08]"
-  }`}>
-    <span className="text-[11px] font-mono tracking-wider uppercase text-muted-foreground">{label}</span>
-    <span className={`text-sm font-body font-semibold ${
-      type === "before" ? "text-muted-foreground" : "text-foreground"
-    }`}>{value}</span>
+const StaticMetricPill = ({
+  label,
+  value,
+  type,
+}: {
+  label: string;
+  value: string;
+  type: "before" | "after";
+}) => (
+  <div
+    className={`flex items-center justify-between py-2 px-3 rounded-lg ${
+      type === "before" ? "bg-muted/50" : "bg-primary/[0.08]"
+    }`}
+  >
+    <span className="text-[11px] font-mono tracking-wider uppercase text-muted-foreground">
+      {label}
+    </span>
+    <span
+      className={`text-sm font-body font-semibold ${
+        type === "before" ? "text-muted-foreground" : "text-foreground"
+      }`}
+    >
+      {value}
+    </span>
   </div>
 );
 
@@ -218,11 +254,25 @@ const CaseCard = ({ study, index }: { study: CaseStudy; index: number }) => {
           {/* Before / After grid */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground/50 mb-2 block">Before</span>
+              <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground/50 mb-2 block">
+                Before
+              </span>
               <div className="space-y-1.5">
-                <AnimatedMetricPill label="Revenue" metric={study.before.revenue} type="before" />
-                <AnimatedMetricPill label="ACoS" metric={study.before.acos} type="before" />
-                <StaticMetricPill label="Rank" value={study.before.rank} type="before" />
+                <AnimatedMetricPill
+                  label="Revenue"
+                  metric={study.before.revenue}
+                  type="before"
+                />
+                <AnimatedMetricPill
+                  label="ACoS"
+                  metric={study.before.acos}
+                  type="before"
+                />
+                <StaticMetricPill
+                  label="Rank"
+                  value={study.before.rank}
+                  type="before"
+                />
               </div>
             </div>
             <div>
@@ -230,9 +280,21 @@ const CaseCard = ({ study, index }: { study: CaseStudy; index: number }) => {
                 After <ArrowUpRight className="w-2.5 h-2.5 text-primary" />
               </span>
               <div className="space-y-1.5">
-                <AnimatedMetricPill label="Revenue" metric={study.after.revenue} type="after" />
-                <AnimatedMetricPill label="ACoS" metric={study.after.acos} type="after" />
-                <StaticMetricPill label="Rank" value={study.after.rank} type="after" />
+                <AnimatedMetricPill
+                  label="Revenue"
+                  metric={study.after.revenue}
+                  type="after"
+                />
+                <AnimatedMetricPill
+                  label="ACoS"
+                  metric={study.after.acos}
+                  type="after"
+                />
+                <StaticMetricPill
+                  label="Rank"
+                  value={study.after.rank}
+                  type="after"
+                />
               </div>
             </div>
           </div>
@@ -260,16 +322,21 @@ const CaseStudiesSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "200px" }}
           transition={{ duration: 0.8, ease: easeOutExpo }}
           className="mb-16 md:mb-24"
         >
           <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-primary block mb-4">
             Case Studies
           </span>
-          <h2 id="case-studies-heading" className="text-3xl md:text-5xl lg:text-6xl font-display font-bold leading-[1.05] mb-6">
+          <h2
+            id="case-studies-heading"
+            className="text-3xl md:text-5xl lg:text-6xl font-display font-bold leading-[1.05] mb-6"
+          >
             Real brands,{" "}
-            <span className="text-gradient-primary italic font-medium">real results</span>
+            <span className="text-gradient-primary italic font-medium">
+              real results
+            </span>
           </h2>
           <p className="text-muted-foreground font-body text-base md:text-lg max-w-xl leading-relaxed">
             Every number below is from a real Amazon seller we partnered with.
@@ -288,7 +355,7 @@ const CaseStudiesSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
+          viewport={{ once: true, margin: "100px" }}
           transition={{ duration: 0.7, delay: 0.3, ease: easeOutExpo }}
           className="mt-16 text-center"
         >

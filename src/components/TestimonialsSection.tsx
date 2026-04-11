@@ -69,21 +69,30 @@ const TestimonialsSection = () => {
   const handleNext = useCallback(() => {
     pauseRef.current = true;
     changeTo((current + 1) % testimonials.length);
-    setTimeout(() => { pauseRef.current = false; }, 10000);
+    setTimeout(() => {
+      pauseRef.current = false;
+    }, 10000);
   }, [current, changeTo]);
 
   const handlePrev = useCallback(() => {
     pauseRef.current = true;
     changeTo((current - 1 + testimonials.length) % testimonials.length);
-    setTimeout(() => { pauseRef.current = false; }, 10000);
+    setTimeout(() => {
+      pauseRef.current = false;
+    }, 10000);
   }, [current, changeTo]);
 
-  const handleDot = useCallback((i: number) => {
-    if (i === current) return;
-    pauseRef.current = true;
-    changeTo(i);
-    setTimeout(() => { pauseRef.current = false; }, 10000);
-  }, [current, changeTo]);
+  const handleDot = useCallback(
+    (i: number) => {
+      if (i === current) return;
+      pauseRef.current = true;
+      changeTo(i);
+      setTimeout(() => {
+        pauseRef.current = false;
+      }, 10000);
+    },
+    [current, changeTo],
+  );
 
   // Auto-advance
   useEffect(() => {
@@ -116,7 +125,7 @@ const TestimonialsSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "200px" }}
           transition={{ duration: 0.7, ease: easeOutExpo }}
           className="text-center mb-16"
         >

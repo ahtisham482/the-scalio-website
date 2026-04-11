@@ -15,7 +15,8 @@ const faqs = [
       "Most clients see measurable improvements within 30–60 days. Keyword rankings and organic traffic typically move first, followed by revenue growth at 60–90 days. We set clear milestones so you always know where you stand.",
   },
   {
-    question: "Do you work with new product launches or only existing listings?",
+    question:
+      "Do you work with new product launches or only existing listings?",
     answer:
       "Both. Whether you're launching your first SKU or scaling an established catalog with 100+ ASINs, our process adapts. New launches get a full go-to-market strategy; existing listings get optimized for maximum conversion and rank.",
   },
@@ -56,7 +57,7 @@ const FAQSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "200px" }}
           transition={{ duration: 0.8, ease: easeOutExpo }}
           className="text-center mb-16 md:mb-20"
         >
@@ -81,7 +82,7 @@ const FAQSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
+          viewport={{ once: true, margin: "100px" }}
           transition={{ duration: 0.7, ease: easeOutExpo }}
         >
           <Accordion type="single" collapsible className="space-y-3">

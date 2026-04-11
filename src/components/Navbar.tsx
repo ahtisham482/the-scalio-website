@@ -1,4 +1,9 @@
-import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useMotionValueEvent,
+  AnimatePresence,
+} from "framer-motion";
 import { useState, useEffect, useCallback } from "react";
 import ThemeToggle from "@/components/ThemeToggle";
 
@@ -16,12 +21,17 @@ const Navbar = () => {
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [open]);
 
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (e.key === "Escape" && open) setOpen(false);
-  }, [open]);
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape" && open) setOpen(false);
+    },
+    [open],
+  );
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
@@ -41,8 +51,34 @@ const Navbar = () => {
         }`}
         aria-label="Main navigation"
       >
-        <div className={`max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between transition-all duration-500 ${scrolled ? "h-16" : "h-20"}`}>
-          <a href="#" className={`font-display font-bold tracking-tight text-foreground transition-transform duration-500 origin-left ${scrolled ? "text-lg scale-90" : "text-xl"}`}>
+        <div
+          className={`max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between transition-all duration-500 ${scrolled ? "h-16" : "h-20"}`}
+        >
+          <a
+            href="#"
+            className={`flex items-center gap-2 font-display font-bold tracking-tight text-foreground transition-transform duration-500 origin-left ${scrolled ? "text-lg scale-90" : "text-xl"}`}
+          >
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="shrink-0"
+            >
+              <rect width="32" height="32" rx="8" fill="hsl(var(--primary))" />
+              <text
+                x="16"
+                y="22"
+                textAnchor="middle"
+                fill="white"
+                fontSize="18"
+                fontWeight="700"
+                fontFamily="serif"
+              >
+                S
+              </text>
+            </svg>
             The Scalio<span className="text-primary">.</span>
           </a>
 
@@ -75,9 +111,15 @@ const Navbar = () => {
             aria-expanded={open}
           >
             <div className="w-5 h-5 relative">
-              <span className={`absolute left-0 w-full h-px bg-foreground transition-all duration-300 ${open ? "top-1/2 rotate-45" : "top-1"}`} />
-              <span className={`absolute left-0 w-full h-px bg-foreground transition-all duration-300 ${open ? "opacity-0" : "top-1/2 -translate-y-px"}`} />
-              <span className={`absolute left-0 w-full h-px bg-foreground transition-all duration-300 ${open ? "top-1/2 -rotate-45" : "bottom-1"}`} />
+              <span
+                className={`absolute left-0 w-full h-px bg-foreground transition-all duration-300 ${open ? "top-1/2 rotate-45" : "top-1"}`}
+              />
+              <span
+                className={`absolute left-0 w-full h-px bg-foreground transition-all duration-300 ${open ? "opacity-0" : "top-1/2 -translate-y-px"}`}
+              />
+              <span
+                className={`absolute left-0 w-full h-px bg-foreground transition-all duration-300 ${open ? "top-1/2 -rotate-45" : "bottom-1"}`}
+              />
             </div>
           </button>
         </div>
@@ -103,7 +145,11 @@ const Navbar = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
-                  transition={{ delay: i * 0.06, duration: 0.5, ease: easeOutExpo }}
+                  transition={{
+                    delay: i * 0.06,
+                    duration: 0.5,
+                    ease: easeOutExpo,
+                  }}
                   href={`#${item.toLowerCase()}`}
                   onClick={() => setOpen(false)}
                   className="text-3xl font-display font-semibold text-foreground py-3 hover:text-primary transition-colors"

@@ -1,5 +1,12 @@
 import { motion } from "framer-motion";
-import { Search, BarChart3, Package, Megaphone, ShieldCheck, TrendingUp } from "lucide-react";
+import {
+  Search,
+  BarChart3,
+  Package,
+  Megaphone,
+  ShieldCheck,
+  TrendingUp,
+} from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
@@ -15,58 +22,77 @@ const services: ServiceCard[] = [
   {
     icon: Search,
     title: "Product Research & Launch",
-    description: "We identify high-demand, low-competition products and execute full launch strategies to get you ranked fast.",
+    description:
+      "We identify high-demand, low-competition products and execute full launch strategies to get you ranked fast.",
     span: "md:col-span-2",
   },
   {
     icon: Megaphone,
     title: "Amazon PPC Management",
-    description: "Precision-targeted ad campaigns that maximize ACoS and drive profitable organic ranking growth.",
+    description:
+      "Precision-targeted ad campaigns that maximize ACoS and drive profitable organic ranking growth.",
   },
   {
     icon: BarChart3,
     title: "Listing Optimization",
-    description: "Conversion-optimized titles, bullet points, A+ Content, and backend keywords that turn browsers into buyers.",
+    description:
+      "Conversion-optimized titles, bullet points, A+ Content, and backend keywords that turn browsers into buyers.",
   },
   {
     icon: Package,
     title: "Supply Chain & Logistics",
-    description: "End-to-end inventory management, freight forwarding, and FBA prep to keep your supply chain running smoothly.",
+    description:
+      "End-to-end inventory management, freight forwarding, and FBA prep to keep your supply chain running smoothly.",
     span: "md:col-span-2",
   },
   {
     icon: ShieldCheck,
     title: "Account Health & Compliance",
-    description: "Protect your seller account with proactive monitoring, reinstatement support, and policy compliance management.",
+    description:
+      "Protect your seller account with proactive monitoring, reinstatement support, and policy compliance management.",
   },
   {
     icon: TrendingUp,
     title: "Brand Growth & Expansion",
-    description: "Scale beyond Amazon with multi-marketplace expansion, Walmart integration, and omnichannel strategies.",
+    description:
+      "Scale beyond Amazon with multi-marketplace expansion, Walmart integration, and omnichannel strategies.",
   },
 ];
 
 const ServicesSection = () => {
   return (
-    <section id="services" className="relative py-32 lg:py-40 px-6" aria-labelledby="services-heading">
+    <section
+      id="services"
+      className="relative py-32 lg:py-40 px-6"
+      aria-labelledby="services-heading"
+    >
       <div className="absolute top-0 left-0 right-0 line-accent" />
 
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "200px" }}
           transition={{ duration: 0.7, ease: easeOutExpo }}
           className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16"
         >
           <div>
-            <span className="text-[11px] tracking-[0.2em] uppercase text-primary font-mono">Services</span>
-            <h2 id="services-heading" className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mt-4 leading-[1.05]">
-              What we <span className="italic text-gradient-primary font-medium">deliver</span>
+            <span className="text-[11px] tracking-[0.2em] uppercase text-primary font-mono">
+              Services
+            </span>
+            <h2
+              id="services-heading"
+              className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mt-4 leading-[1.05]"
+            >
+              What we{" "}
+              <span className="italic text-gradient-primary font-medium">
+                deliver
+              </span>
             </h2>
           </div>
           <p className="text-muted-foreground font-body text-sm leading-relaxed max-w-sm font-light">
-            End-to-end Amazon FBA services engineered to launch, optimize, and scale your brand to its full potential.
+            End-to-end Amazon FBA services engineered to launch, optimize, and
+            scale your brand to its full potential.
           </p>
         </motion.div>
 
@@ -79,8 +105,12 @@ const ServicesSection = () => {
                 key={service.title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: i * 0.08, ease: easeOutExpo }}
+                viewport={{ once: true, margin: "100px" }}
+                transition={{
+                  duration: 0.6,
+                  delay: i * 0.08,
+                  ease: easeOutExpo,
+                }}
                 className={`group relative p-8 lg:p-10 rounded-2xl bg-card border border-border transition-all duration-500 hover:border-primary/20 hover:-translate-y-1.5 ${service.span || ""}`}
               >
                 {/* Hover glow background */}
