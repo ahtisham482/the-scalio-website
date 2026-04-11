@@ -160,6 +160,35 @@ const ServicesSection = () => {
           </p>
         </motion.div>
 
+        {/* Trust stats bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "200px" }}
+          transition={{ duration: 0.6, delay: 0.1, ease: easeOutExpo }}
+          className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mb-12 py-4 px-6 rounded-2xl border border-border/40 bg-card/30 backdrop-blur-sm max-w-2xl mx-auto"
+        >
+          {[
+            { value: "200+", label: "Brands Scaled" },
+            { value: "$50M+", label: "Revenue Managed" },
+            { value: "97%", label: "Client Retention" },
+          ].map((stat, i) => (
+            <div key={stat.label} className="flex items-center gap-3">
+              {i > 0 && (
+                <span className="w-1 h-1 rounded-full bg-primary/40 hidden md:block" />
+              )}
+              <div className="flex items-center gap-2">
+                <span className="text-lg font-display font-bold text-foreground">
+                  {stat.value}
+                </span>
+                <span className="text-[10px] font-mono tracking-[0.12em] uppercase text-muted-foreground">
+                  {stat.label}
+                </span>
+              </div>
+            </div>
+          ))}
+        </motion.div>
+
         {/* Bento Grid */}
         <div className="grid md:grid-cols-4 gap-4 lg:gap-5">
           {services.map((service, i) => {
