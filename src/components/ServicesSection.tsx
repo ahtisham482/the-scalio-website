@@ -22,6 +22,7 @@ interface ServiceCard {
   deliverables: string[];
   bestFor: string;
   caseStudyLink?: string;
+  caseStudyTeaser?: string;
   span?: string;
 }
 
@@ -42,6 +43,7 @@ const services: ServiceCard[] = [
     bestFor:
       "New sellers launching their first product, or established brands expanding their catalog",
     caseStudyLink: "#case-studies",
+    caseStudyTeaser: "Lumiere Home: $0 → $92K/mo in 6 months",
     span: "md:col-span-2",
   },
   {
@@ -59,6 +61,7 @@ const services: ServiceCard[] = [
     ],
     bestFor: "Brands spending $2K+/month on Amazon ads who want better returns",
     caseStudyLink: "#case-studies",
+    caseStudyTeaser: "PeakFit: ACoS dropped 68% → 18%",
   },
   {
     icon: BarChart3,
@@ -74,6 +77,7 @@ const services: ServiceCard[] = [
     ],
     bestFor: "Sellers with traffic but low conversion rates",
     caseStudyLink: "#case-studies",
+    caseStudyTeaser: "PeakFit: 1,442% revenue growth",
   },
   {
     icon: Package,
@@ -89,6 +93,8 @@ const services: ServiceCard[] = [
       "Supplier sourcing & negotiation",
     ],
     bestFor: "Sellers scaling past $20K/month who need inventory reliability",
+    caseStudyLink: "#case-studies",
+    caseStudyTeaser: "Alpine Gear: scaled to $320K/mo",
     span: "md:col-span-2",
   },
   {
@@ -105,6 +111,7 @@ const services: ServiceCard[] = [
       "Preventive health audits",
     ],
     bestFor: "Any seller who depends on Amazon for revenue",
+    caseStudyLink: "#case-studies",
   },
   {
     icon: TrendingUp,
@@ -120,6 +127,7 @@ const services: ServiceCard[] = [
     ],
     bestFor: "Profitable US Amazon sellers ready to diversify revenue",
     caseStudyLink: "#case-studies",
+    caseStudyTeaser: "Alpine Gear: 611% growth in 12 months",
   },
 ];
 
@@ -269,8 +277,8 @@ const ServicesSection = () => {
                       href={service.caseStudyLink}
                       className="inline-flex items-center gap-1.5 text-xs font-body font-medium text-primary/70 hover:text-primary transition-colors duration-300 group/link"
                     >
-                      See results
-                      <ArrowUpRight className="w-3 h-3 transition-transform duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+                      {service.caseStudyTeaser || "See results"}
+                      <ArrowUpRight className="w-3 h-3 shrink-0 transition-transform duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
                     </a>
                   )}
                 </div>
@@ -284,6 +292,50 @@ const ServicesSection = () => {
             );
           })}
         </div>
+
+        {/* Team composition note */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "100px" }}
+          transition={{ duration: 0.7, delay: 0.1, ease: easeOutExpo }}
+          className="mt-12 max-w-3xl mx-auto rounded-2xl border border-border/40 bg-card/30 backdrop-blur-sm p-6 md:p-8 text-center"
+        >
+          <p className="text-[11px] font-mono tracking-[0.15em] uppercase text-primary mb-4">
+            Your dedicated team
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 mb-4">
+            {[
+              "Account Strategist",
+              "PPC Specialist",
+              "Copywriter",
+              "Graphic Designer",
+            ].map((role) => (
+              <span
+                key={role}
+                className="flex items-center gap-1.5 text-sm font-body text-foreground"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-primary/60" />
+                {role}
+              </span>
+            ))}
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+            {[
+              "Weekly strategy calls",
+              "Dedicated Slack channel",
+              "Real-time dashboard",
+            ].map((item) => (
+              <span
+                key={item}
+                className="flex items-center gap-1.5 text-xs font-body text-muted-foreground"
+              >
+                <Check className="w-3 h-3 text-primary/50" />
+                {item}
+              </span>
+            ))}
+          </div>
+        </motion.div>
 
         {/* Mid-page CTA */}
         <motion.div
