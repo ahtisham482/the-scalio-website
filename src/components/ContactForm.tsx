@@ -109,15 +109,35 @@ const ContactForm = () => {
         <h3 className="text-xl font-display font-semibold text-foreground mb-2">
           Message sent!
         </h3>
-        <p className="text-muted-foreground font-body text-sm">
-          We'll get back to you within 24 hours.
+        <p className="text-muted-foreground font-body text-sm mb-1">
+          We&apos;ll review your info and get back to you within 24 hours.
         </p>
-        <button
-          onClick={() => setStatus("idle")}
-          className="mt-6 text-primary text-sm font-body hover:underline"
-        >
-          Send another message
-        </button>
+        <p className="text-muted-foreground/60 font-body text-xs mb-6">
+          In the meantime, check out our case studies and FAQ to learn more
+          about how we work.
+        </p>
+        <div className="flex flex-wrap gap-3 justify-center">
+          <a
+            href="#case-studies"
+            className="text-xs font-mono tracking-wider text-primary hover:underline"
+          >
+            View Case Studies
+          </a>
+          <span className="text-border">|</span>
+          <a
+            href="#faq"
+            className="text-xs font-mono tracking-wider text-primary hover:underline"
+          >
+            Read FAQ
+          </a>
+          <span className="text-border">|</span>
+          <button
+            onClick={() => setStatus("idle")}
+            className="text-xs font-mono tracking-wider text-muted-foreground hover:text-foreground"
+          >
+            Send Another
+          </button>
+        </div>
       </motion.div>
     );
   }
@@ -290,8 +310,12 @@ const ContactForm = () => {
       )}
 
       <p className="text-[10px] text-muted-foreground/50 text-center font-body leading-relaxed mt-2">
-        By submitting this form, you agree to our privacy policy. We&apos;ll
-        only use your information to respond to your inquiry. No spam, ever.
+        By submitting this form, you agree to our{" "}
+        <a href="/privacy" className="underline hover:text-muted-foreground">
+          privacy policy
+        </a>
+        . We&apos;ll only use your information to respond to your inquiry. No
+        spam, ever.
       </p>
     </form>
   );
