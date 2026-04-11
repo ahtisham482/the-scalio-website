@@ -23,7 +23,6 @@ interface ServiceCard {
   bestFor: string;
   caseStudyLink?: string;
   caseStudyTeaser?: string;
-  span?: string;
 }
 
 const services: ServiceCard[] = [
@@ -44,7 +43,6 @@ const services: ServiceCard[] = [
       "New sellers launching their first product, or established brands expanding their catalog",
     caseStudyLink: "#case-studies",
     caseStudyTeaser: "Lumiere Home: $0 → $92K/mo in 6 months",
-    span: "md:col-span-2",
   },
   {
     icon: Megaphone,
@@ -95,7 +93,6 @@ const services: ServiceCard[] = [
     bestFor: "Sellers scaling past $20K/month who need inventory reliability",
     caseStudyLink: "#case-studies",
     caseStudyTeaser: "Alpine Gear: scaled to $320K/mo",
-    span: "md:col-span-2",
   },
   {
     icon: ShieldCheck,
@@ -198,7 +195,7 @@ const ServicesSection = () => {
         </motion.div>
 
         {/* Bento Grid */}
-        <div className="grid md:grid-cols-4 gap-4 lg:gap-5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
           {services.map((service, i) => {
             const Icon = service.icon;
             return (
@@ -212,7 +209,7 @@ const ServicesSection = () => {
                   delay: i * 0.08,
                   ease: easeOutExpo,
                 }}
-                className={`group relative p-7 lg:p-9 rounded-2xl bg-card border border-border transition-all duration-500 hover:border-primary/20 hover:-translate-y-1.5 flex flex-col ${service.span || ""}`}
+                className="group relative p-7 lg:p-9 rounded-2xl bg-card border border-border transition-all duration-500 hover:border-primary/20 hover:-translate-y-1.5 flex flex-col"
               >
                 {/* Hover glow background */}
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-primary/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
