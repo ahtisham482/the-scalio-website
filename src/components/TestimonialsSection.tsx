@@ -145,7 +145,15 @@ const TestimonialsSection = () => {
 
         {/* Carousel */}
         <div className="max-w-3xl mx-auto">
-          <div className="relative overflow-hidden rounded-2xl bg-card border border-border p-8 md:p-12 lg:p-14 min-h-[360px]">
+          <div
+            className="relative overflow-hidden rounded-2xl bg-card border border-border p-8 md:p-12 lg:p-14 min-h-[360px]"
+            onMouseEnter={() => {
+              pauseRef.current = true;
+            }}
+            onMouseLeave={() => {
+              pauseRef.current = false;
+            }}
+          >
             <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-primary/5 to-transparent blur-xl -z-10" />
 
             <div

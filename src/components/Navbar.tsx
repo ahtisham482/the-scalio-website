@@ -7,7 +7,15 @@ import {
 import { useState, useEffect, useCallback } from "react";
 import ThemeToggle from "@/components/ThemeToggle";
 
-const navItems = ["About", "Services", "Testimonials", "Contact"];
+const navItems = [
+  { label: "About", href: "#about" },
+  { label: "How It Works", href: "#how-it-works" },
+  { label: "Services", href: "#services" },
+  { label: "Case Studies", href: "#case-studies" },
+  { label: "Testimonials", href: "#testimonials" },
+  { label: "FAQ", href: "#faq" },
+  { label: "Contact", href: "#contact" },
+];
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 
 const Navbar = () => {
@@ -83,14 +91,14 @@ const Navbar = () => {
           </a>
 
           {/* Desktop */}
-          <div className="hidden md:flex items-center gap-10">
+          <div className="hidden lg:flex items-center gap-6">
             {navItems.map((item) => (
               <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="relative text-[13px] text-muted-foreground hover:text-foreground transition-colors duration-300 font-body tracking-[0.08em] uppercase group"
+                key={item.label}
+                href={item.href}
+                className="relative text-[12px] text-muted-foreground hover:text-foreground transition-colors duration-300 font-body tracking-[0.06em] uppercase group whitespace-nowrap"
               >
-                {item}
+                {item.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
@@ -106,7 +114,7 @@ const Navbar = () => {
           {/* Mobile toggle */}
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden text-foreground p-2 -mr-2 relative z-[60]"
+            className="lg:hidden text-foreground p-2 -mr-2 relative z-[60]"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
           >
@@ -133,28 +141,28 @@ const Navbar = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4, ease: easeOutExpo }}
-            className="fixed inset-0 z-[55] bg-background flex flex-col items-center justify-center md:hidden"
+            className="fixed inset-0 z-[55] bg-background flex flex-col items-center justify-center lg:hidden overflow-y-auto"
             role="dialog"
             aria-modal="true"
             aria-label="Navigation menu"
           >
-            <div className="flex flex-col items-center gap-2">
+            <div className="flex flex-col items-center gap-1">
               {navItems.map((item, i) => (
                 <motion.a
-                  key={item}
+                  key={item.label}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
                   transition={{
-                    delay: i * 0.06,
+                    delay: i * 0.05,
                     duration: 0.5,
                     ease: easeOutExpo,
                   }}
-                  href={`#${item.toLowerCase()}`}
+                  href={item.href}
                   onClick={() => setOpen(false)}
-                  className="text-3xl font-display font-semibold text-foreground py-3 hover:text-primary transition-colors"
+                  className="text-2xl font-display font-semibold text-foreground py-2.5 hover:text-primary transition-colors"
                 >
-                  {item}
+                  {item.label}
                 </motion.a>
               ))}
             </div>
@@ -163,17 +171,30 @@ const Navbar = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="mt-12 flex gap-6"
+              className="mt-8 flex gap-6"
             >
-              {["Instagram", "LinkedIn", "Email"].map((social) => (
-                <a
-                  key={social}
-                  href="#"
-                  className="text-xs text-muted-foreground hover:text-foreground transition-colors font-mono tracking-wider uppercase"
-                >
-                  {social}
-                </a>
-              ))}
+              <a
+                href="mailto:hello@thescalio.com"
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors font-mono tracking-wider uppercase"
+              >
+                Email
+              </a>
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors font-mono tracking-wider uppercase"
+              >
+                LinkedIn
+              </a>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors font-mono tracking-wider uppercase"
+              >
+                Instagram
+              </a>
             </motion.div>
           </motion.div>
         )}
