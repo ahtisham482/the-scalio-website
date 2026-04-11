@@ -57,7 +57,7 @@ const AboutSection = () => {
   return (
     <section
       id="about"
-      className="relative py-32 lg:py-40 px-6 overflow-hidden"
+      className="relative py-20 lg:py-28 px-6 overflow-hidden"
       aria-labelledby="about-heading"
     >
       <div className="absolute top-0 left-0 right-0 line-accent" />

@@ -7,7 +7,7 @@ const CTASection = () => {
   return (
     <section
       id="contact"
-      className="relative py-32 lg:py-44 px-6 overflow-hidden"
+      className="relative py-20 lg:py-28 px-6 overflow-hidden"
       aria-labelledby="cta-heading"
     >
       <div className="absolute top-0 left-0 right-0 line-accent" />

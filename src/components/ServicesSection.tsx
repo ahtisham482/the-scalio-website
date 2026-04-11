@@ -63,7 +63,7 @@ const ServicesSection = () => {
   return (
     <section
       id="services"
-      className="relative py-32 lg:py-40 px-6"
+      className="relative py-20 lg:py-28 px-6"
       aria-labelledby="services-heading"
     >
       <div className="absolute top-0 left-0 right-0 line-accent" />
