@@ -177,6 +177,9 @@ const TestimonialsSection = () => {
                 <img
                   src={t.photo}
                   alt={t.name}
+                  width={48}
+                  height={48}
+                  loading="lazy"
                   className="w-12 h-12 rounded-full object-cover ring-2 ring-border"
                 />
                 <div className="text-left">
