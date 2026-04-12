@@ -2,7 +2,12 @@ import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
-  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -14,7 +19,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Playfair Display", "serif"],
+        display: ["Inter", "sans-serif"],
         body: ["DM Sans", "sans-serif"],
         mono: ["JetBrains Mono", "monospace"],
       },
@@ -116,7 +121,7 @@ export default {
           "0%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(360deg)" },
         },
-        "breathe": {
+        breathe: {
           "0%, 100%": { transform: "scale(1)", opacity: "0.5" },
           "50%": { transform: "scale(1.05)", opacity: "0.8" },
         },
@@ -131,9 +136,10 @@ export default {
         "float-slow": "float-slow 10s ease-in-out infinite",
         "pulse-glow": "pulse-glow 4s ease-in-out infinite",
         "slide-up": "slide-up 0.6s ease-out forwards",
-        "reveal-clip": "reveal-clip 0.9s cubic-bezier(0.83, 0, 0.17, 1) forwards",
+        "reveal-clip":
+          "reveal-clip 0.9s cubic-bezier(0.83, 0, 0.17, 1) forwards",
         "spin-slow": "spin-slow 20s linear infinite",
-        "breathe": "breathe 6s ease-in-out infinite",
+        breathe: "breathe 6s ease-in-out infinite",
       },
     },
   },

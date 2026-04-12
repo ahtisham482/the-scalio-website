@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const ThemeToggle = () => {
   const [dark, setDark] = useState(() => {
-    if (typeof window === "undefined") return true;
+    if (typeof window === "undefined") return false;
     const stored = localStorage.getItem("theme");
     if (stored) return stored === "dark";
     return window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -13,9 +13,9 @@ const ThemeToggle = () => {
   useEffect(() => {
     const root = document.documentElement;
     if (dark) {
-      root.classList.remove("light");
+      root.classList.add("dark");
     } else {
-      root.classList.add("light");
+      root.classList.remove("dark");
     }
     localStorage.setItem("theme", dark ? "dark" : "light");
   }, [dark]);

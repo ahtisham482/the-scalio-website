@@ -13,12 +13,6 @@ const CTASection = () => {
     >
       <div className="absolute top-0 left-0 right-0 line-accent" />
 
-      {/* Background mesh */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full bg-primary/[0.06] blur-[180px]" />
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[300px] rounded-full bg-accent/[0.04] blur-[140px]" />
-      </div>
-
       <div className="max-w-2xl mx-auto text-center relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

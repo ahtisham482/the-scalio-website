@@ -64,9 +64,6 @@ const FAQSection = () => {
       className="relative py-24 md:py-36 px-6"
       aria-labelledby="faq-heading"
     >
-      {/* Background orb */}
-      <div className="absolute bottom-1/4 right-[5%] w-[300px] h-[300px] bg-primary/[0.03] orb animate-float-slow pointer-events-none" />
-
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <motion.div

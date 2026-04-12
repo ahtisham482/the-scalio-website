@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useRef } from "react";
 
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 
@@ -25,21 +25,6 @@ const SplitText = ({ text, delay = 0 }: { text: string; delay?: number }) => (
   </span>
 );
 
-const FloatingOrb = ({
-  className,
-  delay = 0,
-}: {
-  className: string;
-  delay?: number;
-}) => (
-  <motion.div
-    initial={{ opacity: 0, scale: 0.5 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{ duration: 2, delay, ease: easeOutExpo }}
-    className={`absolute orb ${className}`}
-  />
-);
-
 const HeroSection = () => {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -50,24 +35,6 @@ const HeroSection = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
 
-  const [mousePos, setMousePos] = useState({ x: "50%", y: "50%" });
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    setMousePos({
-      x: `${e.clientX - rect.left}px`,
-      y: `${e.clientY - rect.top}px`,
-    });
-  }, []);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (!window.matchMedia("(pointer: fine)").matches) return;
-    el.addEventListener("mousemove", handleMouseMove);
-    return () => el.removeEventListener("mousemove", handleMouseMove);
-  }, [handleMouseMove]);
-
   return (
     <section
       ref={ref}
@@ -75,56 +42,8 @@ const HeroSection = () => {
       className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
       aria-label="Hero section"
     >
-      {/* Spotlight cursor effect */}
-      <div
-        className="absolute inset-0 pointer-events-none z-[1] opacity-60"
-        style={{
-          background: `radial-gradient(600px circle at ${mousePos.x} ${mousePos.y}, hsl(var(--color-accent-glow) / 0.07), transparent 60%)`,
-        }}
-      />
-
-      {/* Floating orbs */}
-      <FloatingOrb
-        className="top-[10%] left-[15%] w-[500px] h-[500px] bg-primary/[0.06] animate-float-slow"
-        delay={0.5}
-      />
-      <FloatingOrb
-        className="bottom-[5%] right-[10%] w-[400px] h-[400px] bg-accent/[0.05] animate-breathe"
-        delay={0.8}
-      />
-      <FloatingOrb
-        className="top-[60%] left-[60%] w-[300px] h-[300px] bg-primary/[0.04] animate-float"
-        delay={1.2}
-      />
-
-      {/* Subtle grid */}
-      <div
-        className="absolute inset-0 opacity-[0.015]"
-        style={{
-          backgroundImage: `linear-gradient(hsl(var(--primary) / 0.3) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary) / 0.3) 1px, transparent 1px)`,
-          backgroundSize: "80px 80px",
-        }}
-      />
-
-      {/* Radial fade at top */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/10 to-transparent" />
-
-      {/* Noise overlay */}
-      <div className="noise absolute inset-0 pointer-events-none" />
-
-      {/* Decorative corner elements */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.3 }}
-        transition={{ delay: 2, duration: 1 }}
-        className="absolute top-8 left-8 w-16 h-16 border-l border-t border-primary/20 hidden lg:block"
-      />
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.3 }}
-        transition={{ delay: 2.1, duration: 1 }}
-        className="absolute bottom-8 right-8 w-16 h-16 border-r border-b border-primary/20 hidden lg:block"
-      />
+      {/* Clean subtle background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.03] via-transparent to-transparent pointer-events-none" />
 
       <motion.div
         style={{ y, opacity, scale }}
@@ -132,12 +51,12 @@ const HeroSection = () => {
       >
         {/* Eyebrow */}
         <motion.div
-          initial={{ opacity: 0, y: 15, filter: "blur(10px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2, ease: easeOutExpo }}
           className="mb-10"
         >
-          <span className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full glass glass-border text-[11px] text-muted-foreground tracking-[0.2em] uppercase font-mono">
+          <span className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-border bg-card text-[11px] text-muted-foreground tracking-[0.2em] uppercase font-mono">
             <span className="relative w-1.5 h-1.5">
               <span className="absolute inset-0 rounded-full bg-primary animate-ping opacity-75" />
               <span className="relative w-1.5 h-1.5 rounded-full bg-primary block" />
@@ -158,7 +77,7 @@ const HeroSection = () => {
                 initial={{ y: "110%", rotateX: -80 }}
                 animate={{ y: 0, rotateX: 0 }}
                 transition={{ duration: 0.9, delay: 0.65, ease: easeOutExpo }}
-                className="inline-block text-gradient-primary italic font-medium"
+                className="inline-block text-primary italic font-medium"
                 style={{ transformOrigin: "bottom" }}
               >
                 Empire
@@ -169,8 +88,8 @@ const HeroSection = () => {
 
         {/* Subheadline */}
         <motion.p
-          initial={{ opacity: 0, y: 25, filter: "blur(10px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.9, ease: easeOutExpo }}
           className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto mb-14 font-body font-light leading-[1.8] tracking-wide"
         >
@@ -183,14 +102,12 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 1.1, ease: easeOutExpo }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
           <a
             href="#contact"
-            className="group relative inline-flex items-center justify-center px-10 py-5 bg-primary text-primary-foreground font-body font-semibold text-base tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_60px_-8px_hsl(265_85%_65%/0.6)] hover:scale-[1.04] overflow-hidden"
+            className="group relative inline-flex items-center justify-center px-10 py-5 bg-primary text-primary-foreground font-body font-semibold text-base tracking-wide rounded-full transition-all duration-500 hover:shadow-lg hover:scale-[1.03] overflow-hidden"
           >
-            {/* Shimmer effect */}
-            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-foreground/10 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
             <span className="relative z-10 flex items-center gap-2">
               Book a Free Audit
               <svg
