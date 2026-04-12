@@ -9,6 +9,8 @@ import {
   Check,
   Users,
   ArrowUpRight,
+  Phone,
+  MessageSquare,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -317,21 +319,52 @@ const ServicesSection = () => {
               </span>
             ))}
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+          {/* Divider */}
+          <div className="w-full h-px bg-border/40 my-5" />
+
+          <p className="text-[11px] font-mono tracking-[0.15em] uppercase text-primary mb-4">
+            How we stay connected
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
-              "Weekly strategy calls",
-              "Dedicated Slack channel",
-              "Real-time dashboard",
-            ].map((item) => (
-              <span
-                key={item}
-                className="flex items-center gap-1.5 text-xs font-body text-muted-foreground"
-              >
-                <Check className="w-3 h-3 text-primary/50" />
-                {item}
-              </span>
-            ))}
+              {
+                icon: Phone,
+                title: "Weekly Calls",
+                desc: "30-min strategy call every week with your account lead",
+              },
+              {
+                icon: MessageSquare,
+                title: "Slack Channel",
+                desc: "Dedicated channel with your team — responses within hours",
+              },
+              {
+                icon: BarChart3,
+                title: "Live Dashboard",
+                desc: "Real-time KPIs: revenue, ACoS, rank, and conversion data",
+              },
+            ].map((item) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={item.title}
+                  className="flex flex-col items-center gap-2 p-4 rounded-xl bg-background/50 border border-border/30"
+                >
+                  <Icon className="w-5 h-5 text-primary/70" />
+                  <span className="text-sm font-body font-semibold text-foreground">
+                    {item.title}
+                  </span>
+                  <span className="text-[11px] text-muted-foreground font-body text-center leading-relaxed">
+                    {item.desc}
+                  </span>
+                </div>
+              );
+            })}
           </div>
+
+          <p className="text-xs text-muted-foreground/60 font-body italic mt-5">
+            Full transparency is non-negotiable for us.
+          </p>
         </motion.div>
 
         {/* Mid-page CTA */}
