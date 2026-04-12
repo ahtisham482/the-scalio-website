@@ -48,14 +48,35 @@ const Navbar = () => {
 
   return (
     <>
+      {/* Announcement bar */}
+      <div
+        className={`fixed top-0 left-0 right-0 z-[51] bg-primary text-primary-foreground transition-all duration-500 ${
+          scrolled ? "h-0 opacity-0 overflow-hidden" : "h-9"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-center gap-2 text-[11px] sm:text-xs font-body tracking-wide">
+          <span className="hidden sm:inline">🔥</span>
+          <span>
+            <span className="font-semibold">Limited spots:</span> We take 5 new
+            clients per month.
+          </span>
+          <a
+            href="#contact"
+            className="underline underline-offset-2 font-semibold hover:no-underline whitespace-nowrap"
+          >
+            Book your free audit →
+          </a>
+        </div>
+      </div>
+
       <motion.nav
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: easeOutExpo }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
+        className={`fixed left-0 right-0 z-50 transition-all duration-700 ${
           scrolled
-            ? "glass glass-border shadow-[0_1px_40px_-12px_hsl(var(--primary)/0.04)]"
-            : "bg-transparent"
+            ? "top-0 glass glass-border shadow-[0_1px_40px_-12px_hsl(var(--primary)/0.04)]"
+            : "top-9 bg-transparent"
         }`}
         aria-label="Main navigation"
       >
