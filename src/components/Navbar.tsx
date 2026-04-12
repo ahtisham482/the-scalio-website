@@ -5,22 +5,33 @@ import {
   AnimatePresence,
 } from "framer-motion";
 import { useState, useEffect, useCallback } from "react";
+import { ChevronDown } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
 
 const navItems = [
-  { label: "About", href: "#about" },
-  { label: "How It Works", href: "#how-it-works" },
   { label: "Services", href: "#services" },
   { label: "Case Studies", href: "#case-studies" },
-  { label: "Testimonials", href: "#testimonials" },
+  { label: "About", href: "#about" },
   { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
 ];
+
+const serviceDropdown = [
+  { label: "Product Research & Launch", href: "/services/product-launch" },
+  { label: "Amazon PPC Management", href: "/services/ppc" },
+  { label: "Listing Optimization", href: "/services/listing-optimization" },
+  { label: "Supply Chain & Logistics", href: "/services/supply-chain" },
+  { label: "Account Health & Compliance", href: "/services/account-health" },
+  { label: "Brand Growth & Expansion", href: "/services/brand-growth" },
+];
+
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -83,8 +94,9 @@ const Navbar = () => {
         <div
           className={`max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between transition-all duration-500 ${scrolled ? "h-16" : "h-20"}`}
         >
+          {/* Logo — links to / */}
           <a
-            href="#"
+            href="/"
             className={`flex items-center gap-2 font-display font-bold tracking-tight text-foreground transition-transform duration-500 origin-left ${scrolled ? "text-lg scale-90" : "text-xl"}`}
           >
             <svg
@@ -111,18 +123,72 @@ const Navbar = () => {
             The Scalio<span className="text-primary">.</span>
           </a>
 
-          {/* Desktop */}
-          <div className="hidden lg:flex items-center gap-6">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="relative text-[12px] text-muted-foreground hover:text-foreground transition-colors duration-300 font-body tracking-[0.06em] uppercase group whitespace-nowrap"
-              >
-                {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full" />
-              </a>
-            ))}
+          {/* Desktop nav */}
+          <div className="hidden lg:flex items-center gap-7">
+            {navItems.map((item) =>
+              item.label === "Services" ? (
+                /* Services dropdown */
+                <div
+                  key={item.label}
+                  className="relative"
+                  onMouseEnter={() => setServicesOpen(true)}
+                  onMouseLeave={() => setServicesOpen(false)}
+                >
+                  <a
+                    href={item.href}
+                    className="relative text-[13px] text-muted-foreground hover:text-foreground transition-colors duration-300 font-body tracking-[0.06em] uppercase group whitespace-nowrap flex items-center gap-1"
+                  >
+                    {item.label}
+                    <ChevronDown
+                      className={`w-3 h-3 transition-transform duration-200 ${servicesOpen ? "rotate-180" : ""}`}
+                    />
+                    <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full" />
+                  </a>
+
+                  <AnimatePresence>
+                    {servicesOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 8 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-72 rounded-xl border border-border bg-card shadow-lg overflow-hidden"
+                      >
+                        <div className="p-2">
+                          {serviceDropdown.map((service) => (
+                            <a
+                              key={service.href}
+                              href={service.href}
+                              className="block px-4 py-2.5 rounded-lg text-sm font-body text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors duration-200"
+                            >
+                              {service.label}
+                            </a>
+                          ))}
+                        </div>
+                        <div className="border-t border-border px-4 py-3">
+                          <a
+                            href="#services"
+                            className="text-xs font-mono tracking-wider text-primary hover:underline"
+                          >
+                            View all services →
+                          </a>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ) : (
+                /* Regular nav link */
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="relative text-[13px] text-muted-foreground hover:text-foreground transition-colors duration-300 font-body tracking-[0.06em] uppercase group whitespace-nowrap"
+                >
+                  {item.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full" />
+                </a>
+              ),
+            )}
             <ThemeToggle />
             <a
               href="#contact"
@@ -181,31 +247,91 @@ const Navbar = () => {
             aria-label="Navigation menu"
           >
             <div className="flex flex-col items-center gap-1">
-              {navItems.map((item, i) => (
-                <motion.a
-                  key={item.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{
-                    delay: i * 0.05,
-                    duration: 0.5,
-                    ease: easeOutExpo,
-                  }}
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className="text-2xl font-display font-semibold text-foreground py-2.5 hover:text-primary transition-colors"
-                >
-                  {item.label}
-                </motion.a>
-              ))}
+              {navItems.map((item, i) =>
+                item.label === "Services" ? (
+                  <div key={item.label} className="flex flex-col items-center">
+                    <motion.button
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{
+                        delay: i * 0.05,
+                        duration: 0.5,
+                        ease: easeOutExpo,
+                      }}
+                      onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                      className="text-2xl font-display font-semibold text-foreground py-2.5 hover:text-primary transition-colors flex items-center gap-2"
+                    >
+                      Services
+                      <ChevronDown
+                        className={`w-5 h-5 transition-transform duration-200 ${mobileServicesOpen ? "rotate-180" : ""}`}
+                      />
+                    </motion.button>
+                    <AnimatePresence>
+                      {mobileServicesOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="flex flex-col items-center gap-1 overflow-hidden"
+                        >
+                          {serviceDropdown.map((service) => (
+                            <a
+                              key={service.href}
+                              href={service.href}
+                              onClick={() => setOpen(false)}
+                              className="text-base font-body text-muted-foreground hover:text-primary transition-colors py-1.5"
+                            >
+                              {service.label}
+                            </a>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ) : (
+                  <motion.a
+                    key={item.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{
+                      delay: i * 0.05,
+                      duration: 0.5,
+                      ease: easeOutExpo,
+                    }}
+                    href={item.href}
+                    onClick={() => setOpen(false)}
+                    className="text-2xl font-display font-semibold text-foreground py-2.5 hover:text-primary transition-colors"
+                  >
+                    {item.label}
+                  </motion.a>
+                ),
+              )}
             </div>
+
+            {/* Mobile CTA button */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.25 }}
+              className="mt-8"
+            >
+              <a
+                href="#contact"
+                onClick={() => setOpen(false)}
+                className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground font-body font-semibold text-base rounded-full transition-all duration-300 hover:shadow-[0_0_30px_-6px_hsl(var(--primary)/0.4)]"
+              >
+                Free PPC Audit →
+              </a>
+            </motion.div>
 
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="mt-8 flex gap-6"
+              transition={{ delay: 0.35 }}
+              className="mt-6 flex gap-6"
             >
               <a
                 href="mailto:hello@thescalio.com"
