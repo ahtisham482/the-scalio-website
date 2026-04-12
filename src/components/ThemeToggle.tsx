@@ -25,6 +25,7 @@ const ThemeToggle = () => {
       onClick={() => setDark((d) => !d)}
       className="relative w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors duration-300"
       aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+      title={dark ? "Switch to light mode" : "Switch to dark mode"}
     >
       <motion.div
         key={dark ? "moon" : "sun"}
