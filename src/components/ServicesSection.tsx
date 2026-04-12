@@ -1,134 +1,16 @@
 import { motion } from "framer-motion";
 import {
-  Search,
-  BarChart3,
-  Package,
-  Megaphone,
-  ShieldCheck,
-  TrendingUp,
   Check,
   Users,
   ArrowUpRight,
   Phone,
   MessageSquare,
+  BarChart3,
+  TrendingUp,
 } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { services } from "@/data/services";
 
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
-
-interface ServiceCard {
-  icon: LucideIcon;
-  title: string;
-  hook: string;
-  metric: string;
-  deliverables: string[];
-  bestFor: string;
-  caseStudyLink?: string;
-  caseStudyTeaser?: string;
-}
-
-const services: ServiceCard[] = [
-  {
-    icon: Search,
-    title: "Product Research & Launch",
-    hook: "Go from idea to first sale in 4-6 weeks",
-    metric: "X products launched",
-    deliverables: [
-      "Market & demand analysis",
-      "Competitor mapping & gap identification",
-      "Keyword architecture & SEO strategy",
-      "Full listing creation (copy + images)",
-      "Launch PPC campaigns",
-      "Review generation strategy",
-    ],
-    bestFor:
-      "New sellers launching their first product, or established brands expanding their catalog",
-    caseStudyLink: "#case-studies",
-    caseStudyTeaser: "Lumiere Home: $0 → $92K/mo in 6 months",
-  },
-  {
-    icon: Megaphone,
-    title: "Amazon PPC Management",
-    hook: "Turn ad spend into profitable organic rank",
-    metric: "Avg X% ACoS reduction",
-    deliverables: [
-      "Campaign architecture & restructuring",
-      "Daily bid optimization",
-      "Negative keyword mining",
-      "Search term analysis & harvesting",
-      "Weekly performance reports",
-      "Dedicated PPC strategist",
-    ],
-    bestFor: "Brands spending $2K+/month on Amazon ads who want better returns",
-    caseStudyLink: "#case-studies",
-    caseStudyTeaser: "PeakFit: ACoS dropped 68% → 18%",
-  },
-  {
-    icon: BarChart3,
-    title: "Listing Optimization",
-    hook: "Convert more browsers into buyers",
-    metric: "Avg X% conversion lift",
-    deliverables: [
-      "SEO-optimized titles & bullet points",
-      "A+ Content design & copywriting",
-      "Backend keyword optimization",
-      "Main image & gallery strategy",
-      "Competitor split testing",
-    ],
-    bestFor: "Sellers with traffic but low conversion rates",
-    caseStudyLink: "#case-studies",
-    caseStudyTeaser: "PeakFit: 1,442% revenue growth",
-  },
-  {
-    icon: Package,
-    title: "Supply Chain & Logistics",
-    hook: "Never stock out. Never over-order.",
-    metric: "X brands managed",
-    deliverables: [
-      "Demand forecasting & planning",
-      "Freight forwarding coordination",
-      "FBA prep & labeling",
-      "Automated restock alerts",
-      "Multi-warehouse distribution",
-      "Supplier sourcing & negotiation",
-    ],
-    bestFor: "Sellers scaling past $20K/month who need inventory reliability",
-    caseStudyLink: "#case-studies",
-    caseStudyTeaser: "Alpine Gear: scaled to $320K/mo",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Account Health & Compliance",
-    hook: "Sleep well knowing your account is protected",
-    metric: "X% reinstatement success",
-    deliverables: [
-      "Policy compliance monitoring",
-      "Listing suppression resolution",
-      "Intellectual property protection",
-      "Review management & monitoring",
-      "Reinstatement support",
-      "Preventive health audits",
-    ],
-    bestFor: "Any seller who depends on Amazon for revenue",
-    caseStudyLink: "#case-studies",
-  },
-  {
-    icon: TrendingUp,
-    title: "Brand Growth & Expansion",
-    hook: "Grow beyond Amazon into a real brand",
-    metric: "X marketplaces covered",
-    deliverables: [
-      "Walmart marketplace launch",
-      "Amazon EU / UK / CA expansion",
-      "Brand Registry optimization",
-      "Omnichannel strategy & DTC",
-      "International market analysis",
-    ],
-    bestFor: "Profitable US Amazon sellers ready to diversify revenue",
-    caseStudyLink: "#case-studies",
-    caseStudyTeaser: "Alpine Gear: 611% growth in 12 months",
-  },
-];
 
 const ServicesSection = () => {
   return (
@@ -225,7 +107,12 @@ const ServicesSection = () => {
 
                   {/* Title */}
                   <h3 className="text-lg font-display font-semibold text-foreground mb-1.5">
-                    {service.title}
+                    <a
+                      href={`/services/${service.slug}`}
+                      className="hover:text-primary transition-colors duration-300"
+                    >
+                      {service.title}
+                    </a>
                   </h3>
 
                   {/* Hook */}
