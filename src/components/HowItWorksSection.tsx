@@ -112,6 +112,9 @@ const HowItWorksSection = () => {
       className="relative py-24 md:py-36 px-6"
       aria-labelledby="how-it-works-heading"
     >
+      {/* Background orb */}
+      <div className="absolute top-1/4 left-[5%] w-[350px] h-[350px] bg-accent/[0.03] orb animate-float-slow pointer-events-none" />
+
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.div

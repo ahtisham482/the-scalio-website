@@ -314,6 +314,9 @@ const CaseStudiesSection = () => {
       className="relative py-24 md:py-36 px-6"
       aria-labelledby="case-studies-heading"
     >
+      {/* Background orb */}
+      <div className="absolute top-1/3 right-[5%] w-[400px] h-[400px] bg-primary/[0.03] orb animate-breathe pointer-events-none" />
+
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
         <motion.div

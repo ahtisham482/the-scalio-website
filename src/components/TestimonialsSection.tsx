@@ -118,6 +118,7 @@ const TestimonialsSection = () => {
       aria-labelledby="testimonials-heading"
     >
       <div className="absolute top-0 left-0 right-0 line-accent" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/[0.03] blur-[150px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
