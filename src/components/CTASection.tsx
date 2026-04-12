@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { ShieldCheck } from "lucide-react";
 import ContactForm from "@/components/ContactForm";
 
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
@@ -94,6 +95,26 @@ const CTASection = () => {
           className="glass glass-border rounded-2xl p-8 md:p-10"
         >
           <ContactForm />
+        </motion.div>
+
+        {/* Money-back guarantee */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3, ease: easeOutExpo }}
+          className="mt-8 flex items-center justify-center gap-3 py-4 px-6 rounded-xl border border-primary/10 bg-primary/[0.03] max-w-md mx-auto"
+        >
+          <ShieldCheck className="w-6 h-6 text-primary shrink-0" />
+          <div className="text-left">
+            <p className="text-sm font-body font-semibold text-foreground">
+              30-Day Money-Back Guarantee
+            </p>
+            <p className="text-[11px] text-muted-foreground font-body leading-relaxed">
+              Not satisfied in the first 30 days? We&apos;ll refund 100% of your
+              fees. No questions asked.
+            </p>
+          </div>
         </motion.div>
       </div>
     </section>
