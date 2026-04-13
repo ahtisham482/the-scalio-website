@@ -59,10 +59,10 @@ const AboutSection = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "200px" }}
-          transition={{ duration: 0.7, ease: easeOutExpo }}
+          transition={{ duration: 0.8, ease: easeOutExpo }}
           className="mb-12"
         >
           <span className="text-[11px] tracking-[0.2em] uppercase text-primary font-mono">
@@ -81,10 +81,10 @@ const AboutSection = () => {
 
         {/* Stats bar — ABOVE body text, first visual after heading */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "200px" }}
-          transition={{ duration: 0.7, delay: 0.1, ease: easeOutExpo }}
+          transition={{ duration: 0.6, delay: 0.1, ease: easeOutExpo }}
           className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border rounded-2xl overflow-hidden mb-14"
         >
           {stats.map((stat, i) => (
@@ -93,7 +93,7 @@ const AboutSection = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.15 + i * 0.05 }}
+              transition={{ duration: 0.5, delay: i * 0.12 }}
               className="bg-card p-8 lg:p-10 flex flex-col items-center text-center group relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-primary/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
@@ -113,10 +113,10 @@ const AboutSection = () => {
 
         {/* Body — empathy-first narrative */}
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "200px" }}
-          transition={{ duration: 0.8, delay: 0.15, ease: easeOutExpo }}
+          transition={{ duration: 0.6, delay: 0.15, ease: easeOutExpo }}
           className="max-w-3xl"
         >
           <p className="text-muted-foreground font-body text-base leading-[1.9] font-light max-w-lg mb-5">

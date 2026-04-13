@@ -21,7 +21,7 @@ const CTASection = () => {
 
       <div className="max-w-2xl mx-auto text-center relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "200px" }}
           transition={{ duration: 0.8, ease: easeOutExpo }}
@@ -90,10 +90,10 @@ const CTASection = () => {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.2, ease: easeOutExpo }}
+          transition={{ duration: 0.6, delay: 0.1, ease: easeOutExpo }}
           className="glass glass-border rounded-2xl p-8 md:p-10"
         >
           <ContactForm />
@@ -101,10 +101,10 @@ const CTASection = () => {
 
         {/* Money-back guarantee */}
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3, ease: easeOutExpo }}
+          transition={{ duration: 0.6, delay: 0.15, ease: easeOutExpo }}
           className="mt-8 flex items-center justify-center gap-3 py-4 px-6 rounded-xl border border-primary/10 bg-primary/[0.03] max-w-md mx-auto"
         >
           <ShieldCheck className="w-6 h-6 text-primary shrink-0" />
@@ -124,7 +124,7 @@ const CTASection = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4, ease: easeOutExpo }}
+          transition={{ duration: 0.6, delay: 0.2, ease: easeOutExpo }}
           className="mt-8 text-center"
         >
           <p className="text-muted-foreground/50 font-body text-xs mb-2">

@@ -38,11 +38,11 @@ const HeroSection = () => {
         style={{ y, opacity, scale }}
         className="relative z-10 text-center px-6 max-w-5xl mx-auto"
       >
-        {/* Eyebrow — credibility signal, not category label */}
+        {/* Eyebrow — credibility signal */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0, ease: easeOutExpo }}
+          transition={{ duration: 0.6, delay: 0, ease: easeOutExpo }}
           className="mb-10"
         >
           <span className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full glass glass-border text-[11px] text-muted-foreground tracking-[0.2em] uppercase font-mono">
@@ -56,9 +56,9 @@ const HeroSection = () => {
 
         {/* Headline — differentiated, passes the swap test */}
         <motion.h1
-          initial={{ opacity: 0, y: 25 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1, ease: easeOutExpo }}
+          initial={{ opacity: 0, y: 32, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.8, delay: 0.1, ease: easeOutExpo }}
           className="text-[clamp(2.5rem,7vw,5.5rem)] font-display font-bold leading-[0.95] tracking-tight mb-6"
         >
           We Don&apos;t Manage
@@ -72,7 +72,7 @@ const HeroSection = () => {
 
         {/* Subheadline — objection neutralization, not restating the promise */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.25, ease: easeOutExpo }}
           className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-10 font-body font-light leading-[1.8] tracking-wide"
@@ -85,7 +85,7 @@ const HeroSection = () => {
 
         {/* Trust badges — ABOVE the CTA (pre-suasion position) */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35, duration: 0.6, ease: easeOutExpo }}
           className="flex flex-wrap items-center justify-center gap-6 md:gap-8 mb-10"
@@ -120,14 +120,14 @@ const HeroSection = () => {
 
         {/* Single CTA — one clear next step, no decision fatigue */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4, ease: easeOutExpo }}
+          transition={{ duration: 0.6, delay: 0.4, ease: easeOutExpo }}
           className="flex flex-col items-center gap-3"
         >
           <a
             href="#contact"
-            className="group relative inline-flex items-center justify-center px-10 py-5 bg-primary text-primary-foreground font-body font-semibold text-base tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_60px_-8px_hsl(265_85%_65%/0.6)] hover:scale-[1.04] overflow-hidden"
+            className="cta-pulse group relative inline-flex items-center justify-center px-10 py-5 bg-primary text-primary-foreground font-body font-semibold text-base tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_60px_-8px_hsl(265_85%_65%/0.6)] hover:scale-[1.04] overflow-hidden"
           >
             {/* Shimmer effect */}
             <span className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-foreground/10 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />

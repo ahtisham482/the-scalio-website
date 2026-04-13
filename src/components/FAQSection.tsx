@@ -98,7 +98,7 @@ const FAQSection = () => {
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "200px" }}
           transition={{ duration: 0.8, ease: easeOutExpo }}
@@ -126,12 +126,12 @@ const FAQSection = () => {
         {faqCategories.map((cat, catIndex) => (
           <motion.div
             key={cat.category}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "100px" }}
             transition={{
-              duration: 0.7,
-              delay: catIndex * 0.1,
+              duration: 0.6,
+              delay: catIndex * 0.12,
               ease: easeOutExpo,
             }}
             className="mb-10"
@@ -160,7 +160,7 @@ const FAQSection = () => {
 
         {/* Escape hatch CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "100px" }}
           transition={{ duration: 0.6, ease: easeOutExpo }}

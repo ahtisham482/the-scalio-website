@@ -22,10 +22,10 @@ const ServicesSection = () => {
 
       <div className="max-w-7xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "200px" }}
-          transition={{ duration: 0.7, ease: easeOutExpo }}
+          transition={{ duration: 0.8, ease: easeOutExpo }}
           className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16"
         >
           <div>
@@ -55,15 +55,15 @@ const ServicesSection = () => {
             return (
               <motion.div
                 key={service.slug}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "100px" }}
                 transition={{
                   duration: 0.6,
-                  delay: i * 0.08,
+                  delay: i * 0.12,
                   ease: easeOutExpo,
                 }}
-                className="group relative p-7 lg:p-9 rounded-2xl bg-card border border-border transition-all duration-500 hover:border-primary/20 hover:-translate-y-1.5 flex flex-col"
+                className="group relative p-7 lg:p-9 rounded-2xl bg-card border border-border transition-all duration-500 hover:border-primary/20 hover:-translate-y-1 flex flex-col"
               >
                 {/* Hover glow background */}
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-primary/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
@@ -143,10 +143,10 @@ const ServicesSection = () => {
 
         {/* Team composition note */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "100px" }}
-          transition={{ duration: 0.7, delay: 0.1, ease: easeOutExpo }}
+          transition={{ duration: 0.6, delay: 0.1, ease: easeOutExpo }}
           className="mt-12 max-w-3xl mx-auto rounded-2xl border border-border/40 bg-card/30 backdrop-blur-sm p-6 md:p-8 text-center"
         >
           <p className="text-[11px] font-mono tracking-[0.15em] uppercase text-primary mb-4">
@@ -218,10 +218,10 @@ const ServicesSection = () => {
 
         {/* Mid-page CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "100px" }}
-          transition={{ duration: 0.7, delay: 0.2, ease: easeOutExpo }}
+          transition={{ duration: 0.6, delay: 0.2, ease: easeOutExpo }}
           className="mt-16 text-center"
         >
           <a

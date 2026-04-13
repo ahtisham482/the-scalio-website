@@ -44,10 +44,10 @@ const StepCard = ({ step, index }: { step: Step; index: number }) => {
 
   return (
     <motion.li
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "100px" }}
-      transition={{ duration: 0.6, delay: index * 0.15, ease: easeOutExpo }}
+      transition={{ duration: 0.6, delay: index * 0.12, ease: easeOutExpo }}
       className="relative flex gap-5 md:gap-8"
     >
       {/* Timeline connector (vertical line + icon) */}
@@ -96,7 +96,7 @@ const HowItWorksSection = () => {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "200px" }}
           transition={{ duration: 0.8, ease: easeOutExpo }}
@@ -129,10 +129,10 @@ const HowItWorksSection = () => {
 
         {/* CTA — captures the momentum from the mental rehearsal */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "100px" }}
-          transition={{ duration: 0.7, delay: 0.3, ease: easeOutExpo }}
+          transition={{ duration: 0.6, delay: 0.3, ease: easeOutExpo }}
           className="text-center mt-4"
         >
           <p className="text-muted-foreground font-body text-sm mb-6">

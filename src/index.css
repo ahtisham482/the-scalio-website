@@ -148,9 +148,21 @@
   }
 
   html {
-    scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
   }
 
   body {
@@ -252,6 +264,23 @@
 
   .line-accent {
     @apply h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent;
+  }
+
+  /* ─── ANIMATED SECTION DIVIDER ─── */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--primary) / 0.2),
+      transparent
+    );
+    transform: scaleX(0);
+    transition: transform 1s var(--ease-out-expo);
+  }
+
+  .section-divider.visible {
+    transform: scaleX(1);
   }
 
   .glass {
@@ -421,6 +450,28 @@
     gap: 2rem;
     animation: marquee-scroll 25s linear infinite;
     flex-shrink: 0;
+  }
+
+  /* ─── CTA PULSE GLOW ─── */
+  .cta-pulse {
+    animation: cta-glow-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes cta-glow-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 20px -8px hsl(var(--primary) / 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px -4px hsl(var(--primary) / 0.5);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cta-pulse {
+      animation: none;
+      box-shadow: 0 0 20px -8px hsl(var(--primary) / 0.3);
+    }
   }
 
   /* ─── PULSING RING ─── */

@@ -106,10 +106,10 @@ const TestimonialsSection = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header — signals source-shift from agency to clients */}
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "200px" }}
-          transition={{ duration: 0.7, ease: easeOutExpo }}
+          transition={{ duration: 0.8, ease: easeOutExpo }}
           className="text-center mb-16"
         >
           <span className="text-[11px] tracking-[0.2em] uppercase text-primary font-mono">
@@ -140,8 +140,11 @@ const TestimonialsSection = () => {
             <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-primary/5 to-transparent blur-xl -z-10" />
 
             <div
-              className="flex flex-col items-center text-center transition-opacity duration-300"
-              style={{ opacity: fading ? 0 : 1 }}
+              className="flex flex-col items-center text-center transition-all duration-400 ease-out"
+              style={{
+                opacity: fading ? 0 : 1,
+                transform: fading ? "translateX(20px)" : "translateX(0)",
+              }}
             >
               <Quote
                 className="w-10 h-10 text-primary/15 mb-6"

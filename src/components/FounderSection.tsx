@@ -19,13 +19,13 @@ const FounderSection = () => {
       <div className="absolute top-0 left-0 right-0 line-accent" />
 
       <div className="max-w-4xl mx-auto">
+        {/* Eyebrow + heading: delay 0 */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "200px" }}
           transition={{ duration: 0.8, ease: easeOutExpo }}
         >
-          {/* Section eyebrow + heading */}
           <div className="text-center mb-10">
             <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-primary block mb-4">
               Meet the Founder
@@ -40,17 +40,30 @@ const FounderSection = () => {
               </span>
             </h2>
           </div>
+        </motion.div>
 
-          {/* Pull quote — the scan hook */}
-          <blockquote className="text-center mb-12 max-w-2xl mx-auto">
-            <p className="text-xl md:text-2xl font-display font-medium italic text-foreground/90 leading-relaxed">
-              &ldquo;Most agencies optimize for ACoS. We optimize for profit.
-              There&apos;s a difference — and it&apos;s worth millions to the
-              brands that understand it.&rdquo;
-            </p>
-          </blockquote>
+        {/* Pull quote — emphasis entrance: delay 0.12 */}
+        <motion.blockquote
+          initial={{ opacity: 0, y: 32, filter: "blur(8px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true, margin: "200px" }}
+          transition={{ duration: 0.8, delay: 0.12, ease: easeOutExpo }}
+          className="text-center mb-12 max-w-2xl mx-auto"
+        >
+          <p className="text-xl md:text-2xl font-display font-medium italic text-foreground/90 leading-relaxed">
+            &ldquo;Most agencies optimize for ACoS. We optimize for profit.
+            There&apos;s a difference — and it&apos;s worth millions to the
+            brands that understand it.&rdquo;
+          </p>
+        </motion.blockquote>
 
-          {/* Story */}
+        {/* Paragraphs: delay 0.24 */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "200px" }}
+          transition={{ duration: 0.6, delay: 0.24, ease: easeOutExpo }}
+        >
           <div className="max-w-2xl mx-auto">
             <h3 className="text-xl font-display font-bold text-foreground mb-4">
               I Built The Scalio Because Every Other Amazon Agency Failed Me
@@ -76,8 +89,17 @@ const FounderSection = () => {
               because of lock-in contracts — because of results. No black boxes.
               No excuses.
             </p>
+          </div>
+        </motion.div>
 
-            {/* Founder-specific credentials — different from company stats in About */}
+        {/* Credentials + LinkedIn: delay 0.36 */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "200px" }}
+          transition={{ duration: 0.6, delay: 0.36, ease: easeOutExpo }}
+        >
+          <div className="max-w-2xl mx-auto">
             <div className="flex flex-wrap gap-3 mb-8">
               {founderCredentials.map((cred) => {
                 const Icon = cred.icon;
@@ -95,7 +117,6 @@ const FounderSection = () => {
               })}
             </div>
 
-            {/* LinkedIn verification link */}
             <div className="flex items-center gap-4 mb-10">
               <a
                 href="https://linkedin.com"
@@ -114,20 +135,27 @@ const FounderSection = () => {
                 Connect on LinkedIn
               </a>
             </div>
+          </div>
+        </motion.div>
 
-            {/* Personal CTA */}
-            <div className="text-center">
-              <a
-                href="#contact"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-body font-semibold text-sm tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_40px_-8px_hsl(265_85%_65%/0.5)] hover:scale-[1.03]"
-              >
-                Talk to the Founder About Your Brand
-                <ArrowUpRight className="w-4 h-4" />
-              </a>
-              <p className="text-muted-foreground/50 font-body text-xs mt-3">
-                Every new client starts with a personal call.
-              </p>
-            </div>
+        {/* CTA: delay 0.48 */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "200px" }}
+          transition={{ duration: 0.6, delay: 0.48, ease: easeOutExpo }}
+        >
+          <div className="max-w-2xl mx-auto text-center">
+            <a
+              href="#contact"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-body font-semibold text-sm tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_40px_-8px_hsl(265_85%_65%/0.5)] hover:scale-[1.03]"
+            >
+              Talk to the Founder About Your Brand
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
+            <p className="text-muted-foreground/50 font-body text-xs mt-3">
+              Every new client starts with a personal call.
+            </p>
           </div>
         </motion.div>
       </div>
