@@ -137,16 +137,28 @@ const CaseCard = ({ study, index }: { study: CaseStudy; index: number }) => {
                   {study.category} · {study.timeline}
                 </span>
               </div>
-              <div
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-semibold shrink-0"
-                style={{
-                  background: `hsl(${study.accent} / 0.1)`,
-                  color: `hsl(${study.accent})`,
+              <motion.div
+                initial={{ scale: 0.85, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{
+                  type: "spring",
+                  damping: 12,
+                  stiffness: 200,
+                  delay: index * 0.12 + 0.3,
                 }}
               >
-                <TrendingUp className="w-3 h-3" />
-                {study.growth}
-              </div>
+                <div
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-semibold shrink-0"
+                  style={{
+                    background: `hsl(${study.accent} / 0.1)`,
+                    color: `hsl(${study.accent})`,
+                  }}
+                >
+                  <TrendingUp className="w-3 h-3" />
+                  {study.growth}
+                </div>
+              </motion.div>
             </div>
 
             {/* Intervention — what Scalio actually DID */}

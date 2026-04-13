@@ -148,7 +148,7 @@ const ContactForm = () => {
             type="text"
             value={form.name}
             onChange={(e) => handleChange("name", e.target.value)}
-            className="w-full bg-card/60 border border-border/50 rounded-xl px-4 py-3 text-foreground font-body text-sm placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all"
+            className="w-full bg-card/60 border border-border/50 rounded-xl px-4 py-3 text-foreground font-body text-sm placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all form-focus-glow"
             placeholder="Jane Smith"
           />
           <AnimatePresence>
@@ -176,7 +176,7 @@ const ContactForm = () => {
             type="email"
             value={form.email}
             onChange={(e) => handleChange("email", e.target.value)}
-            className="w-full bg-card/60 border border-border/50 rounded-xl px-4 py-3 text-foreground font-body text-sm placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all"
+            className="w-full bg-card/60 border border-border/50 rounded-xl px-4 py-3 text-foreground font-body text-sm placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all form-focus-glow"
             placeholder="jane@brand.com"
           />
           <AnimatePresence>
@@ -207,7 +207,7 @@ const ContactForm = () => {
           type="text"
           value={form.company || ""}
           onChange={(e) => handleChange("company", e.target.value)}
-          className="w-full bg-card/60 border border-border/50 rounded-xl px-4 py-3 text-foreground font-body text-sm placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all"
+          className="w-full bg-card/60 border border-border/50 rounded-xl px-4 py-3 text-foreground font-body text-sm placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all form-focus-glow"
           placeholder="Your brand name (optional)"
         />
       </div>

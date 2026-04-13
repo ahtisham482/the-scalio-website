@@ -474,6 +474,23 @@
     }
   }
 
+  /* ─── FORM FOCUS GLOW ─── */
+  .form-focus-glow:focus {
+    animation: focus-glow 0.6s ease-out;
+  }
+
+  @keyframes focus-glow {
+    0% {
+      box-shadow: 0 0 0 0 hsl(var(--primary) / 0.3);
+    }
+    50% {
+      box-shadow: 0 0 12px 2px hsl(var(--primary) / 0.15);
+    }
+    100% {
+      box-shadow: none;
+    }
+  }
+
   /* ─── PULSING RING ─── */
   .pulse-ring {
     position: absolute;

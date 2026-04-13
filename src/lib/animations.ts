@@ -32,3 +32,16 @@ export const sectionStagger = (index: number) => ({
   ...standardEntrance,
   transition: { duration: 0.6, delay: index * STAGGER_DELAY, ease },
 });
+
+// ─── LEVEL 2: Spring Physics ───
+export const springBounce = { damping: 12, stiffness: 200, mass: 1 };
+export const springSnap = { damping: 20, stiffness: 300, mass: 0.8 };
+export const springGentle = { damping: 25, stiffness: 150, mass: 1 };
+
+// ─── LEVEL 2: Micro-animation presets ───
+export const microBounceEntrance = {
+  initial: { scale: 0.85, opacity: 0 },
+  whileInView: { scale: 1, opacity: 1 },
+  viewport: { once: true, amount: 0.5 },
+  transition: { type: "spring" as const, ...springBounce },
+};

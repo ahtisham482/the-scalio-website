@@ -1,3 +1,4 @@
+import { useState, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   Check,
@@ -11,7 +12,43 @@ import { services } from "@/data/services";
 
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 
+/** Returns true when the device has a fine pointer (mouse/trackpad, not touch) */
+function useHasFinePointer(): boolean {
+  const [hasFine, setHasFine] = useState(false);
+  useEffect(() => {
+    const mql = window.matchMedia("(pointer: fine)");
+    setHasFine(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setHasFine(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+  return hasFine;
+}
+
 const ServicesSection = () => {
+  const hasFinePointer = useHasFinePointer();
+  const [tilts, setTilts] = useState<
+    Record<string, { rx: number; ry: number }>
+  >({});
+
+  const handleMouseMove = useCallback(
+    (slug: string, e: React.MouseEvent<HTMLDivElement>) => {
+      if (!hasFinePointer) return;
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      setTilts((prev) => ({
+        ...prev,
+        [slug]: { rx: -y * 6, ry: x * 6 }, // max +-3 degrees
+      }));
+    },
+    [hasFinePointer],
+  );
+
+  const handleMouseLeave = useCallback((slug: string) => {
+    setTilts((prev) => ({ ...prev, [slug]: { rx: 0, ry: 0 } }));
+  }, []);
+
   return (
     <section
       id="services"
@@ -49,9 +86,13 @@ const ServicesSection = () => {
         </motion.div>
 
         {/* Bento Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
+        <div
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5"
+          style={{ perspective: 800 }}
+        >
           {services.map((service, i) => {
             const Icon = service.icon;
+            const tilt = tilts[service.slug] || { rx: 0, ry: 0 };
             return (
               <motion.div
                 key={service.slug}
@@ -63,6 +104,12 @@ const ServicesSection = () => {
                   delay: i * 0.12,
                   ease: easeOutExpo,
                 }}
+                onMouseMove={(e) => handleMouseMove(service.slug, e)}
+                onMouseLeave={() => handleMouseLeave(service.slug)}
+                style={{
+                  transform: `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
+                  transition: "transform 0.3s ease-out",
+                }}
                 className="group relative p-7 lg:p-9 rounded-2xl bg-card border border-border transition-all duration-500 hover:border-primary/20 hover:-translate-y-1 flex flex-col"
               >
                 {/* Hover glow background */}
@@ -72,7 +119,7 @@ const ServicesSection = () => {
                 <div className="relative z-10 flex flex-col flex-1">
                   {/* Icon */}
                   <div className="w-11 h-11 rounded-xl bg-secondary flex items-center justify-center mb-5 transition-all duration-500 group-hover:bg-primary/10 group-hover:shadow-[0_0_20px_-4px_hsl(var(--primary)/0.3)]">
-                    <Icon className="w-5 h-5 text-primary transition-transform duration-500 group-hover:scale-110" />
+                    <Icon className="w-5 h-5 text-primary transition-transform duration-500 group-hover:scale-110 group-hover:rotate-[15deg]" />
                   </div>
 
                   {/* Title */}

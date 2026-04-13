@@ -1,5 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { useParallax } from "@/lib/useParallax";
+import { useMagnetic } from "@/lib/useMagnetic";
 
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 
@@ -13,6 +15,23 @@ const HeroSection = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
 
+  // Level 2: Parallax on background spotlight
+  const { ref: spotlightRef, y: spotlightY } = useParallax({ range: [0, -25] });
+
+  // Level 2: Magnetic pull on CTA button
+  const {
+    ref: ctaRef,
+    x: ctaX,
+    y: ctaY,
+    handleMouseMove: ctaMouseMove,
+    handleMouseLeave: ctaMouseLeave,
+  } = useMagnetic({
+    radius: 80,
+    strength: 0.25,
+    damping: 20,
+    stiffness: 300,
+  });
+
   return (
     <section
       ref={ref}
@@ -20,9 +39,15 @@ const HeroSection = () => {
       className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
       aria-label="Hero section"
     >
-      {/* Spotlight cursor effect */}
-      <div className="absolute inset-0 pointer-events-none z-[1] opacity-40">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-primary/[0.04] blur-[120px]" />
+      {/* Spotlight with Level 2 parallax depth */}
+      <div
+        ref={spotlightRef}
+        className="absolute inset-0 pointer-events-none z-[1] opacity-40"
+      >
+        <motion.div
+          style={{ y: spotlightY }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-primary/[0.04] blur-[120px]"
+        />
       </div>
 
       {/* Subtle grid */}
@@ -127,11 +152,17 @@ const HeroSection = () => {
         >
           <a
             href="#contact"
+            ref={ctaRef}
+            onMouseMove={ctaMouseMove}
+            onMouseLeave={ctaMouseLeave}
             className="cta-pulse group relative inline-flex items-center justify-center px-10 py-5 bg-primary text-primary-foreground font-body font-semibold text-base tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_60px_-8px_hsl(265_85%_65%/0.6)] hover:scale-[1.04] overflow-hidden"
           >
             {/* Shimmer effect */}
             <span className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-foreground/10 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
-            <span className="relative z-10 flex items-center gap-2">
+            <motion.span
+              style={{ x: ctaX, y: ctaY }}
+              className="relative z-10 flex items-center gap-2"
+            >
               Book a Free Audit
               <svg
                 className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
@@ -146,7 +177,7 @@ const HeroSection = () => {
                   d="M17 8l4 4m0 0l-4 4m4-4H3"
                 />
               </svg>
-            </span>
+            </motion.span>
           </a>
           <span className="text-[11px] text-muted-foreground/50 font-body">
             Free 30-min call. No commitment. Keep the roadmap either way.
