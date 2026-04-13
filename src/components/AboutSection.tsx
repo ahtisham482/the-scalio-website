@@ -27,13 +27,42 @@ const AnimatedCounter = ({
       return;
     }
 
+    // Phase 1: Count up to target value
     let start = 0;
-    const duration = 1200;
+    const duration = 1000;
     const stepTime = Math.max(Math.floor(duration / value), 16);
     const timer = setInterval(() => {
       start += 1;
       setCount(start);
-      if (start >= value) clearInterval(timer);
+      if (start >= value) {
+        clearInterval(timer);
+        // Phase 2: Spring overshoot — shoot to 115%, bounce back
+        const overshoot = Math.round(value * 1.15);
+        const springDuration = 600;
+        const startTime = performance.now();
+        const spring = (t: number) => {
+          const omega = 18;
+          const zeta = 0.35;
+          return (
+            1 -
+            Math.exp(-zeta * omega * t) *
+              Math.cos(omega * Math.sqrt(1 - zeta * zeta) * t)
+          );
+        };
+        const animate = (now: number) => {
+          const elapsed = (now - startTime) / springDuration;
+          if (elapsed >= 1) {
+            setCount(value);
+            return;
+          }
+          const progress = spring(elapsed);
+          const current = overshoot - (overshoot - value) * progress;
+          setCount(Math.round(current));
+          requestAnimationFrame(animate);
+        };
+        setCount(overshoot);
+        requestAnimationFrame(animate);
+      }
     }, stepTime);
     return () => clearInterval(timer);
   }, [isInView, value]);

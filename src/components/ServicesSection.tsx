@@ -28,25 +28,25 @@ function useHasFinePointer(): boolean {
 const ServicesSection = () => {
   const hasFinePointer = useHasFinePointer();
   const [tilts, setTilts] = useState<
-    Record<string, { rx: number; ry: number }>
+    Record<string, { rx: number; ry: number; ox: number; oy: number }>
   >({});
 
   const handleMouseMove = useCallback(
     (slug: string, e: React.MouseEvent<HTMLDivElement>) => {
       if (!hasFinePointer) return;
       const rect = e.currentTarget.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
       const y = (e.clientY - rect.top) / rect.height - 0.5;
       setTilts((prev) => ({
         ...prev,
-        [slug]: { rx: -y * 6, ry: x * 6 }, // max +-3 degrees
+        [slug]: { rx: -y * 6, ry: x * 6, ox: x, oy: y }, // ox/oy = -0.5 to 0.5 offset for internal parallax
       }));
     },
     [hasFinePointer],
   );
 
   const handleMouseLeave = useCallback((slug: string) => {
-    setTilts((prev) => ({ ...prev, [slug]: { rx: 0, ry: 0 } }));
+    setTilts((prev) => ({ ...prev, [slug]: { rx: 0, ry: 0, ox: 0, oy: 0 } }));
   }, []);
 
   return (
@@ -92,7 +92,7 @@ const ServicesSection = () => {
         >
           {services.map((service, i) => {
             const Icon = service.icon;
-            const tilt = tilts[service.slug] || { rx: 0, ry: 0 };
+            const tilt = tilts[service.slug] || { rx: 0, ry: 0, ox: 0, oy: 0 };
             return (
               <motion.div
                 key={service.slug}
@@ -117,13 +117,27 @@ const ServicesSection = () => {
                 <div className="absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-b from-primary/10 to-transparent blur-xl -z-10" />
 
                 <div className="relative z-10 flex flex-col flex-1">
-                  {/* Icon */}
-                  <div className="w-11 h-11 rounded-xl bg-secondary flex items-center justify-center mb-5 transition-all duration-500 group-hover:bg-primary/10 group-hover:shadow-[0_0_20px_-4px_hsl(var(--primary)/0.3)]">
+                  {/* Icon — Level 3: floats above card on hover (internal parallax) */}
+                  <div
+                    className="w-11 h-11 rounded-xl bg-secondary flex items-center justify-center mb-5 transition-all duration-500 group-hover:bg-primary/10 group-hover:shadow-[0_0_20px_-4px_hsl(var(--primary)/0.3)]"
+                    style={{
+                      transform: `translate(${-tilt.ox * 8}px, ${-tilt.oy * 8}px)`,
+                      transition:
+                        "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+                    }}
+                  >
                     <Icon className="w-5 h-5 text-primary transition-transform duration-500 group-hover:scale-110 group-hover:rotate-[15deg]" />
                   </div>
 
-                  {/* Title */}
-                  <h3 className="text-lg font-display font-semibold text-foreground mb-1.5">
+                  {/* Title — Level 3: subtle internal shift */}
+                  <h3
+                    className="text-lg font-display font-semibold text-foreground mb-1.5"
+                    style={{
+                      transform: `translate(${-tilt.ox * 2}px, ${-tilt.oy * 2}px)`,
+                      transition:
+                        "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+                    }}
+                  >
                     <a
                       href={`/services/${service.slug}`}
                       className="hover:text-primary transition-colors duration-300"

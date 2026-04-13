@@ -2,8 +2,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { useParallax } from "@/lib/useParallax";
 import { useMagnetic } from "@/lib/useMagnetic";
-
-const easeOutExpo = [0.16, 1, 0.3, 1] as const;
+import { useHeroSequence } from "@/lib/useHeroSequence";
 
 const HeroSection = () => {
   const ref = useRef<HTMLElement>(null);
@@ -15,22 +14,18 @@ const HeroSection = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
 
-  // Level 2: Parallax on background spotlight
   const { ref: spotlightRef, y: spotlightY } = useParallax({ range: [0, -25] });
 
-  // Level 2: Magnetic pull on CTA button
   const {
     ref: ctaRef,
     x: ctaX,
     y: ctaY,
     handleMouseMove: ctaMouseMove,
     handleMouseLeave: ctaMouseLeave,
-  } = useMagnetic({
-    radius: 80,
-    strength: 0.25,
-    damping: 20,
-    stiffness: 300,
-  });
+  } = useMagnetic({ radius: 80, strength: 0.25, damping: 20, stiffness: 300 });
+
+  // Level 3: Choreographed entrance sequence
+  const seq = useHeroSequence();
 
   return (
     <section
@@ -39,7 +34,7 @@ const HeroSection = () => {
       className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
       aria-label="Hero section"
     >
-      {/* Spotlight with Level 2 parallax depth */}
+      {/* Spotlight with parallax depth */}
       <div
         ref={spotlightRef}
         className="absolute inset-0 pointer-events-none z-[1] opacity-40"
@@ -63,11 +58,10 @@ const HeroSection = () => {
         style={{ y, opacity, scale }}
         className="relative z-10 text-center px-6 max-w-5xl mx-auto"
       >
-        {/* Eyebrow — credibility signal */}
+        {/* Eyebrow — choreographed entrance */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0, ease: easeOutExpo }}
+          initial={seq.initial.eyebrow}
+          animate={seq.eyebrow}
           className="mb-10"
         >
           <span className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full glass glass-border text-[11px] text-muted-foreground tracking-[0.2em] uppercase font-mono">
@@ -79,11 +73,10 @@ const HeroSection = () => {
           </span>
         </motion.div>
 
-        {/* Headline — differentiated, passes the swap test */}
+        {/* Headline — Level 3 clip-path mask reveal */}
         <motion.h1
-          initial={{ opacity: 0, y: 32, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.8, delay: 0.1, ease: easeOutExpo }}
+          initial={seq.initial.headline}
+          animate={seq.headline}
           className="text-[clamp(2.5rem,7vw,5.5rem)] font-display font-bold leading-[0.95] tracking-tight mb-6"
         >
           We Don&apos;t Manage
@@ -95,11 +88,10 @@ const HeroSection = () => {
           </span>
         </motion.h1>
 
-        {/* Subheadline — objection neutralization, not restating the promise */}
+        {/* Subheadline — sequenced entrance */}
         <motion.p
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.25, ease: easeOutExpo }}
+          initial={seq.initial.subheadline}
+          animate={seq.subheadline}
           className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-10 font-body font-light leading-[1.8] tracking-wide"
         >
           Every month without optimized PPC is revenue you won&apos;t recover.
@@ -108,11 +100,10 @@ const HeroSection = () => {
           partner who owns the outcome.
         </motion.p>
 
-        {/* Trust badges — ABOVE the CTA (pre-suasion position) */}
+        {/* Trust badges — sequenced entrance */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35, duration: 0.6, ease: easeOutExpo }}
+          initial={seq.initial.trustBadges}
+          animate={seq.trustBadges}
           className="flex flex-wrap items-center justify-center gap-6 md:gap-8 mb-10"
         >
           <div className="flex flex-col items-center gap-0.5">
@@ -143,11 +134,10 @@ const HeroSection = () => {
           </div>
         </motion.div>
 
-        {/* Single CTA — one clear next step, no decision fatigue */}
+        {/* CTA — Level 3 spring scale entrance + Level 2 magnetic */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4, ease: easeOutExpo }}
+          initial={seq.initial.cta}
+          animate={seq.cta}
           className="flex flex-col items-center gap-3"
         >
           <a
@@ -157,7 +147,6 @@ const HeroSection = () => {
             onMouseLeave={ctaMouseLeave}
             className="cta-pulse group relative inline-flex items-center justify-center px-10 py-5 bg-primary text-primary-foreground font-body font-semibold text-base tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_60px_-8px_hsl(265_85%_65%/0.6)] hover:scale-[1.04] overflow-hidden"
           >
-            {/* Shimmer effect */}
             <span className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-foreground/10 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
             <motion.span
               style={{ x: ctaX, y: ctaY }}

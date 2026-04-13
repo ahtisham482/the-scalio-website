@@ -1,21 +1,54 @@
-import { motion } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ShieldCheck } from "lucide-react";
 import ContactForm from "@/components/ContactForm";
 
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 
 const CTASection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [gravityEnabled, setGravityEnabled] = useState(false);
+
+  useEffect(() => {
+    const isMobile = window.innerWidth <= 768;
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    setGravityEnabled(!isMobile && !prefersReduced);
+  }, []);
+
+  // Level 3: Scroll-linked gravity effects
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "center center"],
+  });
+
+  const formScale = useTransform(
+    scrollYProgress,
+    [0, 0.6],
+    gravityEnabled ? [0.97, 1] : [1, 1],
+  );
+  const bgOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.7],
+    gravityEnabled ? [0.03, 0.09] : [0.06, 0.06],
+  );
+
   return (
     <section
+      ref={sectionRef}
       id="contact"
       className="relative py-20 lg:py-28 px-6 overflow-hidden"
       aria-labelledby="cta-heading"
     >
       <div className="absolute top-0 left-0 right-0 line-accent" />
 
-      {/* Background mesh */}
+      {/* Background mesh — Level 3: scroll-linked intensity */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full bg-primary/[0.06] blur-[180px]" />
+        <motion.div
+          style={{ opacity: bgOpacity }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full bg-primary blur-[180px]"
+        />
         <div className="absolute bottom-0 right-1/4 w-[400px] h-[300px] rounded-full bg-accent/[0.04] blur-[140px]" />
       </div>
 
@@ -89,11 +122,13 @@ const CTASection = () => {
           </p>
         </motion.div>
 
+        {/* Level 3: Form scales subtly as section enters viewport */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1, ease: easeOutExpo }}
+          style={{ scale: formScale }}
           className="glass glass-border rounded-2xl p-8 md:p-10"
         >
           <ContactForm />
