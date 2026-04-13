@@ -65,7 +65,10 @@ const HeroSection = () => {
           <br />
           Amazon Accounts.
           <br />
-          <span className="text-gradient-primary italic font-medium">
+          <span
+            className="text-gradient-primary italic font-medium"
+            style={{ color: "hsl(var(--primary))" }}
+          >
             We Grow Them.
           </span>
         </motion.h1>
@@ -77,7 +80,8 @@ const HeroSection = () => {
           transition={{ duration: 0.6, delay: 0.25, ease: easeOutExpo }}
           className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-10 font-body font-light leading-[1.8] tracking-wide"
         >
-          Full-service PPC, listings, and supply chain — with a dedicated
+          Every month without optimized PPC is revenue you won&apos;t recover.
+          We handle your ads, listings, and supply chain — with a dedicated
           strategist who reports to you weekly. Not a VA. Not a dashboard. A
           partner who owns the outcome.
         </motion.p>
