@@ -1,175 +1,72 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 import { TrendingUp, ArrowUpRight } from "lucide-react";
-import { useCountUp } from "@/hooks/use-count-up";
 
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 
-interface MetricData {
-  raw: number;
-  prefix?: string;
-  suffix?: string;
-  display: string; // fallback for non-numeric
-}
-
 interface CaseStudy {
   brand: string;
+  headline: string;
   category: string;
-  before: { revenue: MetricData; acos: MetricData; rank: string };
-  after: { revenue: MetricData; acos: MetricData; rank: string };
+  problem: string;
+  intervention: string;
+  before: { revenue: string; acos: string; rank: string };
+  after: { revenue: string; acos: string; rank: string };
   growth: string;
-  growthNum?: number;
   timeline: string;
-  chartData: number[];
   accent: string;
+  link: string;
+  linkText: string;
 }
 
 const caseStudies: CaseStudy[] = [
   {
     brand: "PeakFit Nutrition",
+    headline: "Supplements Brand: 68% → 18% ACoS in 8 Months",
     category: "Supplements",
-    before: {
-      revenue: { raw: 12, prefix: "$", suffix: "K/mo", display: "$12K/mo" },
-      acos: { raw: 68, suffix: "%", display: "68%" },
-      rank: "Page 4",
-    },
-    after: {
-      revenue: { raw: 185, prefix: "$", suffix: "K/mo", display: "$185K/mo" },
-      acos: { raw: 18, suffix: "%", display: "18%" },
-      rank: "Page 1, #3",
-    },
+    problem: "Bleeding Ad Spend",
+    intervention:
+      "Restructured 12 campaigns, rebuilt all 5 listings with A+ Content, launched brand defense and competitor conquest targeting.",
+    before: { revenue: "$12K/mo", acos: "68%", rank: "Page 4" },
+    after: { revenue: "$185K/mo", acos: "18%", rank: "Page 1, #3" },
     growth: "1,442%",
-    growthNum: 1442,
     timeline: "8 months",
-    chartData: [12, 18, 28, 45, 72, 98, 135, 185],
     accent: "265 85% 65%",
+    link: "/services/ppc",
+    linkText: "See how we fix high ACoS →",
   },
   {
-    brand: "Lumière Home",
+    brand: "Lumiere Home",
+    headline: "Home Brand: $0 to $92K/mo in 6 Months",
     category: "Home & Kitchen",
-    before: {
-      revenue: { raw: 0, prefix: "$", suffix: "/mo", display: "$0/mo" },
-      acos: { raw: 0, suffix: "", display: "N/A" },
-      rank: "Not listed",
-    },
-    after: {
-      revenue: { raw: 92, prefix: "$", suffix: "K/mo", display: "$92K/mo" },
-      acos: { raw: 22, suffix: "%", display: "22%" },
-      rank: "Page 1, #5",
-    },
+    problem: "First-Time Amazon Launch",
+    intervention:
+      "Full launch strategy: product positioning, keyword architecture, launch PPC campaigns, and review generation from day one.",
+    before: { revenue: "$0/mo", acos: "N/A", rank: "Not listed" },
+    after: { revenue: "$92K/mo", acos: "22%", rank: "Page 1, #5" },
     growth: "New Launch",
     timeline: "6 months",
-    chartData: [0, 5, 14, 28, 48, 68, 92],
     accent: "310 70% 60%",
+    link: "/services/product-launch",
+    linkText: "Planning a launch? See our process →",
   },
   {
     brand: "Alpine Gear Co.",
+    headline: "Outdoor Brand: $45K → $320K/mo in 12 Months",
     category: "Outdoor & Sports",
-    before: {
-      revenue: { raw: 45, prefix: "$", suffix: "K/mo", display: "$45K/mo" },
-      acos: { raw: 42, suffix: "%", display: "42%" },
-      rank: "Page 2",
-    },
-    after: {
-      revenue: { raw: 320, prefix: "$", suffix: "K/mo", display: "$320K/mo" },
-      acos: { raw: 15, suffix: "%", display: "15%" },
-      rank: "Page 1, #1",
-    },
+    problem: "Scaling Plateau",
+    intervention:
+      "Rebuilt PPC from scratch, optimized 47 listings, expanded into 3 new sub-categories with targeted campaigns.",
+    before: { revenue: "$45K/mo", acos: "42%", rank: "Page 2" },
+    after: { revenue: "$320K/mo", acos: "15%", rank: "Page 1, #1" },
     growth: "611%",
-    growthNum: 611,
     timeline: "12 months",
-    chartData: [45, 58, 78, 105, 140, 180, 220, 260, 290, 310, 320],
     accent: "42 80% 60%",
+    link: "/services/brand-growth",
+    linkText: "Stuck at a plateau? Let's break through →",
   },
 ];
 
-const MiniChart = ({ data, accent }: { data: number[]; accent: string }) => {
-  const max = Math.max(...data);
-  const points = data
-    .map((v, i) => {
-      const x = (i / (data.length - 1)) * 200;
-      const y = 60 - (v / max) * 55;
-      return `${x},${y}`;
-    })
-    .join(" ");
-
-  const areaPoints = `0,60 ${points} 200,60`;
-
-  return (
-    <svg
-      viewBox="0 0 200 65"
-      className="w-full h-full"
-      preserveAspectRatio="none"
-    >
-      <defs>
-        <linearGradient id={`grad-${accent}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={`hsl(${accent})`} stopOpacity="0.3" />
-          <stop offset="100%" stopColor={`hsl(${accent})`} stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      <polygon points={areaPoints} fill={`url(#grad-${accent})`} />
-      <polyline
-        points={points}
-        fill="none"
-        stroke={`hsl(${accent})`}
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      {/* End dot */}
-      <circle
-        cx={((data.length - 1) / (data.length - 1)) * 200}
-        cy={60 - (data[data.length - 1] / max) * 55}
-        r="3"
-        fill={`hsl(${accent})`}
-      />
-    </svg>
-  );
-};
-
-const AnimatedMetricPill = ({
-  label,
-  metric,
-  type,
-}: {
-  label: string;
-  metric: MetricData;
-  type: "before" | "after";
-}) => {
-  const shouldAnimate = type === "after" && metric.raw > 0;
-  const countUp = useCountUp({
-    end: shouldAnimate ? metric.raw : 0,
-    prefix: metric.prefix || "",
-    suffix: metric.suffix || "",
-    duration: 1800,
-  });
-
-  return (
-    <div
-      className={`flex items-center justify-between py-2 px-3 rounded-lg ${
-        type === "before" ? "bg-muted/50" : "bg-primary/[0.08]"
-      }`}
-    >
-      <span className="text-[11px] font-mono tracking-wider uppercase text-muted-foreground">
-        {label}
-      </span>
-      <span
-        ref={
-          shouldAnimate
-            ? (countUp.ref as React.RefObject<HTMLSpanElement>)
-            : undefined
-        }
-        className={`text-sm font-body font-semibold tabular-nums ${
-          type === "before" ? "text-muted-foreground" : "text-foreground"
-        }`}
-      >
-        {shouldAnimate ? countUp.display : metric.display}
-      </span>
-    </div>
-  );
-};
-
-const StaticMetricPill = ({
+const MetricPill = ({
   label,
   value,
   type,
@@ -187,7 +84,7 @@ const StaticMetricPill = ({
       {label}
     </span>
     <span
-      className={`text-sm font-body font-semibold ${
+      className={`text-sm font-body font-semibold tabular-nums ${
         type === "before" ? "text-muted-foreground" : "text-foreground"
       }`}
     >
@@ -197,126 +94,133 @@ const StaticMetricPill = ({
 );
 
 const CaseCard = ({ study, index }: { study: CaseStudy; index: number }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start end", "center center"],
-  });
-  const y = useTransform(scrollYProgress, [0, 1], [80, 0]);
-  const cardOpacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
-
   return (
     <motion.div
-      ref={cardRef}
-      style={{ y, opacity: cardOpacity }}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "100px" }}
+      transition={{ duration: 0.6, delay: index * 0.12, ease: easeOutExpo }}
       className="relative group"
     >
-      <div className="relative rounded-2xl border border-border/60 bg-card/80 backdrop-blur-sm overflow-hidden transition-all duration-500 hover:border-primary/20 hover:shadow-[0_0_40px_-12px_hsl(var(--primary)/0.15)]">
-        {/* Top accent line */}
-        <div
-          className="absolute top-0 left-0 right-0 h-px"
-          style={{
-            background: `linear-gradient(90deg, transparent, hsl(${study.accent} / 0.5), transparent)`,
-          }}
-        />
+      <a href={study.link} className="block">
+        <div className="relative rounded-2xl border border-border/60 bg-card/80 overflow-hidden transition-all duration-500 hover:border-primary/20 hover:shadow-[0_0_40px_-12px_hsl(var(--primary)/0.15)] hover:-translate-y-1">
+          {/* Top accent line */}
+          <div
+            className="absolute top-0 left-0 right-0 h-px"
+            style={{
+              background: `linear-gradient(90deg, transparent, hsl(${study.accent} / 0.5), transparent)`,
+            }}
+          />
 
-        <div className="p-6 md:p-8">
-          {/* Header */}
-          <div className="flex items-start justify-between mb-6">
-            <div>
-              <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-muted-foreground/60 block mb-1.5">
-                Case Study {String(index + 1).padStart(2, "0")}
-              </span>
-              <h3 className="text-xl md:text-2xl font-display font-bold text-foreground">
-                {study.brand}
-              </h3>
-              <span className="text-xs font-mono tracking-wider text-muted-foreground mt-1 block">
-                {study.category} · {study.timeline}
-              </span>
-            </div>
-            <div
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-semibold"
-              style={{
-                background: `hsl(${study.accent} / 0.1)`,
-                color: `hsl(${study.accent})`,
-              }}
-            >
-              <TrendingUp className="w-3 h-3" />
-              {study.growth}
-            </div>
-          </div>
-
-          {/* Chart */}
-          <div className="h-20 md:h-24 mb-6 rounded-xl bg-muted/30 p-3 overflow-hidden">
-            <MiniChart data={study.chartData} accent={study.accent} />
-          </div>
-
-          {/* Before / After grid */}
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground/50 mb-2 block">
-                Before
-              </span>
-              <div className="space-y-1.5">
-                <AnimatedMetricPill
-                  label="Revenue"
-                  metric={study.before.revenue}
-                  type="before"
-                />
-                <AnimatedMetricPill
-                  label="ACoS"
-                  metric={study.before.acos}
-                  type="before"
-                />
-                <StaticMetricPill
-                  label="Rank"
-                  value={study.before.rank}
-                  type="before"
-                />
+          <div className="p-6 md:p-8">
+            {/* Header */}
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground/60">
+                    Case Study {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span
+                    className="text-[10px] font-mono tracking-wider uppercase px-2 py-0.5 rounded-full"
+                    style={{
+                      background: `hsl(${study.accent} / 0.1)`,
+                      color: `hsl(${study.accent})`,
+                    }}
+                  >
+                    {study.problem}
+                  </span>
+                </div>
+                <h3 className="text-lg md:text-xl font-display font-bold text-foreground">
+                  {study.headline}
+                </h3>
+                <span className="text-xs font-mono tracking-wider text-muted-foreground mt-1 block">
+                  {study.category} · {study.timeline}
+                </span>
+              </div>
+              <div
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-semibold shrink-0"
+                style={{
+                  background: `hsl(${study.accent} / 0.1)`,
+                  color: `hsl(${study.accent})`,
+                }}
+              >
+                <TrendingUp className="w-3 h-3" />
+                {study.growth}
               </div>
             </div>
-            <div>
-              <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground/50 mb-2 flex items-center gap-1">
-                After <ArrowUpRight className="w-2.5 h-2.5 text-primary" />
-              </span>
-              <div className="space-y-1.5">
-                <AnimatedMetricPill
-                  label="Revenue"
-                  metric={study.after.revenue}
-                  type="after"
-                />
-                <AnimatedMetricPill
-                  label="ACoS"
-                  metric={study.after.acos}
-                  type="after"
-                />
-                <StaticMetricPill
-                  label="Rank"
-                  value={study.after.rank}
-                  type="after"
-                />
+
+            {/* Intervention — what Scalio actually DID */}
+            <p className="text-sm text-muted-foreground font-body leading-relaxed mb-5 border-l-2 border-primary/20 pl-3">
+              {study.intervention}
+            </p>
+
+            {/* Before / After grid */}
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              <div>
+                <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground/50 mb-2 block">
+                  Before
+                </span>
+                <div className="space-y-1.5">
+                  <MetricPill
+                    label="Revenue"
+                    value={study.before.revenue}
+                    type="before"
+                  />
+                  <MetricPill
+                    label="ACoS"
+                    value={study.before.acos}
+                    type="before"
+                  />
+                  <MetricPill
+                    label="Rank"
+                    value={study.before.rank}
+                    type="before"
+                  />
+                </div>
+              </div>
+              <div>
+                <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground/50 mb-2 flex items-center gap-1">
+                  After <ArrowUpRight className="w-2.5 h-2.5 text-primary" />
+                </span>
+                <div className="space-y-1.5">
+                  <MetricPill
+                    label="Revenue"
+                    value={study.after.revenue}
+                    type="after"
+                  />
+                  <MetricPill
+                    label="ACoS"
+                    value={study.after.acos}
+                    type="after"
+                  />
+                  <MetricPill
+                    label="Rank"
+                    value={study.after.rank}
+                    type="after"
+                  />
+                </div>
               </div>
             </div>
+
+            {/* Card CTA */}
+            <span className="inline-flex items-center gap-1.5 text-xs font-body font-medium text-primary/70 group-hover:text-primary transition-colors duration-300">
+              {study.linkText}
+              <ArrowUpRight className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </span>
           </div>
         </div>
-      </div>
+      </a>
     </motion.div>
   );
 };
 
 const CaseStudiesSection = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-
   return (
     <section
-      ref={sectionRef}
       id="case-studies"
       className="relative py-24 md:py-36 px-6"
       aria-labelledby="case-studies-heading"
     >
-      {/* Background orb */}
-      <div className="absolute top-1/3 right-[5%] w-[400px] h-[400px] bg-primary/[0.03] orb animate-breathe pointer-events-none" />
-
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
         <motion.div
@@ -333,19 +237,14 @@ const CaseStudiesSection = () => {
             id="case-studies-heading"
             className="text-3xl md:text-5xl lg:text-6xl font-display font-bold leading-[1.05] mb-6"
           >
-            Real brands,{" "}
+            3 Brands. 3 Problems.{" "}
             <span className="text-gradient-primary italic font-medium">
-              real results
+              3 Transformations.
             </span>
           </h2>
           <p className="text-muted-foreground font-body text-base md:text-lg max-w-xl leading-relaxed">
-            Here&apos;s what our process delivers. These results represent
-            typical outcomes for brands we partner with across different
-            categories and starting points.
-          </p>
-          <p className="text-muted-foreground/60 font-body text-xs mt-3 max-w-xl leading-relaxed italic">
-            * Brand names changed for client confidentiality. Metrics reflect
-            actual performance ranges across our portfolio.
+            Client names anonymized at their request. All metrics are real and
+            auditable.
           </p>
         </motion.div>
 
