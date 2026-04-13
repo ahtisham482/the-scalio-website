@@ -6,7 +6,6 @@ import {
   Phone,
   MessageSquare,
   BarChart3,
-  TrendingUp,
 } from "lucide-react";
 import { services } from "@/data/services";
 
@@ -37,45 +36,16 @@ const ServicesSection = () => {
               id="services-heading"
               className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mt-4 leading-[1.05]"
             >
-              What we{" "}
+              Find your{" "}
               <span className="italic text-gradient-primary font-medium">
-                deliver
+                growth lever
               </span>
             </h2>
           </div>
           <p className="text-muted-foreground font-body text-sm leading-relaxed max-w-sm font-light">
-            End-to-end Amazon FBA services engineered to launch, optimize, and
-            scale your brand to its full potential.
+            Every Amazon seller has a different bottleneck. Find yours below —
+            then let us fix it.
           </p>
-        </motion.div>
-
-        {/* Trust stats bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "200px" }}
-          transition={{ duration: 0.6, delay: 0.1, ease: easeOutExpo }}
-          className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mb-12 py-4 px-6 rounded-2xl border border-border/40 bg-card/30 backdrop-blur-sm max-w-2xl mx-auto"
-        >
-          {[
-            { value: "200+", label: "Brands Scaled" },
-            { value: "$50M+", label: "Revenue Managed" },
-            { value: "97%", label: "Client Retention" },
-          ].map((stat, i) => (
-            <div key={stat.label} className="flex items-center gap-3">
-              {i > 0 && (
-                <span className="w-1 h-1 rounded-full bg-primary/40 hidden md:block" />
-              )}
-              <div className="flex items-center gap-2">
-                <span className="text-lg font-display font-bold text-foreground">
-                  {stat.value}
-                </span>
-                <span className="text-[10px] font-mono tracking-[0.12em] uppercase text-muted-foreground">
-                  {stat.label}
-                </span>
-              </div>
-            </div>
-          ))}
         </motion.div>
 
         {/* Bento Grid */}
@@ -84,7 +54,7 @@ const ServicesSection = () => {
             const Icon = service.icon;
             return (
               <motion.div
-                key={service.title}
+                key={service.slug}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "100px" }}
@@ -119,14 +89,6 @@ const ServicesSection = () => {
                   <p className="text-sm italic text-primary/80 font-body mb-4">
                     {service.hook}
                   </p>
-
-                  {/* Metric placeholder */}
-                  <div className="inline-flex self-start items-center gap-1.5 px-3 py-1.5 rounded-full border border-dashed border-primary/20 bg-primary/[0.03] mb-5">
-                    <TrendingUp className="w-3 h-3 text-primary/50" />
-                    <span className="text-[10px] font-mono tracking-wider text-primary/50 uppercase">
-                      {service.metric}
-                    </span>
-                  </div>
 
                   {/* Deliverables checklist */}
                   <div className="mb-5 flex-1">
