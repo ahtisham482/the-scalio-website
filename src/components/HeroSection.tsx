@@ -65,10 +65,7 @@ const HeroSection = () => {
           <br />
           Amazon Accounts.
           <br />
-          <span
-            className="text-gradient-primary italic font-medium"
-            style={{ color: "hsl(var(--primary))" }}
-          >
+          <span className="text-gradient-primary italic font-medium">
             We Grow Them.
           </span>
         </motion.h1>
