@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion } from "framer-motion";
-import { Star, Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import testimonialJason from "@/assets/testimonial-jason.jpg";
 import testimonialAmara from "@/assets/testimonial-amara.jpg";
 import testimonialDavid from "@/assets/testimonial-david.jpg";
@@ -12,43 +12,27 @@ const testimonials = [
     quote:
       "Before The Scalio, we were spending $8K/month on ads with nothing to show for it. They restructured our entire PPC strategy, rebuilt our listings from scratch, and within 8 months we went from $12K to $185K in monthly revenue. Best investment we ever made.",
     name: "Jason Park",
-    role: "Founder & CEO, Supplements Brand (US Market)",
+    role: "Founder & CEO",
+    context: "Supplements · $185K/mo",
     photo: testimonialJason,
-    rating: 5,
-    metric: "15x Revenue Growth",
   },
   {
     quote:
       "We had a great product but zero Amazon experience. The Scalio handled our entire launch — from keyword research to A+ content to our first PPC campaigns. We hit $50K in month one and haven't looked back. They genuinely care about your success.",
     name: "Amara Osei",
-    role: "Founder, Home & Kitchen Brand (Launched 2024)",
+    role: "Founder",
+    context: "Home & Kitchen · Launched 2024",
     photo: testimonialAmara,
-    rating: 5,
-    metric: "$50K in Month 1",
   },
   {
     quote:
-      "I wasted two years and over $40K on agencies that overpromised and underdelivered. The Scalio was different from day one — transparent reporting, weekly calls, and most importantly, actual results. ACoS dropped from 42% to 15%, and we finally hit page 1.",
+      "I wasted two years and over $40K on agencies that overpromised and underdelivered. The Scalio was different from day one — they rebuilt our entire PPC structure and listing strategy, gave us transparent reporting and weekly calls. ACoS dropped from 42% to 15%, and we finally hit page 1.",
     name: "David Muller",
-    role: "Co-founder, Outdoor & Sports Brand (EU + US)",
+    role: "Co-founder",
+    context: "Outdoor & Sports · $320K/mo",
     photo: testimonialDavid,
-    rating: 5,
-    metric: "Page 1 Rankings",
   },
 ];
-
-const StarRating = ({ rating }: { rating: number }) => (
-  <div className="flex gap-1" aria-label={`${rating} out of 5 stars`}>
-    {[...Array(5)].map((_, i) => (
-      <Star
-        key={i}
-        className={`w-4 h-4 transition-colors ${
-          i < rating ? "fill-primary text-primary" : "fill-muted text-muted"
-        }`}
-      />
-    ))}
-  </div>
-);
 
 const TestimonialsSection = () => {
   const [current, setCurrent] = useState(0);
@@ -71,7 +55,7 @@ const TestimonialsSection = () => {
     changeTo((current + 1) % testimonials.length);
     setTimeout(() => {
       pauseRef.current = false;
-    }, 10000);
+    }, 15000);
   }, [current, changeTo]);
 
   const handlePrev = useCallback(() => {
@@ -79,7 +63,7 @@ const TestimonialsSection = () => {
     changeTo((current - 1 + testimonials.length) % testimonials.length);
     setTimeout(() => {
       pauseRef.current = false;
-    }, 10000);
+    }, 15000);
   }, [current, changeTo]);
 
   const handleDot = useCallback(
@@ -89,12 +73,12 @@ const TestimonialsSection = () => {
       changeTo(i);
       setTimeout(() => {
         pauseRef.current = false;
-      }, 10000);
+      }, 15000);
     },
     [current, changeTo],
   );
 
-  // Auto-advance
+  // Auto-advance at 12 seconds (T1 — was 6s, too fast to read)
   useEffect(() => {
     const timer = setInterval(() => {
       if (!pauseRef.current) {
@@ -105,7 +89,7 @@ const TestimonialsSection = () => {
           return next;
         });
       }
-    }, 6000);
+    }, 12000);
     return () => clearInterval(timer);
   }, []);
 
@@ -118,10 +102,9 @@ const TestimonialsSection = () => {
       aria-labelledby="testimonials-heading"
     >
       <div className="absolute top-0 left-0 right-0 line-accent" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/[0.03] blur-[150px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Header */}
+        {/* Header — signals source-shift from agency to clients */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -136,9 +119,9 @@ const TestimonialsSection = () => {
             id="testimonials-heading"
             className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mt-4 leading-[1.05]"
           >
-            Seller{" "}
+            Don&apos;t take{" "}
             <span className="italic text-gradient-primary font-medium">
-              success stories
+              our word for it
             </span>
           </h2>
         </motion.div>
@@ -146,7 +129,7 @@ const TestimonialsSection = () => {
         {/* Carousel */}
         <div className="max-w-3xl mx-auto">
           <div
-            className="relative overflow-hidden rounded-2xl bg-card border border-border p-8 md:p-12 lg:p-14 min-h-[360px]"
+            className="relative overflow-hidden rounded-2xl bg-card border border-border p-8 md:p-12 lg:p-14 min-h-[340px]"
             onMouseEnter={() => {
               pauseRef.current = true;
             }}
@@ -160,23 +143,19 @@ const TestimonialsSection = () => {
               className="flex flex-col items-center text-center transition-opacity duration-300"
               style={{ opacity: fading ? 0 : 1 }}
             >
-              <Quote className="w-10 h-10 text-primary/15 mb-6" />
-              <StarRating rating={t.rating} />
+              <Quote
+                className="w-10 h-10 text-primary/15 mb-6"
+                aria-hidden="true"
+              />
 
-              <blockquote className="mt-6 text-foreground/90 font-body text-lg md:text-xl leading-[1.8] font-light max-w-2xl">
+              <blockquote className="mt-2 text-foreground/90 font-body text-lg md:text-xl leading-[1.8] font-light max-w-2xl">
                 &ldquo;{t.quote}&rdquo;
               </blockquote>
-
-              <div className="mt-6 inline-flex items-center px-3.5 py-1.5 rounded-full bg-primary/5 border border-primary/10">
-                <span className="text-[11px] font-mono tracking-wider text-primary font-medium">
-                  {t.metric}
-                </span>
-              </div>
 
               <div className="mt-8 flex items-center gap-4">
                 <img
                   src={t.photo}
-                  alt={t.name}
+                  alt=""
                   width={48}
                   height={48}
                   loading="lazy"
@@ -188,6 +167,9 @@ const TestimonialsSection = () => {
                   </p>
                   <p className="text-muted-foreground text-xs mt-0.5 font-body">
                     {t.role}
+                  </p>
+                  <p className="text-primary/70 text-[11px] font-mono tracking-wider mt-0.5">
+                    {t.context}
                   </p>
                 </div>
               </div>
@@ -228,16 +210,16 @@ const TestimonialsSection = () => {
             </button>
           </div>
 
-          {/* Mid-page CTA after testimonials */}
+          {/* Mid-page CTA — references witnesses by name */}
           <div className="mt-12 text-center">
             <a
               href="#contact"
               className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground font-body font-semibold text-sm tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_40px_-8px_hsl(265_85%_65%/0.5)] hover:scale-[1.03]"
             >
-              Start Your Growth Story
+              Join Jason, Amara, and David — Book Your Free Audit
             </a>
             <p className="text-muted-foreground/50 font-body text-xs mt-3">
-              Join 200+ brands already scaling with us.
+              See what we can do for your brand.
             </p>
           </div>
         </div>
