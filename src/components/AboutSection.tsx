@@ -34,7 +34,7 @@ const AnimatedCounter = ({
     }
 
     let start = 0;
-    const duration = 2000;
+    const duration = 1200;
     const stepTime = Math.max(Math.floor(duration / value), 16);
     const timer = setInterval(() => {
       start += 1;
@@ -62,77 +62,88 @@ const AboutSection = () => {
     >
       <div className="absolute top-0 left-0 right-0 line-accent" />
 
-      {/* Ambient glow */}
-      <div className="absolute top-1/3 right-0 w-[500px] h-[500px] orb bg-primary/[0.03]" />
-
       <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          {/* Left: Text */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "200px" }}
-            transition={{ duration: 0.8, ease: easeOutExpo }}
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "200px" }}
+          transition={{ duration: 0.7, ease: easeOutExpo }}
+          className="mb-12"
+        >
+          <span className="text-[11px] tracking-[0.2em] uppercase text-primary font-mono">
+            8 Years &middot; 200+ Brands &middot; $50M+ Revenue
+          </span>
+          <h2
+            id="about-heading"
+            className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mt-4 leading-[1.05]"
           >
-            <span className="text-[11px] tracking-[0.2em] uppercase text-primary font-mono">
-              About Us
+            Why 200+ Amazon Sellers{" "}
+            <span className="italic text-gradient-primary font-medium">
+              Trust Us
             </span>
-            <h2
-              id="about-heading"
-              className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mt-4 leading-[1.05]"
-            >
-              Your growth
-              <br />
-              <span className="italic text-gradient-primary font-medium">
-                is our obsession
-              </span>
-            </h2>
-            <div className="w-12 h-px bg-primary/40 mt-8 mb-8 shimmer-line" />
-            <p className="text-muted-foreground font-body text-base leading-[1.9] font-light max-w-md">
-              The Scalio is a full-service Amazon FBA agency built by sellers,
-              for sellers. We&apos;ve helped over 200 brands launch, optimize,
-              and scale to 7- and 8-figure revenue on Amazon&apos;s marketplace.
-            </p>
-            <p className="text-muted-foreground font-body text-base leading-[1.9] font-light max-w-md mt-5">
-              From product research and listing optimization to PPC management
-              and supply chain logistics — we handle every aspect of your Amazon
-              business so you can focus on growing your brand.
-            </p>
-          </motion.div>
+          </h2>
+        </motion.div>
 
-          {/* Right: Stats grid */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "200px" }}
-            transition={{ duration: 0.8, delay: 0.15, ease: easeOutExpo }}
-            className="grid grid-cols-2 gap-px bg-border rounded-2xl overflow-hidden"
-          >
-            {stats.map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.25 + i * 0.08 }}
-                className="bg-card p-8 lg:p-10 flex flex-col items-center text-center group relative overflow-hidden"
-              >
-                {/* Hover glow */}
-                <div className="absolute inset-0 bg-primary/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                <span className="text-4xl md:text-5xl font-display font-bold text-foreground relative z-10">
-                  <AnimatedCounter
-                    value={stat.value}
-                    suffix={stat.suffix}
-                    prefix={stat.prefix}
-                  />
-                </span>
-                <span className="text-[11px] tracking-[0.15em] uppercase text-muted-foreground font-mono mt-3 relative z-10">
-                  {stat.label}
-                </span>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
+        {/* Stats bar — ABOVE body text, first visual after heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "200px" }}
+          transition={{ duration: 0.7, delay: 0.1, ease: easeOutExpo }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border rounded-2xl overflow-hidden mb-14"
+        >
+          {stats.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.15 + i * 0.05 }}
+              className="bg-card p-8 lg:p-10 flex flex-col items-center text-center group relative overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-primary/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <span className="text-4xl md:text-5xl font-display font-bold text-foreground relative z-10">
+                <AnimatedCounter
+                  value={stat.value}
+                  suffix={stat.suffix}
+                  prefix={stat.prefix}
+                />
+              </span>
+              <span className="text-[11px] tracking-[0.15em] uppercase text-muted-foreground font-mono mt-3 relative z-10">
+                {stat.label}
+              </span>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Body — empathy-first narrative */}
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "200px" }}
+          transition={{ duration: 0.8, delay: 0.15, ease: easeOutExpo }}
+          className="max-w-3xl"
+        >
+          <p className="text-muted-foreground font-body text-base leading-[1.9] font-light max-w-lg mb-5">
+            You&apos;ve been burned before. An agency that promised the world,
+            delivered a monthly PDF, and blamed &ldquo;the algorithm.&rdquo;
+            Junior VAs managing your account between 30 others. Dashboards that
+            hid more than they revealed.
+          </p>
+          <p className="text-muted-foreground font-body text-base leading-[1.9] font-light max-w-lg mb-5">
+            We built The Scalio because we were tired of it too. As Amazon
+            sellers ourselves, we knew agencies could be better — senior
+            strategists managing a maximum of 5 accounts. Weekly calls, not
+            monthly reports. Outcomes, not excuses.
+          </p>
+          <p className="text-foreground/80 font-body text-base leading-[1.9] font-medium max-w-lg">
+            That approach has worked for 200+ brands across 14 Amazon
+            categories, generated over $50M in revenue, and kept 97% of our
+            clients year after year. Not because of lock-in contracts — because
+            of results.
+          </p>
+        </motion.div>
       </div>
     </section>
   );
