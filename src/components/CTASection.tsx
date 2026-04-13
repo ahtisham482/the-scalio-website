@@ -27,25 +27,27 @@ const CTASection = () => {
           transition={{ duration: 0.8, ease: easeOutExpo }}
         >
           <span className="text-[11px] tracking-[0.2em] uppercase text-primary font-mono">
-            Let&apos;s talk growth
+            Get started
           </span>
           <h2
             id="cta-heading"
             className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mt-4 mb-6 leading-[1.05]"
           >
-            Ready to scale your
-            <br />
+            Your free PPC audit is{" "}
             <span className="italic text-gradient-primary font-medium">
-              Amazon business?
+              one form away
             </span>
           </h2>
           <p className="text-muted-foreground font-body text-base mb-6 font-light max-w-lg mx-auto leading-relaxed">
-            Book a free 30-minute audit call. We&apos;ll review your account,
-            identify your biggest growth opportunities, and give you a custom
-            roadmap — whether you work with us or not.
+            Fill out the form below. A senior strategist will review your
+            account and email you a personalized audit within 24 hours — whether
+            you work with us or not.
           </p>
 
           {/* What the audit includes */}
+          <p className="text-[11px] font-mono tracking-[0.15em] uppercase text-muted-foreground/60 mb-3">
+            Your free audit includes:
+          </p>
           <div className="flex flex-wrap justify-center gap-3 mb-4">
             {[
               "Listing Analysis",
@@ -115,6 +117,25 @@ const CTASection = () => {
               fees. No questions asked.
             </p>
           </div>
+        </motion.div>
+
+        {/* CT1 — Alternative contact path */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4, ease: easeOutExpo }}
+          className="mt-8 text-center"
+        >
+          <p className="text-muted-foreground/50 font-body text-xs mb-2">
+            Prefer to talk directly?
+          </p>
+          <a
+            href="mailto:hello@thescalio.com"
+            className="text-sm font-body text-primary hover:underline"
+          >
+            hello@thescalio.com
+          </a>
         </motion.div>
       </div>
     </section>

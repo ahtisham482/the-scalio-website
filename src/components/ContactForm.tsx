@@ -17,37 +17,24 @@ const contactSchema = z.object({
     .email("Please enter a valid email")
     .max(255, "Email is too long"),
   company: z.string().trim().max(100, "Company name is too long").optional(),
-  revenue: z.string().optional(),
-  message: z
-    .string()
-    .trim()
-    .min(1, "Message is required")
-    .max(2000, "Message is too long"),
+  message: z.string().trim().max(2000, "Message is too long").optional(),
 });
 
 type FormData = z.infer<typeof contactSchema>;
 type FormErrors = Partial<Record<keyof FormData, string>>;
-
-const revenueOptions = [
-  "Pre-launch (not yet selling)",
-  "Under $10K/month",
-  "$10K – $50K/month",
-  "$50K – $100K/month",
-  "$100K+/month",
-];
 
 const ContactForm = () => {
   const [form, setForm] = useState<FormData>({
     name: "",
     email: "",
     company: "",
-    revenue: "",
     message: "",
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<
     "idle" | "submitting" | "success" | "error"
   >("idle");
+  const [submittedName, setSubmittedName] = useState("");
 
   const handleChange = (field: keyof FormData, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -69,20 +56,23 @@ const ContactForm = () => {
     }
 
     setStatus("submitting");
+    setSubmittedName(result.data.name.split(" ")[0]);
+
     const { error } = await supabase.from("contact_submissions").insert({
       name: result.data.name,
       email: result.data.email,
-      message: `${result.data.company ? `Company: ${result.data.company}\n` : ""}${result.data.revenue ? `Revenue: ${result.data.revenue}\n\n` : ""}${result.data.message}`,
+      message: `${result.data.company ? `Company: ${result.data.company}\n\n` : ""}${result.data.message || "(No message — requested callback)"}`,
     });
 
     if (error) {
       setStatus("error");
     } else {
       setStatus("success");
-      setForm({ name: "", email: "", company: "", revenue: "", message: "" });
+      setForm({ name: "", email: "", company: "", message: "" });
     }
   };
 
+  // CT4 — Personalized success state
   if (status === "success") {
     return (
       <motion.div
@@ -107,14 +97,14 @@ const ContactForm = () => {
           </svg>
         </div>
         <h3 className="text-xl font-display font-semibold text-foreground mb-2">
-          Message sent!
+          Thanks, {submittedName}! Your audit request is confirmed.
         </h3>
         <p className="text-muted-foreground font-body text-sm mb-1">
-          We&apos;ll review your info and get back to you within 24 hours.
+          A senior strategist will email you within 24 hours with a personalized
+          account review.
         </p>
         <p className="text-muted-foreground/60 font-body text-xs mb-6">
-          In the meantime, check out our case studies and FAQ to learn more
-          about how we work.
+          In the meantime, check out how we&apos;ve helped brands like yours.
         </p>
         <div className="flex flex-wrap gap-3 justify-center">
           <a
@@ -204,77 +194,40 @@ const ContactForm = () => {
         </div>
       </div>
 
-      {/* Company + Revenue row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label
-            htmlFor="company"
-            className="block text-[11px] font-mono tracking-[0.15em] uppercase text-muted-foreground mb-2"
-          >
-            Brand / Company
-          </label>
-          <input
-            id="company"
-            type="text"
-            value={form.company || ""}
-            onChange={(e) => handleChange("company", e.target.value)}
-            className="w-full bg-card/60 border border-border/50 rounded-xl px-4 py-3 text-foreground font-body text-sm placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all"
-            placeholder="Your brand name"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="revenue"
-            className="block text-[11px] font-mono tracking-[0.15em] uppercase text-muted-foreground mb-2"
-          >
-            Monthly Revenue
-          </label>
-          <select
-            id="revenue"
-            value={form.revenue || ""}
-            onChange={(e) => handleChange("revenue", e.target.value)}
-            className="w-full bg-card/60 border border-border/50 rounded-xl px-4 py-3 text-foreground font-body text-sm focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all appearance-none"
-          >
-            <option value="" className="bg-background">
-              Select range...
-            </option>
-            {revenueOptions.map((opt) => (
-              <option key={opt} value={opt} className="bg-background">
-                {opt}
-              </option>
-            ))}
-          </select>
-        </div>
+      {/* Company — optional, single field row */}
+      <div>
+        <label
+          htmlFor="company"
+          className="block text-[11px] font-mono tracking-[0.15em] uppercase text-muted-foreground mb-2"
+        >
+          Brand / Company
+        </label>
+        <input
+          id="company"
+          type="text"
+          value={form.company || ""}
+          onChange={(e) => handleChange("company", e.target.value)}
+          className="w-full bg-card/60 border border-border/50 rounded-xl px-4 py-3 text-foreground font-body text-sm placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all"
+          placeholder="Your brand name (optional)"
+        />
       </div>
 
-      {/* Message */}
+      {/* Message — CT6: now optional */}
       <div>
         <label
           htmlFor="message"
           className="block text-[11px] font-mono tracking-[0.15em] uppercase text-muted-foreground mb-2"
         >
-          Your Message *
+          Your Message
         </label>
         <textarea
           id="message"
-          value={form.message}
+          value={form.message || ""}
           onChange={(e) => handleChange("message", e.target.value)}
           rows={3}
           className="w-full bg-card/60 border border-border/50 rounded-xl px-4 py-3 text-foreground font-body text-sm placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all resize-none"
-          placeholder="Tell us about your brand and goals..."
+          placeholder="Optional — or just submit and we'll ask on the call."
         />
-        <AnimatePresence>
-          {errors.message && (
-            <motion.p
-              initial={{ opacity: 0, y: -5 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              className="text-xs text-red-400 mt-1.5 font-body"
-            >
-              {errors.message}
-            </motion.p>
-          )}
-        </AnimatePresence>
       </div>
 
       <button
@@ -303,9 +256,14 @@ const ContactForm = () => {
         </span>
       </button>
 
+      {/* CT5 — Error with email fallback */}
       {status === "error" && (
         <p className="text-xs text-red-400 text-center font-body">
-          Something went wrong. Please try again.
+          Something went wrong. Please try again, or email us directly at{" "}
+          <a href="mailto:hello@thescalio.com" className="underline">
+            hello@thescalio.com
+          </a>
+          .
         </p>
       )}
 
