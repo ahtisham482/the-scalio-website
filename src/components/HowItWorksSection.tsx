@@ -1,71 +1,59 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import { ClipboardCheck, Crosshair, Rocket, TrendingUp } from "lucide-react";
+import { motion } from "framer-motion";
+import { ClipboardCheck, Crosshair, TrendingUp } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 
-const steps = [
+interface Step {
+  icon: LucideIcon;
+  number: string;
+  title: string;
+  description: string;
+  accent: string;
+}
+
+const steps: Step[] = [
   {
     icon: ClipboardCheck,
     number: "01",
-    title: "Free Account Audit",
+    title: "Day 1: Your Free Audit",
     description:
-      "We analyze your listings, PPC campaigns, keyword gaps, and competitor landscape. Within 48 hours, you receive a detailed report showing exactly where you're leaving money on the table — with specific revenue projections for each opportunity. No cost, no obligation.",
+      "You book a 30-minute call. We analyze your PPC, listings, keywords, and competitors. Within 48 hours, you receive a detailed audit with exact opportunities and projected revenue impact. Free, no obligation — the audit is yours to keep either way.",
     accent: "265 85% 65%",
   },
   {
     icon: Crosshair,
     number: "02",
-    title: "90-Day Growth Blueprint",
+    title: "Week 1: Your 90-Day Roadmap",
     description:
-      "Based on the audit, your dedicated strategist builds a custom 90-day plan with monthly milestones. We map out keyword architecture, PPC campaign structure, listing optimizations, and A+ content strategy — all with projected ROI so you know what to expect before we start.",
+      "Based on the audit, your dedicated strategist builds a custom 90-day plan with monthly milestones and projected ROI. You review it, ask questions, and approve before we touch anything. No surprises.",
     accent: "310 70% 60%",
   },
   {
-    icon: Rocket,
-    number: "03",
-    title: "Execute & Iterate Weekly",
-    description:
-      "Your team executes the plan across every lever — optimized listings go live, PPC campaigns launch, and we iterate based on real data every week. You get a weekly report + a 30-minute strategy call so you're never in the dark. Most clients see ranking improvements within 30 days.",
-    accent: "42 80% 60%",
-  },
-  {
     icon: TrendingUp,
-    number: "04",
-    title: "Scale What Works",
+    number: "03",
+    title: "Month 1–3: We Execute, You Grow",
     description:
-      "Once we establish profitable campaigns and strong organic rank, we reinvest into scaling — expanding to new keywords, launching additional SKUs, entering international markets, and growing your brand beyond Amazon. This is where the real compounding happens.",
-    accent: "265 85% 65%",
+      "Your team launches optimized campaigns, rebuilds listings, and reports to you every week. Most clients see ranking improvements in 30 days and measurable revenue growth by day 60. Once profitable, we scale into new keywords, SKUs, and markets — compounding your growth quarter over quarter.",
+    accent: "42 80% 60%",
   },
 ];
 
-const StepCard = ({
-  step,
-  index,
-}: {
-  step: (typeof steps)[0];
-  index: number;
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "center center"],
-  });
-  const y = useTransform(scrollYProgress, [0, 1], [60, 0]);
-  const opacity = useTransform(scrollYProgress, [0, 0.4], [0, 1]);
-
+const StepCard = ({ step, index }: { step: Step; index: number }) => {
   const Icon = step.icon;
 
   return (
-    <motion.div
-      ref={ref}
-      style={{ y, opacity }}
+    <motion.li
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "100px" }}
+      transition={{ duration: 0.6, delay: index * 0.15, ease: easeOutExpo }}
       className="relative flex gap-5 md:gap-8"
     >
-      {/* Timeline connector (vertical line + dot) */}
+      {/* Timeline connector (vertical line + icon) */}
       <div className="flex flex-col items-center shrink-0">
         <div
-          className="w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center border border-border/60 transition-colors duration-500 group-hover:border-primary/30"
+          className="w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center border border-border/60"
           style={{ background: `hsl(${step.accent} / 0.08)` }}
         >
           <Icon
@@ -83,6 +71,7 @@ const StepCard = ({
         <span
           className="text-[10px] font-mono tracking-[0.25em] uppercase mb-2 block"
           style={{ color: `hsl(${step.accent})` }}
+          aria-hidden="true"
         >
           Step {step.number}
         </span>
@@ -93,28 +82,17 @@ const StepCard = ({
           {step.description}
         </p>
       </div>
-    </motion.div>
+    </motion.li>
   );
 };
 
 const HowItWorksSection = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-  const lineHeight = useTransform(scrollYProgress, [0.1, 0.8], ["0%", "100%"]);
-
   return (
     <section
-      ref={sectionRef}
       id="how-it-works"
       className="relative py-24 md:py-36 px-6"
       aria-labelledby="how-it-works-heading"
     >
-      {/* Background orb */}
-      <div className="absolute top-1/4 left-[5%] w-[350px] h-[350px] bg-accent/[0.03] orb animate-float-slow pointer-events-none" />
-
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.div
@@ -131,29 +109,43 @@ const HowItWorksSection = () => {
             id="how-it-works-heading"
             className="text-3xl md:text-5xl lg:text-6xl font-display font-bold leading-[1.05] mb-6"
           >
-            From audit to{" "}
+            Your growth in{" "}
             <span className="text-gradient-primary italic font-medium">
-              empire
+              3 simple steps
             </span>
           </h2>
           <p className="text-muted-foreground font-body text-base md:text-lg max-w-lg mx-auto leading-relaxed">
-            A proven four-step process that turns underperforming listings into
-            category leaders.
+            Here&apos;s exactly what happens after you book your free audit —
+            and when you&apos;ll see results.
           </p>
         </motion.div>
 
-        {/* Timeline */}
-        <div className="relative max-w-xl mx-auto">
-          {/* Animated progress line (desktop only) */}
-          <motion.div
-            className="absolute left-6 md:left-7 top-0 w-px bg-gradient-to-b from-primary/40 via-accent/30 to-primary/40 origin-top hidden md:block"
-            style={{ height: lineHeight }}
-          />
-
+        {/* Timeline — semantic <ol> for screen readers */}
+        <ol className="relative max-w-xl mx-auto list-none p-0 m-0">
           {steps.map((step, i) => (
             <StepCard key={step.number} step={step} index={i} />
           ))}
-        </div>
+        </ol>
+
+        {/* CTA — captures the momentum from the mental rehearsal */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "100px" }}
+          transition={{ duration: 0.7, delay: 0.3, ease: easeOutExpo }}
+          className="text-center mt-4"
+        >
+          <p className="text-muted-foreground font-body text-sm mb-6">
+            That&apos;s it — three steps to predictable, profitable Amazon
+            growth.
+          </p>
+          <a
+            href="#contact"
+            className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground font-body font-semibold text-sm tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_40px_-8px_hsl(265_85%_65%/0.5)] hover:scale-[1.03]"
+          >
+            Book Your Free Audit — Step 1 Takes 5 Minutes
+          </a>
+        </motion.div>
       </div>
     </section>
   );
