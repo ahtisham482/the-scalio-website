@@ -1,14 +1,8 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
+import { stats } from "@/data/stats";
 
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
-
-const stats = [
-  { value: 200, suffix: "+", label: "Brands Scaled" },
-  { value: 8, suffix: "+", label: "Years on Amazon" },
-  { value: 50, suffix: "M+", label: "Revenue Generated", prefix: "$" },
-  { value: 97, suffix: "%", label: "Client Retention" },
-];
 
 const AnimatedCounter = ({
   value,
