@@ -148,7 +148,7 @@ const FounderSection = () => {
           <div className="max-w-2xl mx-auto text-center">
             <a
               href="#contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-body font-semibold text-sm tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_40px_-8px_hsl(265_85%_65%/0.5)] hover:scale-[1.03]"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-body font-semibold text-sm tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_40px_-8px_hsl(var(--primary)/0.5)] hover:scale-[1.03]"
             >
               Talk to the Founder About Your Brand
               <ArrowUpRight className="w-4 h-4" />

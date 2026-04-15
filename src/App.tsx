@@ -12,6 +12,7 @@ import Terms from "./pages/Terms";
 import ServicePage from "./pages/ServicePage";
 import NotFound from "./pages/NotFound";
 import PageTransition from "./components/PageTransition";
+import ColorSwitcher from "./components/ColorSwitcher";
 
 const queryClient = new QueryClient();
 
@@ -98,6 +99,7 @@ const App = () => (
       <LenisProvider>
         <BrowserRouter>
           <AnimatedRoutes />
+          <ColorSwitcher />
         </BrowserRouter>
       </LenisProvider>
     </TooltipProvider>

@@ -141,7 +141,7 @@ const HowItWorksSection = () => {
           </p>
           <a
             href="#contact"
-            className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground font-body font-semibold text-sm tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_40px_-8px_hsl(265_85%_65%/0.5)] hover:scale-[1.03]"
+            className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground font-body font-semibold text-sm tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_40px_-8px_hsl(var(--primary)/0.5)] hover:scale-[1.03]"
           >
             Book Your Free Audit — Step 1 Takes 5 Minutes
           </a>
