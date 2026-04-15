@@ -217,7 +217,7 @@ const TestimonialsSection = () => {
           <div className="mt-12 text-center">
             <a
               href="#contact"
-              className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground font-body font-semibold text-sm tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_40px_-8px_hsl(265_85%_65%/0.5)] hover:scale-[1.03]"
+              className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground font-body font-semibold text-sm tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_40px_-8px_hsl(217_91%_60%/0.5)] hover:scale-[1.03]"
             >
               Join Jason, Amara, and David — Book Your Free Audit
             </a>

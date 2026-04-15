@@ -27,7 +27,7 @@
     --popover: 228 12% 10%;
     --popover-foreground: 45 10% 92%;
 
-    --primary: 265 85% 65%;
+    --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 228 10% 14%;
@@ -36,7 +36,7 @@
     --muted: 228 10% 13%;
     --muted-foreground: 228 8% 48%;
 
-    --accent: 310 70% 60%;
+    --accent: 239 84% 67%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 55%;
@@ -44,13 +44,13 @@
 
     --border: 228 10% 15%;
     --input: 228 10% 15%;
-    --ring: 265 85% 65%;
+    --ring: 217 91% 60%;
 
     --radius: 0.75rem;
 
     /* ─── EXTENDED PALETTE ─── */
-    --color-accent-glow: 265 85% 65%;
-    --color-accent-2: 310 70% 60%;
+    --color-accent-glow: 217 91% 60%;
+    --color-accent-2: 239 84% 67%;
     --color-gold: 42 80% 60%;
     --surface-elevated: 228 11% 12%;
     --glass: 228 12% 10%;
@@ -80,12 +80,12 @@
     /* ─── SIDEBAR ─── */
     --sidebar-background: 228 12% 10%;
     --sidebar-foreground: 45 10% 92%;
-    --sidebar-primary: 265 85% 65%;
+    --sidebar-primary: 217 91% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 228 10% 14%;
     --sidebar-accent-foreground: 45 8% 75%;
     --sidebar-border: 228 10% 15%;
-    --sidebar-ring: 265 85% 65%;
+    --sidebar-ring: 217 91% 60%;
   }
 
   .light {
@@ -98,7 +98,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 228 20% 12%;
 
-    --primary: 265 85% 55%;
+    --primary: 217 91% 50%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 228 15% 92%;
@@ -107,7 +107,7 @@
     --muted: 228 15% 93%;
     --muted-foreground: 228 10% 42%;
 
-    --accent: 310 70% 55%;
+    --accent: 239 84% 57%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 50%;
@@ -115,10 +115,10 @@
 
     --border: 228 15% 88%;
     --input: 228 15% 88%;
-    --ring: 265 85% 55%;
+    --ring: 217 91% 50%;
 
-    --color-accent-glow: 265 85% 55%;
-    --color-accent-2: 310 70% 55%;
+    --color-accent-glow: 217 91% 50%;
+    --color-accent-2: 239 84% 57%;
     --color-gold: 42 80% 50%;
     --surface-elevated: 0 0% 100%;
     --glass: 0 0% 100%;
@@ -133,12 +133,12 @@
 
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 228 20% 12%;
-    --sidebar-primary: 265 85% 55%;
+    --sidebar-primary: 217 91% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 228 15% 92%;
     --sidebar-accent-foreground: 228 12% 35%;
     --sidebar-border: 228 15% 88%;
-    --sidebar-ring: 265 85% 55%;
+    --sidebar-ring: 217 91% 50%;
   }
 }
 
@@ -223,9 +223,9 @@
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(
       135deg,
-      hsl(265 85% 65%),
-      hsl(310 70% 60%),
-      hsl(265 85% 75%)
+      hsl(217 91% 60%),
+      hsl(239 84% 67%),
+      hsl(217 91% 72%)
     );
   }
 

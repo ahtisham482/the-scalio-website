@@ -145,7 +145,7 @@ const HeroSection = () => {
             ref={ctaRef}
             onMouseMove={ctaMouseMove}
             onMouseLeave={ctaMouseLeave}
-            className="cta-pulse group relative inline-flex items-center justify-center px-10 py-5 bg-primary text-primary-foreground font-body font-semibold text-base tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_60px_-8px_hsl(265_85%_65%/0.6)] hover:scale-[1.04] overflow-hidden"
+            className="cta-pulse group relative inline-flex items-center justify-center px-10 py-5 bg-primary text-primary-foreground font-body font-semibold text-base tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_60px_-8px_hsl(217_91%_60%/0.6)] hover:scale-[1.04] overflow-hidden"
           >
             <span className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-foreground/10 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
             <motion.span
