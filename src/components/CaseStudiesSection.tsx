@@ -6,7 +6,6 @@ import {
   CASE_CARD_STAGES,
   WEIGHT_TIRED_OPACITY,
   WEIGHT_TIRED_SCALE,
-  WEIGHT_TIRED_SATURATE,
   AFTER_LIFT_Y,
   AFTER_ENTER_SCALE,
   GROWTH_TICKER_MS,
@@ -101,15 +100,15 @@ const MetricPill = ({
   type: "before" | "after";
 }) => (
   <div
-    className={`flex items-center justify-between py-2 px-3 rounded-lg ${
-      type === "before" ? "bg-muted/50" : "bg-primary/[0.08]"
+    className={`flex items-center justify-between gap-3 py-2.5 px-3.5 rounded-lg ${
+      type === "before" ? "bg-muted/40" : "bg-primary/[0.08]"
     }`}
   >
-    <span className="text-[11px] font-mono tracking-wider uppercase text-muted-foreground">
+    <span className="text-[11px] font-mono tracking-[0.1em] uppercase text-muted-foreground/80 shrink-0">
       {label}
     </span>
     <span
-      className={`text-sm font-body font-semibold tabular-nums ${
+      className={`text-[13.5px] font-body font-semibold tabular-nums text-right ${
         type === "before" ? "text-muted-foreground" : "text-foreground"
       }`}
     >
@@ -195,7 +194,7 @@ const CaseCard = ({ study, index }: { study: CaseStudy; index: number }) => {
             }}
           />
 
-          <div className="p-6 md:p-8">
+          <div className="p-7 md:p-9">
             {/* ─── Header (stage: header) ─── */}
             <motion.div
               initial={reducedMotion ? false : { opacity: 0, y: 12 }}
@@ -206,10 +205,10 @@ const CaseCard = ({ study, index }: { study: CaseStudy; index: number }) => {
                 duration: 0.5,
                 ease: easeOutExpo,
               }}
-              className="flex items-start justify-between mb-4"
+              className="flex items-start justify-between gap-4 mb-6"
             >
               <div>
-                <div className="flex items-center gap-2 mb-2">
+                <div className="flex flex-wrap items-center gap-2 mb-3">
                   <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground/60">
                     Case Study {String(index + 1).padStart(2, "0")}
                   </span>
@@ -223,10 +222,10 @@ const CaseCard = ({ study, index }: { study: CaseStudy; index: number }) => {
                     {study.problem}
                   </span>
                 </div>
-                <h3 className="text-lg md:text-xl font-display font-bold text-foreground">
+                <h3 className="text-lg md:text-xl font-display font-bold text-foreground leading-snug">
                   {study.headline}
                 </h3>
-                <span className="text-xs font-mono tracking-wider text-muted-foreground mt-1 block">
+                <span className="text-xs font-mono tracking-wider text-muted-foreground mt-2 block">
                   {study.category} · {study.timeline}
                 </span>
               </div>
@@ -287,13 +286,13 @@ const CaseCard = ({ study, index }: { study: CaseStudy; index: number }) => {
                 duration: 0.5,
                 ease: easeOutExpo,
               }}
-              className="text-sm text-muted-foreground font-body leading-relaxed mb-5 border-l-2 border-primary/20 pl-3"
+              className="text-[13.5px] text-muted-foreground font-body leading-[1.7] mb-7 border-l-2 border-primary/20 pl-4"
             >
               {study.intervention}
             </motion.p>
 
             {/* ─── Before / After grid ─── */}
-            <div className="grid grid-cols-2 gap-3 mb-4">
+            <div className="grid grid-cols-2 gap-4 md:gap-5 mb-6">
               {/* Before column — "tired" state, static desaturation + sinks when After arrives */}
               <motion.div
                 initial="hidden"
@@ -311,16 +310,17 @@ const CaseCard = ({ study, index }: { study: CaseStudy; index: number }) => {
                       : { duration: 0 }
                 }
                 style={{
-                  filter: `saturate(${WEIGHT_TIRED_SATURATE})`,
-                  boxShadow: "0 4px 10px -4px hsl(0 0% 0% / 0.25)", // weight pressing down
-                  borderRadius: "0.5rem",
-                  padding: "0.25rem",
+                  // "Tired" feel comes from muted pill backgrounds + dimmer text +
+                  // the sink animation when After arrives — NOT a saturate filter,
+                  // which hurt text readability. Subtle downward shadow = weight pressing down.
+                  boxShadow: "0 4px 12px -6px hsl(0 0% 0% / 0.3)",
+                  borderRadius: "0.75rem",
                 }}
               >
-                <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground/50 mb-2 block">
+                <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground/80 mb-3 block font-medium">
                   Before
                 </span>
-                <div className="space-y-1.5">
+                <div className="space-y-2">
                   <MetricPill
                     label="Revenue"
                     value={study.before.revenue}
@@ -358,15 +358,15 @@ const CaseCard = ({ study, index }: { study: CaseStudy; index: number }) => {
                   ...SPRING_LIQUID,
                 }}
                 style={{
-                  boxShadow: "0 -8px 24px -8px hsl(var(--primary) / 0.25)", // light bleed from above
-                  borderRadius: "0.5rem",
-                  padding: "0.25rem",
+                  // Light bleed from above = "arrives alive"
+                  boxShadow: "0 -6px 20px -8px hsl(var(--primary) / 0.22)",
+                  borderRadius: "0.75rem",
                 }}
               >
-                <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground/50 mb-2 flex items-center gap-1">
-                  After <ArrowUpRight className="w-2.5 h-2.5 text-primary" />
+                <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-primary/80 mb-3 flex items-center gap-1.5 font-medium">
+                  After <ArrowUpRight className="w-3 h-3 text-primary" />
                 </span>
-                <div className="space-y-1.5">
+                <div className="space-y-2">
                   <MetricPill
                     label="Revenue"
                     value={study.after.revenue}
@@ -387,9 +387,9 @@ const CaseCard = ({ study, index }: { study: CaseStudy; index: number }) => {
             </div>
 
             {/* Card CTA */}
-            <span className="inline-flex items-center gap-1.5 text-xs font-body font-medium text-primary/70 group-hover:text-primary transition-colors duration-300">
+            <span className="inline-flex items-center gap-1.5 text-[13px] font-body font-medium text-primary/75 group-hover:text-primary transition-colors duration-300 mt-1">
               {study.linkText}
-              <ArrowUpRight className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </span>
           </div>
         </div>
