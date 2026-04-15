@@ -56,6 +56,19 @@ export const FOCUS_ELEVATION = 6; // px — how far the focused card lifts
 export const PEER_DIM_OPACITY = 0.82; // opacity of non-focused peer cards
 export const RADIAL_WAVE_STAGGER = 0.12; // seconds per unit distance-from-center for entrance
 
+// ─── LEVEL 4: The Invitation (CTA Section) ───
+// Signature moment: page narrows toward the form (scroll-linked glow
+// expansion + ceiling gradient), form opens (radial pill bloom + perimeter
+// trace), form listens (inhale/exhale on any field focus).
+// See docs/briefs/cta.md for full concept.
+export const CTA_GLOW_OPACITY_MIN = 0.03;
+export const CTA_GLOW_OPACITY_MAX = 0.15;
+export const CTA_GLOW_SIZE_MIN = { w: 700, h: 500 } as const;
+export const CTA_GLOW_SIZE_MAX = { w: 900, h: 700 } as const;
+export const CTA_CEILING_OPACITY_MAX = 0.35;
+export const CTA_PILL_BLOOM_STAGGER = 0.08; // seconds per unit of distance from center pill
+export const CTA_FORM_INHALE_SCALE = 1.002;
+
 // ─── LEVEL 4: Weight Transfer (Case Studies) ───
 // Signature moment: Before numbers feel heavy/tired, After numbers arrive
 // buoyant/alive, Growth % digits tick up in a crescendo.

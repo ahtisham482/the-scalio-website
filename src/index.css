@@ -545,4 +545,73 @@
       transform: translateY(0);
     }
   }
+
+  /* ─── LEVEL 4: CTA Form Perimeter Trace ─── */
+  /* One-shot gradient sweep around the form's border when it enters view.
+     Part of "The Invitation" concept — marks the form as active without
+     pulsing. Gated by cta-form-trace-active class (added via JS when
+     the form first enters viewport). */
+  @property --cta-trace-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  .cta-form-wrapper {
+    position: relative;
+  }
+
+  .cta-form-wrapper::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(
+      from var(--cta-trace-angle, 0deg),
+      transparent 0deg,
+      hsl(var(--primary) / 0.5) 20deg,
+      transparent 45deg,
+      transparent 360deg
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+  }
+
+  .cta-form-wrapper.cta-form-trace-active::before {
+    animation: cta-form-trace 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.4s 1 forwards;
+  }
+
+  @keyframes cta-form-trace {
+    0% {
+      --cta-trace-angle: 0deg;
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      --cta-trace-angle: -360deg;
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cta-form-wrapper.cta-form-trace-active::before {
+      animation: none;
+      opacity: 0;
+    }
+  }
 }
