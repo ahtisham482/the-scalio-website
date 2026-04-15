@@ -29,6 +29,7 @@
 
     --primary: 265 85% 65%;
     --primary-foreground: 0 0% 100%;
+    --primary-light: 265 85% 75%;
 
     --secondary: 228 10% 14%;
     --secondary-foreground: 45 8% 75%;
@@ -100,6 +101,7 @@
 
     --primary: 265 85% 55%;
     --primary-foreground: 0 0% 100%;
+    --primary-light: 265 85% 65%;
 
     --secondary: 228 15% 92%;
     --secondary-foreground: 228 12% 35%;
@@ -225,7 +227,7 @@
       135deg,
       hsl(var(--primary)),
       hsl(var(--accent)),
-      hsl(var(--primary) / 0.85)
+      hsl(var(--primary-light))
     );
   }
 

@@ -7,6 +7,7 @@ type Theme = {
   sublabel: string;
   swatch: string;
   primary: string;
+  primaryLight: string;
   accent: string;
 };
 
@@ -17,6 +18,7 @@ const THEMES: Theme[] = [
     sublabel: "Original",
     swatch: "#A855F7",
     primary: "265 85% 65%",
+    primaryLight: "265 85% 75%",
     accent: "310 70% 60%",
   },
   {
@@ -25,6 +27,7 @@ const THEMES: Theme[] = [
     sublabel: "Growth",
     swatch: "#10B981",
     primary: "158 64% 52%",
+    primaryLight: "158 64% 65%",
     accent: "173 58% 49%",
   },
   {
@@ -33,6 +36,7 @@ const THEMES: Theme[] = [
     sublabel: "Trust",
     swatch: "#3B82F6",
     primary: "217 91% 60%",
+    primaryLight: "217 91% 72%",
     accent: "239 84% 67%",
   },
   {
@@ -41,6 +45,7 @@ const THEMES: Theme[] = [
     sublabel: "Energy",
     swatch: "#F97316",
     primary: "20 90% 60%",
+    primaryLight: "20 90% 72%",
     accent: "340 82% 62%",
   },
 ];
@@ -48,6 +53,7 @@ const THEMES: Theme[] = [
 function applyTheme(theme: Theme) {
   const root = document.documentElement;
   root.style.setProperty("--primary", theme.primary);
+  root.style.setProperty("--primary-light", theme.primaryLight);
   root.style.setProperty("--accent", theme.accent);
   root.style.setProperty("--ring", theme.primary);
   root.style.setProperty("--color-accent-glow", theme.primary);
