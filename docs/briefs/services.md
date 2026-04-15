@@ -1,9 +1,10 @@
 # Services Section — Signature Moment Brief & Concept
 
-**Status**: ✅ IMPLEMENTED (preview branch: `services-stage-lighting`) — awaiting live review before merge to master
+**Status**: ✅ LIVE ON PRODUCTION — merged to master, deployed via Vercel
 **Section**: Services (bento grid + dedicated team + connection cards + mid-CTA)
 **Created**: 2026-04-15
 **Implemented**: 2026-04-15 · Concept: **Stage Lighting**
+**User verdict (live review)**: "looking great, no issue"
 
 ## Implementation Summary
 
