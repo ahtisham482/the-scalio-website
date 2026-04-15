@@ -1,9 +1,10 @@
 # Hero Section — Signature Moment Brief & Concept
 
-**Status**: ✅ IMPLEMENTED (preview branch: `hero-breaking-through`) — awaiting live review before merge to master
+**Status**: ✅ LIVE ON PRODUCTION — merged to master, deployed via Vercel
 **Section**: Hero (eyebrow + headline + subheadline + trust badges + primary CTA + background spotlight/grid)
 **Created**: 2026-04-15
 **Implemented**: 2026-04-15 · Concept: **Breaking Through**
+**User verdict**: "looks good"
 
 ## Implementation Summary
 
