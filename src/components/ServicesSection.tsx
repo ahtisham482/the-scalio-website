@@ -9,6 +9,7 @@ import {
   BarChart3,
 } from "lucide-react";
 import { services } from "@/data/services";
+import { SectionBridge } from "@/components/SectionBridge";
 import {
   CardFocusProvider,
   useCardFocus,
@@ -473,6 +474,9 @@ const ServicesSection = () => {
             No commitment. Results in 48 hours.
           </p>
         </motion.div>
+
+        {/* Phase 1 Cohesion: PROPEL handoff → Case Studies (Overlap) */}
+        <SectionBridge label="The proof" targetId="case-studies" />
       </div>
     </section>
   );

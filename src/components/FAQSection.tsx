@@ -5,6 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { SectionBridge } from "@/components/SectionBridge";
 
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 
@@ -187,6 +188,9 @@ const FAQSection = () => {
             </a>
           </div>
         </motion.div>
+
+        {/* Phase 1 Cohesion: PROPEL handoff → CTA (Reveal) */}
+        <SectionBridge label="Ready when you are" targetId="contact" />
       </div>
     </section>
   );

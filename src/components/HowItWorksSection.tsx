@@ -95,10 +95,13 @@ const HowItWorksSection = () => {
     >
       <div className="max-w-4xl mx-auto">
         {/* Header */}
+        {/* Phase 1 Cohesion: early-reveal margin ("400px") triggers this
+            header while the visitor is still in the bottom of About — creates
+            a Reveal handoff. SectionBridge at the end of About points here. */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "200px" }}
+          viewport={{ once: true, margin: "400px" }}
           transition={{ duration: 0.8, ease: easeOutExpo }}
           className="text-center mb-16 md:mb-24"
         >

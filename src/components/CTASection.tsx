@@ -122,6 +122,9 @@ const CTASection = () => {
       </div>
 
       <div className="max-w-2xl mx-auto text-center relative z-10">
+        {/* Phase 1 Cohesion: early-reveal margin ("400px") triggers the
+            "settle" sequence while the visitor is still in FAQ — creates a
+            Reveal handoff. SectionBridge at the end of FAQ points here. */}
         {/* Eyebrow + headline — "settles" with tiny scale overshoot */}
         <motion.div
           initial={reducedMotion ? false : { opacity: 0, scale: 0.98 }}
@@ -129,7 +132,7 @@ const CTASection = () => {
             opacity: 1,
             scale: reducedMotion ? 1 : [0.98, 1.01, 1],
           }}
-          viewport={{ once: true, margin: "200px" }}
+          viewport={{ once: true, margin: "400px" }}
           transition={{
             opacity: { duration: 0.6, ease: easeOutExpo },
             scale: {

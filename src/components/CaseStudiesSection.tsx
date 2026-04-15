@@ -407,10 +407,13 @@ const CaseStudiesSection = () => {
     >
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
+        {/* Phase 1 Cohesion: early-reveal margin ("400px") triggers this
+            header while the visitor is still in Services — creates an
+            Overlap handoff. SectionBridge at the end of Services points here. */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "200px" }}
+          viewport={{ once: true, margin: "400px" }}
           transition={{ duration: 0.8, ease: easeOutExpo }}
           className="mb-16 md:mb-24"
         >

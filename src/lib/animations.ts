@@ -4,12 +4,33 @@
 
 export const ease = [0.16, 1, 0.3, 1] as const;
 
+// ─── THE MASTER CLOCK ───
+// Every animation duration on the site is a multiple of BASE_UNIT_MS.
+// Creates subconscious rhythm across sections — visitors feel the tempo
+// even when they can't name it. See docs/MAGNETIC_SCROLL_BRIEF.md §Cohesion Architecture §4.
+//
+//   0.5× (200ms) → micro-interactions, hover responses, instant feedback
+//   1× (400ms)   → standard entrances, transitions, state changes
+//   2× (800ms)   → section-level reveals, choreographed sequences
+//   3× (1200ms)  → signature moments, hero entrance
+//   5× (2000ms)  → maximum animation budget (hero sequence only)
+//
+// New animation durations MUST be multiples of BASE_UNIT_MS. Off-grid values
+// are a deliberate system-level decision, never per-section convenience.
+export const BASE_UNIT_MS = 400;
+export const MS_HALF = 200; // 0.5×
+export const MS_BASE = 400; // 1×
+export const MS_DOUBLE = 800; // 2×
+export const MS_TRIPLE = 1200; // 3×
+export const MS_MAX = 2000; // 5×
+
 // Pattern 1: Standard Entrance (70% of all animations)
+// Duration: MS_DOUBLE (800ms) — on Master Clock grid (2×)
 export const standardEntrance = {
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, amount: 0.2 },
-  transition: { duration: 0.6, ease },
+  transition: { duration: 0.8, ease },
 };
 
 // Pattern 3: Emphasis Entrance (hero headline, pull quotes, key metrics)
@@ -28,9 +49,10 @@ export const viewport = { once: true, amount: 0.2 } as const;
 export const viewportEarly = { once: true, margin: "200px" } as const;
 
 // Standard delays for sequential elements within a section
+// Duration: MS_DOUBLE (800ms) — on Master Clock grid (2×)
 export const sectionStagger = (index: number) => ({
   ...standardEntrance,
-  transition: { duration: 0.6, delay: index * STAGGER_DELAY, ease },
+  transition: { duration: 0.8, delay: index * STAGGER_DELAY, ease },
 });
 
 // ─── LEVEL 2: Spring Physics ───
@@ -51,8 +73,11 @@ export const microBounceEntrance = {
 // focused, peers tilt toward it (peer-lean), dim slightly, and defer
 // attention. See docs/briefs/services.md for full concept.
 export const SPRING_LIQUID = { damping: 20, stiffness: 180, mass: 1 } as const;
-export const PEER_LEAN_ANGLE = 2; // degrees — max angle a peer card rotates toward the focused one
-export const FOCUS_ELEVATION = 6; // px — how far the focused card lifts
+// Phase 1 cohesion pass (2026-04-15): dialed down from 2°/6px to fix the
+// rhythm violation where Services (Level 5) was adjacent to Case Studies
+// (Level 5). Services is now the calmer verse before Case Studies' climax.
+export const PEER_LEAN_ANGLE = 1; // degrees — max angle a peer card rotates toward the focused one
+export const FOCUS_ELEVATION = 3; // px — how far the focused card lifts
 export const PEER_DIM_OPACITY = 0.82; // opacity of non-focused peer cards
 export const RADIAL_WAVE_STAGGER = 0.12; // seconds per unit distance-from-center for entrance
 

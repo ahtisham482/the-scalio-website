@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import { stats } from "@/data/stats";
+import { SectionBridge } from "@/components/SectionBridge";
 
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 
@@ -167,6 +168,9 @@ const AboutSection = () => {
             of results.
           </p>
         </motion.div>
+
+        {/* Phase 1 Cohesion: PROPEL handoff → How It Works (Question-Answer) */}
+        <SectionBridge label="How we do it" targetId="how-it-works" />
       </div>
     </section>
   );
