@@ -1,9 +1,11 @@
 # Case Studies Section — Signature Moment Brief & Concept
 
-**Status**: ✅ IMPLEMENTED (preview branch: `case-studies-weight-transfer`) — awaiting live review before merge to master
+**Status**: ✅ LIVE ON PRODUCTION — merged to master, deployed via Vercel
 **Section**: Case Studies (3 cards: PeakFit / Lumiere / Alpine; each with problem, intervention, Before/After grid, growth pill)
 **Created**: 2026-04-15
 **Implemented**: 2026-04-15 · Concept: **Weight Transfer**
+**Iteration**: readability pass after preview review — removed saturate filter, expanded spacing, typography bumps
+**User verdict**: "looking good" after readability pass
 
 ## Implementation Summary
 
