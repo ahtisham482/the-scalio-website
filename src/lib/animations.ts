@@ -45,3 +45,13 @@ export const microBounceEntrance = {
   viewport: { once: true, amount: 0.5 },
   transition: { type: "spring" as const, ...springBounce },
 };
+
+// ─── LEVEL 4: Stage Lighting (Services Section) ───
+// Signature moment: cards in a grid that notice each other. When one is
+// focused, peers tilt toward it (peer-lean), dim slightly, and defer
+// attention. See docs/briefs/services.md for full concept.
+export const SPRING_LIQUID = { damping: 20, stiffness: 180, mass: 1 } as const;
+export const PEER_LEAN_ANGLE = 2; // degrees — max angle a peer card rotates toward the focused one
+export const FOCUS_ELEVATION = 6; // px — how far the focused card lifts
+export const PEER_DIM_OPACITY = 0.82; // opacity of non-focused peer cards
+export const RADIAL_WAVE_STAGGER = 0.12; // seconds per unit distance-from-center for entrance
