@@ -1,5 +1,17 @@
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 import { TrendingUp, ArrowUpRight } from "lucide-react";
+import { useDigitTicker } from "@/lib/useDigitTicker";
+import {
+  CASE_CARD_STAGES,
+  WEIGHT_TIRED_OPACITY,
+  WEIGHT_TIRED_SCALE,
+  WEIGHT_TIRED_SATURATE,
+  AFTER_LIFT_Y,
+  AFTER_ENTER_SCALE,
+  GROWTH_TICKER_MS,
+  SPRING_LIQUID,
+} from "@/lib/animations";
 
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 
@@ -66,6 +78,19 @@ const caseStudies: CaseStudy[] = [
   },
 ];
 
+/** Returns true when prefers-reduced-motion is set */
+function useReducedMotion(): boolean {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setReduced(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+  return reduced;
+}
+
 const MetricPill = ({
   label,
   value,
@@ -93,13 +118,71 @@ const MetricPill = ({
   </div>
 );
 
+// ─── CaseCard with Weight Transfer (Level 4) ───
+// Choreographed entrance:
+//   header → intervention → Before (tired) → After (alive) → Before sinks → Growth crescendo
 const CaseCard = ({ study, index }: { study: CaseStudy; index: number }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(cardRef, { once: true, margin: "100px" });
+  const reducedMotion = useReducedMotion();
+
+  const baseDelay = index * 0.12;
+
+  // Two gate states driven by timeouts after card enters viewport:
+  // - afterArrived: flips true when After column has landed → Before sinks
+  // - growthActive: flips true when Growth pill begins crescendo → digit ticker runs
+  const [afterArrived, setAfterArrived] = useState(false);
+  const [growthActive, setGrowthActive] = useState(false);
+
+  useEffect(() => {
+    if (!isInView) return;
+    if (reducedMotion) {
+      // Reduced motion: skip to final state immediately
+      setAfterArrived(true);
+      setGrowthActive(true);
+      return;
+    }
+    const tAfter = window.setTimeout(
+      () => setAfterArrived(true),
+      (baseDelay + CASE_CARD_STAGES.beforeSink) * 1000,
+    );
+    const tGrowth = window.setTimeout(
+      () => setGrowthActive(true),
+      (baseDelay + CASE_CARD_STAGES.growth) * 1000,
+    );
+    return () => {
+      window.clearTimeout(tAfter);
+      window.clearTimeout(tGrowth);
+    };
+  }, [isInView, reducedMotion, baseDelay]);
+
+  // Digit ticker for growth pill. Non-numeric values (e.g. "New Launch") pass through.
+  const { display: growthDisplay } = useDigitTicker(
+    study.growth,
+    GROWTH_TICKER_MS,
+    growthActive,
+  );
+
+  // Before column state machine: hidden → entered → sunk
+  const beforeState: "hidden" | "entered" | "sunk" = !isInView
+    ? "hidden"
+    : afterArrived
+      ? "sunk"
+      : "entered";
+
+  const beforeVariants = {
+    hidden: { opacity: 0, y: 4, scale: 1 },
+    entered: { opacity: 1, y: 0, scale: 1 },
+    sunk: { opacity: WEIGHT_TIRED_OPACITY, y: 2, scale: WEIGHT_TIRED_SCALE },
+  };
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      ref={cardRef}
+      initial={reducedMotion ? false : { opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "100px" }}
-      transition={{ duration: 0.6, delay: index * 0.12, ease: easeOutExpo }}
+      transition={{ duration: 0.6, delay: baseDelay, ease: easeOutExpo }}
       className="relative group"
     >
       <a href={study.link} className="block">
@@ -113,8 +196,18 @@ const CaseCard = ({ study, index }: { study: CaseStudy; index: number }) => {
           />
 
           <div className="p-6 md:p-8">
-            {/* Header */}
-            <div className="flex items-start justify-between mb-4">
+            {/* ─── Header (stage: header) ─── */}
+            <motion.div
+              initial={reducedMotion ? false : { opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "100px" }}
+              transition={{
+                delay: baseDelay + CASE_CARD_STAGES.header,
+                duration: 0.5,
+                ease: easeOutExpo,
+              }}
+              className="flex items-start justify-between mb-4"
+            >
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground/60">
@@ -137,38 +230,93 @@ const CaseCard = ({ study, index }: { study: CaseStudy; index: number }) => {
                   {study.category} · {study.timeline}
                 </span>
               </div>
+
+              {/* ─── Growth pill (stage: growth) — crescendo entrance ─── */}
               <motion.div
-                initial={{ scale: 0.85, opacity: 0 }}
+                initial={reducedMotion ? false : { scale: 0.85, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "100px" }}
                 transition={{
                   type: "spring",
-                  damping: 12,
-                  stiffness: 200,
-                  delay: index * 0.12 + 0.3,
+                  damping: 14,
+                  stiffness: 180,
+                  delay: baseDelay + CASE_CARD_STAGES.growth,
                 }}
+                className="shrink-0"
               >
-                <div
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-semibold shrink-0"
+                {/* Inner wrapper handles the glow pulse that fires AFTER digits finish */}
+                <motion.div
+                  animate={
+                    growthActive && !reducedMotion
+                      ? {
+                          boxShadow: [
+                            `0 0 0px 0px hsl(${study.accent} / 0)`,
+                            `0 0 24px 6px hsl(${study.accent} / 0.4)`,
+                            `0 0 0px 0px hsl(${study.accent} / 0)`,
+                          ],
+                        }
+                      : undefined
+                  }
+                  transition={{
+                    boxShadow: {
+                      duration: 1.2,
+                      delay: GROWTH_TICKER_MS / 1000 + 0.1, // wait for ticker
+                      ease: easeOutExpo,
+                      times: [0, 0.3, 1],
+                    },
+                  }}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-semibold"
                   style={{
                     background: `hsl(${study.accent} / 0.1)`,
                     color: `hsl(${study.accent})`,
                   }}
                 >
                   <TrendingUp className="w-3 h-3" />
-                  {study.growth}
-                </div>
+                  <span className="tabular-nums">{growthDisplay}</span>
+                </motion.div>
               </motion.div>
-            </div>
+            </motion.div>
 
-            {/* Intervention — what Scalio actually DID */}
-            <p className="text-sm text-muted-foreground font-body leading-relaxed mb-5 border-l-2 border-primary/20 pl-3">
+            {/* ─── Intervention (stage: intervention) ─── */}
+            <motion.p
+              initial={reducedMotion ? false : { opacity: 0, y: 8 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "100px" }}
+              transition={{
+                delay: baseDelay + CASE_CARD_STAGES.intervention,
+                duration: 0.5,
+                ease: easeOutExpo,
+              }}
+              className="text-sm text-muted-foreground font-body leading-relaxed mb-5 border-l-2 border-primary/20 pl-3"
+            >
               {study.intervention}
-            </p>
+            </motion.p>
 
-            {/* Before / After grid */}
+            {/* ─── Before / After grid ─── */}
             <div className="grid grid-cols-2 gap-3 mb-4">
-              <div>
+              {/* Before column — "tired" state, static desaturation + sinks when After arrives */}
+              <motion.div
+                initial="hidden"
+                animate={beforeState}
+                variants={beforeVariants}
+                transition={
+                  beforeState === "entered"
+                    ? {
+                        duration: 0.5,
+                        delay: baseDelay + CASE_CARD_STAGES.before,
+                        ease: easeOutExpo,
+                      }
+                    : beforeState === "sunk"
+                      ? { type: "spring", ...SPRING_LIQUID }
+                      : { duration: 0 }
+                }
+                style={{
+                  filter: `saturate(${WEIGHT_TIRED_SATURATE})`,
+                  boxShadow: "0 4px 10px -4px hsl(0 0% 0% / 0.25)", // weight pressing down
+                  borderRadius: "0.5rem",
+                  padding: "0.25rem",
+                }}
+              >
                 <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground/50 mb-2 block">
                   Before
                 </span>
@@ -189,8 +337,32 @@ const CaseCard = ({ study, index }: { study: CaseStudy; index: number }) => {
                     type="before"
                   />
                 </div>
-              </div>
-              <div>
+              </motion.div>
+
+              {/* After column — "alive" state, enters from above with lift + glow */}
+              <motion.div
+                initial={
+                  reducedMotion
+                    ? false
+                    : {
+                        opacity: 0,
+                        y: AFTER_LIFT_Y,
+                        scale: AFTER_ENTER_SCALE,
+                      }
+                }
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: "100px" }}
+                transition={{
+                  delay: baseDelay + CASE_CARD_STAGES.after,
+                  type: "spring",
+                  ...SPRING_LIQUID,
+                }}
+                style={{
+                  boxShadow: "0 -8px 24px -8px hsl(var(--primary) / 0.25)", // light bleed from above
+                  borderRadius: "0.5rem",
+                  padding: "0.25rem",
+                }}
+              >
                 <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground/50 mb-2 flex items-center gap-1">
                   After <ArrowUpRight className="w-2.5 h-2.5 text-primary" />
                 </span>
@@ -211,7 +383,7 @@ const CaseCard = ({ study, index }: { study: CaseStudy; index: number }) => {
                     type="after"
                   />
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* Card CTA */}
@@ -260,7 +432,7 @@ const CaseStudiesSection = () => {
           </p>
         </motion.div>
 
-        {/* Cards */}
+        {/* Cards — Level 4: Weight Transfer choreography */}
         <div className="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-3">
           {caseStudies.map((study, i) => (
             <CaseCard key={study.brand} study={study} index={i} />
