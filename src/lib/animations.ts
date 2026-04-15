@@ -56,6 +56,24 @@ export const FOCUS_ELEVATION = 6; // px — how far the focused card lifts
 export const PEER_DIM_OPACITY = 0.82; // opacity of non-focused peer cards
 export const RADIAL_WAVE_STAGGER = 0.12; // seconds per unit distance-from-center for entrance
 
+// ─── LEVEL 4: Breaking Through (Hero Section) ───
+// 4-phase sequence: atmospheric resistance (chromatic aberration + noise) →
+// break-through snap → headline arrives from z-axis depth → supporting
+// elements arrive simultaneously from varied directions.
+// See docs/briefs/hero.md for full concept.
+export const HERO_PRE_CHAOS_MS = 400; // duration of atmospheric resistance phase
+export const HERO_HEADLINE_ARRIVAL_MS = 800; // z-axis travel duration (ms)
+export const HERO_HEADLINE_START_SCALE = 1.15; // arrival starts "larger" for forward-travel feeling
+export const HERO_HEADLINE_START_Z = -200; // px — z-offset for 3D arrival
+export const HERO_HEADLINE_START_BLUR = 8; // px — blur at arrival start, decays to 0
+export const HERO_SUPPORTING_DELAY_MS = 1000; // all supporting elements arrive simultaneously
+export const HERO_ABERRATION_PX = 3; // chromatic aberration RGB offset during pre-chaos
+export const HERO_TRUST_BADGE_OFFSETS = {
+  left: { x: -20, y: -8 },
+  center: { y: 20 },
+  right: { x: 20, y: -8 },
+} as const;
+
 // ─── LEVEL 4: The Invitation (CTA Section) ───
 // Signature moment: page narrows toward the form (scroll-linked glow
 // expansion + ceiling gradient), form opens (radial pill bloom + perimeter

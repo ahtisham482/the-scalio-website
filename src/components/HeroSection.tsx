@@ -1,4 +1,9 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion";
 import { useRef } from "react";
 import { useParallax } from "@/lib/useParallax";
 import { useMagnetic } from "@/lib/useMagnetic";
@@ -24,7 +29,13 @@ const HeroSection = () => {
     handleMouseLeave: ctaMouseLeave,
   } = useMagnetic({ radius: 80, strength: 0.25, damping: 20, stiffness: 300 });
 
-  // Level 3: Choreographed entrance sequence
+  // Level 4: "Breaking Through" — 4-phase choreographed entrance
+  //   Phase 1 (0–400ms): Atmospheric resistance (chaosActive=true) — noise
+  //                       overlay visible + eyebrow has chromatic aberration
+  //   Phase 2 (400ms):    Break-through snap — chaos overlays fade out
+  //   Phase 3 (450ms+):   Headline arrives from z-axis depth
+  //   Phase 4 (1000ms):   All supporting elements arrive SIMULTANEOUSLY
+  //                       from varied directions (pulled by headline's wake)
   const seq = useHeroSequence();
 
   return (
@@ -54,17 +65,35 @@ const HeroSection = () => {
         }}
       />
 
+      {/* Level 4: Atmospheric resistance — noise overlay during pre-chaos phase */}
+      <AnimatePresence>
+        {seq.chaosActive && (
+          <motion.div
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
+            className="hero-chaos-noise"
+            aria-hidden
+          />
+        )}
+      </AnimatePresence>
+
       <motion.div
         style={{ y, opacity, scale }}
         className="relative z-10 text-center px-6 max-w-5xl mx-auto"
       >
-        {/* Eyebrow — choreographed entrance */}
+        {/* Eyebrow — present during chaos at partial opacity, gains chromatic
+            aberration via .hero-chaos-active class, then completes at break-through */}
         <motion.div
           initial={seq.initial.eyebrow}
           animate={seq.eyebrow}
           className="mb-10"
         >
-          <span className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full glass glass-border text-[11px] text-muted-foreground tracking-[0.2em] uppercase font-mono">
+          <span
+            className={`inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full glass glass-border text-[11px] text-muted-foreground tracking-[0.2em] uppercase font-mono hero-eyebrow ${
+              seq.chaosActive ? "hero-chaos-active" : ""
+            }`}
+          >
             <span className="relative w-1.5 h-1.5">
               <span className="absolute inset-0 rounded-full bg-primary animate-ping opacity-75" />
               <span className="relative w-1.5 h-1.5 rounded-full bg-primary block" />
@@ -73,10 +102,13 @@ const HeroSection = () => {
           </span>
         </motion.div>
 
-        {/* Headline — Level 3 clip-path mask reveal */}
+        {/* Headline — Level 4: arrives from z-axis depth (z:-200 → 0, scale
+            1.15 → 1.0, blur 8px → 0) after break-through. Literal
+            interpretation of "words traveling toward you and landing." */}
         <motion.h1
           initial={seq.initial.headline}
           animate={seq.headline}
+          style={{ transformPerspective: 1000 }}
           className="text-[clamp(2.5rem,7vw,5.5rem)] font-display font-bold leading-[0.95] tracking-tight mb-6"
         >
           We Don&apos;t Manage
@@ -88,7 +120,8 @@ const HeroSection = () => {
           </span>
         </motion.h1>
 
-        {/* Subheadline — sequenced entrance */}
+        {/* Subheadline — Level 4: arrives at t=1000ms simultaneously with
+            trust badges + CTA (no sequential stagger) */}
         <motion.p
           initial={seq.initial.subheadline}
           animate={seq.subheadline}
@@ -100,44 +133,57 @@ const HeroSection = () => {
           partner who owns the outcome.
         </motion.p>
 
-        {/* Trust badges — sequenced entrance */}
-        <motion.div
-          initial={seq.initial.trustBadges}
-          animate={seq.trustBadges}
-          className="flex flex-wrap items-center justify-center gap-6 md:gap-8 mb-10"
-        >
-          <div className="flex flex-col items-center gap-0.5">
+        {/* Trust badges — Level 4: each arrives from its OWN direction
+            (left from left+up, center from below, right from right+up),
+            synchronized at t=1000ms via shared trustBadges animation */}
+        <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8 mb-10">
+          <motion.div
+            initial={seq.initial.trustBadges.left}
+            animate={seq.trustBadges}
+            className="flex flex-col items-center gap-0.5"
+          >
             <span className="text-2xl md:text-3xl font-display font-bold text-foreground">
               200+
             </span>
             <span className="text-[10px] tracking-[0.15em] uppercase text-muted-foreground font-mono">
               Brands Scaled
             </span>
-          </div>
+          </motion.div>
           <div className="w-px h-8 bg-border hidden sm:block" />
-          <div className="flex flex-col items-center gap-0.5">
+          <motion.div
+            initial={seq.initial.trustBadges.center}
+            animate={seq.trustBadges}
+            className="flex flex-col items-center gap-0.5"
+          >
             <span className="text-2xl md:text-3xl font-display font-bold text-foreground">
               $50M+
             </span>
             <span className="text-[10px] tracking-[0.15em] uppercase text-muted-foreground font-mono">
               Revenue Generated
             </span>
-          </div>
+          </motion.div>
           <div className="w-px h-8 bg-border hidden sm:block" />
-          <div className="flex flex-col items-center gap-0.5">
+          <motion.div
+            initial={seq.initial.trustBadges.right}
+            animate={seq.trustBadges}
+            className="flex flex-col items-center gap-0.5"
+          >
             <span className="text-2xl md:text-3xl font-display font-bold text-foreground">
               97%
             </span>
             <span className="text-[10px] tracking-[0.15em] uppercase text-muted-foreground font-mono">
               Client Retention
             </span>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
 
-        {/* CTA — Level 3 spring scale entrance + Level 2 magnetic */}
+        {/* CTA — Level 4: z-axis arrival (z:40 → 0, scale 1.05 → 1.0)
+            synchronized with other supporting elements at t=1000ms.
+            Magnetic behavior preserved (Level 2). */}
         <motion.div
           initial={seq.initial.cta}
           animate={seq.cta}
+          style={{ transformPerspective: 1000 }}
           className="flex flex-col items-center gap-3"
         >
           <a
@@ -145,7 +191,7 @@ const HeroSection = () => {
             ref={ctaRef}
             onMouseMove={ctaMouseMove}
             onMouseLeave={ctaMouseLeave}
-            className="cta-pulse group relative inline-flex items-center justify-center px-10 py-5 bg-primary text-primary-foreground font-body font-semibold text-base tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_60px_-8px_hsl(217_91%_60%/0.6)] hover:scale-[1.04] overflow-hidden"
+            className="cta-pulse group relative inline-flex items-center justify-center px-10 py-5 bg-primary text-primary-foreground font-body font-semibold text-base tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_60px_-8px_hsl(var(--primary)/0.6)] hover:scale-[1.04] overflow-hidden"
           >
             <span className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-foreground/10 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
             <motion.span

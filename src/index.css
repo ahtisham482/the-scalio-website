@@ -546,6 +546,40 @@
     }
   }
 
+  /* ─── LEVEL 4: Hero "Breaking Through" — Chaos overlays ─── */
+  /* During the 400ms pre-chaos phase, the eyebrow text has chromatic
+     aberration (RGB split) as if a signal is struggling to lock in.
+     At break-through, the class is removed and aberration smoothly resolves.
+     Plus a subtle noise overlay on the hero area (conditional on state). */
+  .hero-eyebrow {
+    transition: text-shadow 0.15s ease-out;
+  }
+
+  .hero-eyebrow.hero-chaos-active {
+    text-shadow:
+      -2px 0 hsl(0 90% 55% / 0.35),
+      2px 0 hsl(180 90% 55% / 0.35);
+  }
+
+  .hero-chaos-noise {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.045;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-eyebrow.hero-chaos-active {
+      text-shadow: none;
+    }
+    .hero-chaos-noise {
+      display: none;
+    }
+  }
+
   /* ─── LEVEL 4: CTA Form Perimeter Trace ─── */
   /* One-shot gradient sweep around the form's border when it enters view.
      Part of "The Invitation" concept — marks the form as active without
