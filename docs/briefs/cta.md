@@ -1,9 +1,10 @@
 # CTA Section — Signature Moment Brief & Concept
 
-**Status**: ✅ IMPLEMENTED (preview branch: `cta-invitation`) — awaiting live review before merge to master
+**Status**: ✅ LIVE ON PRODUCTION — merged to master, deployed via Vercel
 **Section**: CTA (headline + 5 audit-includes pills + urgency + form + money-back guarantee + email alternative)
 **Created**: 2026-04-15
 **Implemented**: 2026-04-15 · Concept: **The Invitation**
+**User verdict**: "looking good"
 
 ## Implementation Summary
 
