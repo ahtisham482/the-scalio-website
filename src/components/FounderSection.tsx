@@ -1,12 +1,11 @@
 import { motion } from "framer-motion";
-import { Briefcase, Target, Users, ArrowUpRight } from "lucide-react";
+import { Briefcase, ArrowUpRight } from "lucide-react";
+import { OFFER } from "@/data/offer";
 
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 
 const founderCredentials = [
   { icon: Briefcase, label: "Former Amazon Seller" },
-  { icon: Target, label: "Managed $X in Ad Spend Personally" },
-  { icon: Users, label: "Scaled X+ Brands from $0 to $100K+" },
 ];
 
 const FounderSection = () => {
@@ -100,7 +99,7 @@ const FounderSection = () => {
           transition={{ duration: 0.6, delay: 0.36, ease: easeOutExpo }}
         >
           <div className="max-w-2xl mx-auto">
-            <div className="flex flex-wrap gap-3 mb-8">
+            <div className="flex flex-wrap gap-3 mb-10">
               {founderCredentials.map((cred) => {
                 const Icon = cred.icon;
                 return (
@@ -117,24 +116,6 @@ const FounderSection = () => {
               })}
             </div>
 
-            <div className="flex items-center gap-4 mb-10">
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-xs font-mono tracking-wider text-muted-foreground hover:text-primary transition-colors"
-                aria-label="Founder's LinkedIn profile"
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                </svg>
-                Connect on LinkedIn
-              </a>
-            </div>
           </div>
         </motion.div>
 
@@ -150,10 +131,10 @@ const FounderSection = () => {
               href="#contact"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-body font-semibold text-sm tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_40px_-8px_hsl(217_91%_60%/0.5)] hover:scale-[1.03]"
             >
-              Talk to the Founder About Your Brand
+              {OFFER.cta}
               <ArrowUpRight className="w-4 h-4" />
             </a>
-            <p className="text-muted-foreground/50 font-body text-xs mt-3">
+            <p className="text-muted-foreground font-body text-xs mt-3">
               Every new client starts with a personal call.
             </p>
           </div>

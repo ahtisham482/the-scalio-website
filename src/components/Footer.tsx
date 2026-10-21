@@ -74,8 +74,8 @@ const Footer = () => {
               The Scalio<span className="text-primary">.</span>
             </a>
             <p className="text-muted-foreground text-sm font-body font-light mt-4 leading-relaxed max-w-xs">
-              Full-service Amazon FBA agency helping brands launch, scale, and
-              grow on the marketplace.
+              Amazon PPC agency for brands that want profitable growth. Every
+              engagement starts with a free written audit.
             </p>
             <div className="flex gap-4 mt-6">
               {socialLinks.map((s) => (
@@ -121,10 +121,10 @@ const Footer = () => {
 
         {/* Bottom */}
         <div className="border-t border-border py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-muted-foreground/60 font-body">
+          <p className="text-xs text-muted-foreground font-body">
             © {new Date().getFullYear()} The Scalio. All rights reserved.
           </p>
-          <p className="text-xs text-muted-foreground/60 font-body">
+          <p className="text-xs text-muted-foreground font-body">
             hello@thescalio.com
           </p>
         </div>

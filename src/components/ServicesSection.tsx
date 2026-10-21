@@ -23,6 +23,7 @@ import {
   PEER_DIM_OPACITY,
   RADIAL_WAVE_STAGGER,
 } from "@/lib/animations";
+import { OFFER } from "@/data/offer";
 
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 
@@ -261,13 +262,13 @@ const ServiceCard = ({
           </motion.h3>
 
           {/* Hook */}
-          <p className="text-sm italic text-primary/80 font-body mb-4">
+          <p className="text-sm italic text-primary font-body mb-4">
             {service.hook}
           </p>
 
           {/* Deliverables checklist */}
           <div className="mb-5 flex-1">
-            <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground/60 block mb-2.5">
+            <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground block mb-2.5">
               What&apos;s included
             </span>
             <ul className="space-y-1.5">
@@ -276,7 +277,7 @@ const ServiceCard = ({
                   key={item}
                   className="flex items-start gap-2 text-sm text-muted-foreground font-body font-light leading-relaxed"
                 >
-                  <Check className="w-3.5 h-3.5 text-primary/60 mt-0.5 shrink-0" />
+                  <Check className="w-3.5 h-3.5 text-primary mt-0.5 shrink-0" />
                   {item}
                 </li>
               ))}
@@ -285,8 +286,8 @@ const ServiceCard = ({
 
           {/* Best for */}
           <div className="flex items-start gap-2 py-3 border-t border-border/40 mb-3">
-            <Users className="w-3.5 h-3.5 text-muted-foreground/50 mt-0.5 shrink-0" />
-            <span className="text-[11px] text-muted-foreground/70 font-body leading-relaxed">
+            <Users className="w-3.5 h-3.5 text-muted-foreground mt-0.5 shrink-0" />
+            <span className="text-[11px] text-muted-foreground font-body leading-relaxed">
               <span className="font-medium text-muted-foreground">
                 Best for:
               </span>{" "}
@@ -298,7 +299,7 @@ const ServiceCard = ({
           {service.caseStudyLink && (
             <a
               href={service.caseStudyLink}
-              className="inline-flex items-center gap-1.5 text-xs font-body font-medium text-primary/70 hover:text-primary transition-colors duration-300 group/link"
+              className="inline-flex items-center gap-1.5 text-xs font-body font-medium text-primary hover:text-primary transition-colors duration-300 group/link"
             >
               {service.caseStudyTeaser || "See results"}
               <ArrowUpRight className="w-3 h-3 shrink-0 transition-transform duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
@@ -438,7 +439,7 @@ const ServicesSection = () => {
                   key={item.title}
                   className="flex flex-col items-center gap-2 p-4 rounded-xl bg-background/50 border border-border/30"
                 >
-                  <Icon className="w-5 h-5 text-primary/70" />
+                  <Icon className="w-5 h-5 text-primary" />
                   <span className="text-sm font-body font-semibold text-foreground">
                     {item.title}
                   </span>
@@ -450,7 +451,7 @@ const ServicesSection = () => {
             })}
           </div>
 
-          <p className="text-xs text-muted-foreground/60 font-body italic mt-5">
+          <p className="text-xs text-muted-foreground font-body italic mt-5">
             Full transparency is non-negotiable for us.
           </p>
         </motion.div>
@@ -467,10 +468,10 @@ const ServicesSection = () => {
             href="#contact"
             className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground font-body font-semibold text-sm tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_40px_-8px_hsl(217_91%_60%/0.5)] hover:scale-[1.03]"
           >
-            Get a Free Growth Audit
+            {OFFER.cta}
           </a>
-          <p className="text-muted-foreground/50 font-body text-xs mt-3">
-            No commitment. Results in 48 hours.
+          <p className="text-muted-foreground font-body text-xs mt-3">
+            {OFFER.promise}
           </p>
         </motion.div>
       </div>

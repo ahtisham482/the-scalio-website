@@ -145,12 +145,12 @@ export function useHeroSequence() {
     initial: {
       eyebrow: { opacity: 0, y: 8 },
       headline: {
-        opacity: 0,
+        opacity: 1,
         scale: HERO_HEADLINE_START_SCALE,
         z: HERO_HEADLINE_START_Z,
-        filter: `blur(${HERO_HEADLINE_START_BLUR}px)`,
+        filter: "blur(0px)",
       },
-      subheadline: { opacity: 0, y: 24 },
+      subheadline: { opacity: 1, y: 24 },
       // Trust badges share one animation target but have per-position initials
       trustBadges: {
         left: { opacity: 0, ...HERO_TRUST_BADGE_OFFSETS.left },

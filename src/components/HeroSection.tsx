@@ -8,6 +8,7 @@ import { useRef } from "react";
 import { useParallax } from "@/lib/useParallax";
 import { useMagnetic } from "@/lib/useMagnetic";
 import { useHeroSequence } from "@/lib/useHeroSequence";
+import { OFFER } from "@/data/offer";
 
 const HeroSection = () => {
   const ref = useRef<HTMLElement>(null);
@@ -42,7 +43,7 @@ const HeroSection = () => {
     <section
       ref={ref}
       id="hero"
-      className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
+      className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-32 pb-16 lg:pt-28"
       aria-label="Hero section"
     >
       {/* Spotlight with parallax depth */}
@@ -51,8 +52,12 @@ const HeroSection = () => {
         className="absolute inset-0 pointer-events-none z-[1] opacity-40"
       >
         <motion.div
-          style={{ y: spotlightY }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-primary/[0.04] blur-[120px]"
+          style={{
+            y: spotlightY,
+            // A gradient paints once; a 120px blur filter re-rasterizes on every frame
+            background: "radial-gradient(closest-side, hsl(var(--primary) / 0.08), transparent)",
+          }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full"
         />
       </div>
 
@@ -90,7 +95,7 @@ const HeroSection = () => {
           className="mb-10"
         >
           <span
-            className={`inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full glass glass-border text-[11px] text-muted-foreground tracking-[0.2em] uppercase font-mono hero-eyebrow ${
+            className={`inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full glass glass-border text-[11px] text-muted-foreground tracking-[0.12em] sm:tracking-[0.2em] uppercase font-mono hero-eyebrow ${
               seq.chaosActive ? "hero-chaos-active" : ""
             }`}
           >
@@ -128,50 +133,50 @@ const HeroSection = () => {
           className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-10 font-body font-light leading-[1.8] tracking-wide"
         >
           Every month without optimized PPC is revenue you won&apos;t recover.
-          We handle your ads, listings, and supply chain — with a dedicated
-          strategist who reports to you weekly. Not a VA. Not a dashboard. A
+          A dedicated strategist runs your ads and the listings they send
+          traffic to, and reports to you weekly. Not a VA. Not a dashboard. A
           partner who owns the outcome.
         </motion.p>
 
         {/* Trust badges — Level 4: each arrives from its OWN direction
             (left from left+up, center from below, right from right+up),
             synchronized at t=1000ms via shared trustBadges animation */}
-        <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8 mb-10">
+        <div className="flex items-center justify-center gap-4 sm:gap-6 md:gap-8 mb-10">
           <motion.div
             initial={seq.initial.trustBadges.left}
             animate={seq.trustBadges}
             className="flex flex-col items-center gap-0.5"
           >
-            <span className="text-2xl md:text-3xl font-display font-bold text-foreground">
+            <span className="text-xl sm:text-2xl md:text-3xl font-display font-bold text-foreground">
               200+
             </span>
-            <span className="text-[10px] tracking-[0.15em] uppercase text-muted-foreground font-mono">
+            <span className="text-[10px] tracking-[0.1em] sm:tracking-[0.15em] uppercase text-muted-foreground font-mono text-center">
               Brands Scaled
             </span>
           </motion.div>
-          <div className="w-px h-8 bg-border hidden sm:block" />
+          <div className="w-px h-8 bg-border" />
           <motion.div
             initial={seq.initial.trustBadges.center}
             animate={seq.trustBadges}
             className="flex flex-col items-center gap-0.5"
           >
-            <span className="text-2xl md:text-3xl font-display font-bold text-foreground">
+            <span className="text-xl sm:text-2xl md:text-3xl font-display font-bold text-foreground">
               $50M+
             </span>
-            <span className="text-[10px] tracking-[0.15em] uppercase text-muted-foreground font-mono">
+            <span className="text-[10px] tracking-[0.1em] sm:tracking-[0.15em] uppercase text-muted-foreground font-mono text-center">
               Revenue Generated
             </span>
           </motion.div>
-          <div className="w-px h-8 bg-border hidden sm:block" />
+          <div className="w-px h-8 bg-border" />
           <motion.div
             initial={seq.initial.trustBadges.right}
             animate={seq.trustBadges}
             className="flex flex-col items-center gap-0.5"
           >
-            <span className="text-2xl md:text-3xl font-display font-bold text-foreground">
+            <span className="text-xl sm:text-2xl md:text-3xl font-display font-bold text-foreground">
               97%
             </span>
-            <span className="text-[10px] tracking-[0.15em] uppercase text-muted-foreground font-mono">
+            <span className="text-[10px] tracking-[0.1em] sm:tracking-[0.15em] uppercase text-muted-foreground font-mono text-center">
               Client Retention
             </span>
           </motion.div>
@@ -198,7 +203,7 @@ const HeroSection = () => {
               style={{ x: ctaX, y: ctaY }}
               className="relative z-10 flex items-center gap-2"
             >
-              Book a Free Audit
+              {OFFER.cta}
               <svg
                 className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
                 fill="none"
@@ -214,8 +219,8 @@ const HeroSection = () => {
               </svg>
             </motion.span>
           </a>
-          <span className="text-[11px] text-muted-foreground/50 font-body">
-            Free 30-min call. No commitment. Keep the roadmap either way.
+          <span className="text-[11px] text-muted-foreground font-body">
+            {OFFER.promise}
           </span>
         </motion.div>
       </motion.div>

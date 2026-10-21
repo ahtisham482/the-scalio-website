@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ClipboardCheck, Crosshair, TrendingUp } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { OFFER } from "@/data/offer";
 
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 
@@ -18,7 +19,7 @@ const steps: Step[] = [
     number: "01",
     title: "Day 1: Your Free Audit",
     description:
-      "You book a 30-minute call. We analyze your PPC, listings, keywords, and competitors. Within 48 hours, you receive a detailed audit with exact opportunities and projected revenue impact. Free, no obligation — the audit is yours to keep either way.",
+      "You send a short form with your store link. We analyze your PPC, listings, keywords, and competitors. Within 48 hours, you receive a written audit with exact opportunities and projected revenue impact, then an optional 30-minute call to walk through it. Free, no obligation — the audit is yours to keep either way.",
     accent: "217 91% 60%",
   },
   {
@@ -143,7 +144,7 @@ const HowItWorksSection = () => {
             href="#contact"
             className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground font-body font-semibold text-sm tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_40px_-8px_hsl(217_91%_60%/0.5)] hover:scale-[1.03]"
           >
-            Book Your Free Audit — Step 1 Takes 5 Minutes
+            {OFFER.cta}
           </a>
         </motion.div>
       </div>

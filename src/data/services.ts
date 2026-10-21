@@ -23,7 +23,8 @@ export interface ServiceDetail {
   icon: LucideIcon;
   title: string;
   hook: string;
-  metric: string;
+  /** A proven, real figure. Leave unset until there is one — it is hidden when empty. */
+  metric?: string;
   deliverables: string[];
   bestFor: string;
   caseStudyLink: string;
@@ -39,7 +40,6 @@ export const services: ServiceDetail[] = [
     icon: Search,
     title: "Product Research & Launch",
     hook: "Go from idea to first sale in 4-6 weeks",
-    metric: "X products launched",
     deliverables: [
       "Market & demand analysis",
       "Competitor mapping & gap identification",
@@ -99,7 +99,6 @@ export const services: ServiceDetail[] = [
     icon: Megaphone,
     title: "Amazon PPC Management",
     hook: "Turn ad spend into profitable organic rank",
-    metric: "Avg X% ACoS reduction",
     deliverables: [
       "Campaign architecture & restructuring",
       "Daily bid optimization",
@@ -158,7 +157,6 @@ export const services: ServiceDetail[] = [
     icon: BarChart3,
     title: "Listing Optimization",
     hook: "Convert more browsers into buyers",
-    metric: "Avg X% conversion lift",
     deliverables: [
       "SEO-optimized titles & bullet points",
       "A+ Content design & copywriting",
@@ -216,7 +214,6 @@ export const services: ServiceDetail[] = [
     icon: Package,
     title: "Supply Chain & Logistics",
     hook: "Never stock out. Never over-order.",
-    metric: "X brands managed",
     deliverables: [
       "Demand forecasting & planning",
       "Freight forwarding coordination",
@@ -275,7 +272,6 @@ export const services: ServiceDetail[] = [
     icon: ShieldCheck,
     title: "Account Health & Compliance",
     hook: "Sleep well knowing your account is protected",
-    metric: "X% reinstatement success",
     deliverables: [
       "Policy compliance monitoring",
       "Listing suppression resolution",
@@ -333,7 +329,6 @@ export const services: ServiceDetail[] = [
     icon: TrendingUp,
     title: "Brand Growth & Expansion",
     hook: "Grow beyond Amazon into a real brand",
-    metric: "X marketplaces covered",
     deliverables: [
       "Walmart marketplace launch",
       "Amazon EU / UK / CA expansion",

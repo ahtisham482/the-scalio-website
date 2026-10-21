@@ -8,6 +8,7 @@ import {
 import { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronDown, Mail } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
+import { OFFER } from "@/data/offer";
 
 const navItems = [
   { label: "Services", href: "#services" },
@@ -78,15 +79,20 @@ const Navbar = () => {
       >
         <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-center gap-2 text-[11px] sm:text-xs font-body tracking-wide">
           <span className="hidden sm:inline">🔥</span>
-          <span>
-            <span className="font-semibold">Limited spots:</span> We take 5 new
-            clients per month.
+          <span className="whitespace-nowrap">
+            <span className="font-semibold">
+              <span className="hidden sm:inline">Limited spots: </span>5 new
+            </span>{" "}
+            clients a month
+          </span>
+          <span aria-hidden className="sm:hidden">
+            ·
           </span>
           <a
             href="#contact"
             className="underline underline-offset-2 font-semibold hover:no-underline whitespace-nowrap"
           >
-            Book your free audit →
+            {OFFER.ctaShort} →
           </a>
         </div>
       </div>
@@ -145,7 +151,7 @@ const Navbar = () => {
             {/* Email — visible on desktop */}
             <a
               href="mailto:hello@thescalio.com"
-              className="flex items-center gap-1.5 text-[12px] text-muted-foreground/60 hover:text-muted-foreground transition-colors duration-300 font-body mr-2"
+              className="flex items-center gap-1.5 text-[12px] text-muted-foreground hover:text-muted-foreground transition-colors duration-300 font-body mr-2"
               title="Email us"
             >
               <Mail className="w-3.5 h-3.5" />
@@ -223,7 +229,7 @@ const Navbar = () => {
               href="#contact"
               className="ml-2 px-6 py-3 text-sm tracking-[0.04em] uppercase font-body font-semibold bg-primary text-primary-foreground rounded-full transition-all duration-300 hover:shadow-[0_0_30px_-6px_hsl(var(--primary)/0.4)] hover:scale-[1.03] flex items-center gap-1.5"
             >
-              Free PPC Audit
+              {OFFER.ctaShort}
               <svg
                 className="w-4 h-4"
                 fill="none"
@@ -352,7 +358,7 @@ const Navbar = () => {
                 onClick={() => setOpen(false)}
                 className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground font-body font-semibold text-base rounded-full transition-all duration-300 hover:shadow-[0_0_30px_-6px_hsl(var(--primary)/0.4)]"
               >
-                Free PPC Audit →
+                {OFFER.ctaShort} →
               </a>
             </motion.div>
 

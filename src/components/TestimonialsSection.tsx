@@ -4,6 +4,7 @@ import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import testimonialJason from "@/assets/testimonial-jason.jpg";
 import testimonialAmara from "@/assets/testimonial-amara.jpg";
 import testimonialDavid from "@/assets/testimonial-david.jpg";
+import { OFFER } from "@/data/offer";
 
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 
@@ -171,7 +172,7 @@ const TestimonialsSection = () => {
                   <p className="text-muted-foreground text-xs mt-0.5 font-body">
                     {t.role}
                   </p>
-                  <p className="text-primary/70 text-[11px] font-mono tracking-wider mt-0.5">
+                  <p className="text-primary text-[11px] font-mono tracking-wider mt-0.5">
                     {t.context}
                   </p>
                 </div>
@@ -189,18 +190,23 @@ const TestimonialsSection = () => {
               <ChevronLeft className="w-4 h-4" />
             </button>
 
-            <div className="flex gap-2">
+            <div className="flex">
               {testimonials.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => handleDot(i)}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    i === current
-                      ? "bg-primary w-6"
-                      : "bg-muted-foreground/20 hover:bg-muted-foreground/40 w-2"
-                  }`}
+                  className="group h-6 min-w-6 px-1 flex items-center justify-center"
                   aria-label={`Go to testimonial ${i + 1}`}
-                />
+                  aria-current={i === current}
+                >
+                  <span
+                    className={`block h-2 rounded-full transition-all duration-300 ${
+                      i === current
+                        ? "bg-primary w-6"
+                        : "bg-muted-foreground/20 group-hover:bg-muted-foreground/40 w-2"
+                    }`}
+                  />
+                </button>
               ))}
             </div>
 
@@ -219,9 +225,9 @@ const TestimonialsSection = () => {
               href="#contact"
               className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground font-body font-semibold text-sm tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_40px_-8px_hsl(217_91%_60%/0.5)] hover:scale-[1.03]"
             >
-              Join Jason, Amara, and David — Book Your Free Audit
+              {OFFER.cta}
             </a>
-            <p className="text-muted-foreground/50 font-body text-xs mt-3">
+            <p className="text-muted-foreground font-body text-xs mt-3">
               See what we can do for your brand.
             </p>
           </div>

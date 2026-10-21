@@ -5,6 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { OFFER } from "@/data/offer";
 
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 
@@ -136,7 +137,7 @@ const FAQSection = () => {
             }}
             className="mb-10"
           >
-            <h3 className="text-[11px] font-mono tracking-[0.2em] uppercase text-primary/70 mb-4 pl-1">
+            <h3 className="text-[11px] font-mono tracking-[0.2em] uppercase text-primary mb-4 pl-1">
               {cat.category}
             </h3>
             <Accordion type="single" collapsible className="space-y-3">
@@ -177,7 +178,7 @@ const FAQSection = () => {
               href="#contact"
               className="inline-flex items-center justify-center px-6 py-3 bg-primary text-primary-foreground font-body font-semibold text-sm rounded-full transition-all duration-300 hover:shadow-[0_0_30px_-6px_hsl(var(--primary)/0.4)] hover:scale-[1.02]"
             >
-              Book a Free Call
+              {OFFER.cta}
             </a>
             <a
               href="mailto:hello@thescalio.com"

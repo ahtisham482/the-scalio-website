@@ -13,6 +13,7 @@ import {
   CTA_FORM_INHALE_SCALE,
   springGentle,
 } from "@/lib/animations";
+import { OFFER } from "@/data/offer";
 
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 
@@ -115,10 +116,17 @@ const CTASection = () => {
             opacity: glowOpacity,
             width: glowWidth,
             height: glowHeight,
+            background: "radial-gradient(closest-side, hsl(var(--primary) / 1), transparent)",
           }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary blur-[180px]"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
         />
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[300px] rounded-full bg-accent/[0.04] blur-[140px]" />
+        <div
+          className="absolute bottom-0 right-1/4 w-[400px] h-[300px] rounded-full"
+          style={{
+            background:
+              "radial-gradient(closest-side, hsl(var(--accent) / 0.06), transparent)",
+          }}
+        />
       </div>
 
       <div className="max-w-2xl mx-auto text-center relative z-10">
@@ -162,8 +170,8 @@ const CTASection = () => {
           className="text-muted-foreground font-body text-base mb-6 font-light max-w-lg mx-auto leading-relaxed"
         >
           Fill out the form below. A senior strategist will review your account
-          and email you a personalized audit within 24 hours — whether you work
-          with us or not.
+          and email you a written audit within {OFFER.turnaround} — whether you
+          work with us or not.
         </motion.p>
 
         {/* Pills heading */}
@@ -172,7 +180,7 @@ const CTASection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "200px" }}
           transition={{ delay: 0.35, duration: 0.4, ease: easeOutExpo }}
-          className="text-[11px] font-mono tracking-[0.15em] uppercase text-muted-foreground/60 mb-3"
+          className="text-[11px] font-mono tracking-[0.15em] uppercase text-muted-foreground mb-3"
         >
           Your free audit includes:
         </motion.p>
@@ -196,7 +204,7 @@ const CTASection = () => {
                   type: "spring",
                   ...springGentle,
                 }}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/5 border border-primary/10 text-[11px] font-mono tracking-wider text-primary/80"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/5 border border-primary/10 text-[11px] font-mono tracking-wider text-primary"
               >
                 <svg
                   className="w-3 h-3"
@@ -223,7 +231,7 @@ const CTASection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "200px" }}
           transition={{ delay: 0.7, duration: 0.4, ease: easeOutExpo }}
-          className="text-primary/70 font-mono text-xs mb-8 tracking-wider"
+          className="text-primary font-mono text-xs mb-8 tracking-wider"
         >
           We take on 5 new clients per month to ensure quality. Limited spots
           available.
@@ -235,7 +243,7 @@ const CTASection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "200px" }}
           transition={{ delay: 0.8, duration: 0.4, ease: easeOutExpo }}
-          className="text-muted-foreground/50 font-body text-xs mb-10 font-light"
+          className="text-muted-foreground font-body text-xs mb-10 font-light"
         >
           No commitment required. No credit card. Just a conversation.
         </motion.p>
@@ -308,7 +316,7 @@ const CTASection = () => {
           transition={{ duration: 0.6, delay: 1.0, ease: easeOutExpo }}
           className="mt-8 text-center"
         >
-          <p className="text-muted-foreground/50 font-body text-xs mb-2">
+          <p className="text-muted-foreground font-body text-xs mb-2">
             Prefer to talk directly?
           </p>
           <a

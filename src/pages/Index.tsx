@@ -11,6 +11,7 @@ import FounderSection from "@/components/FounderSection";
 import FAQSection from "@/components/FAQSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
+import { usePageMeta } from "@/lib/usePageMeta";
 
 const BackToTop = () => {
   const [show, setShow] = useState(false);
@@ -47,6 +48,13 @@ const BackToTop = () => {
 };
 
 const Index = () => {
+  usePageMeta({
+    title: "The Scalio — Amazon PPC Agency | Free PPC Audit in 48 Hours",
+    description:
+      "Amazon PPC agency for brands spending $2K+ a month on ads. Get a free written audit of your campaigns in 48 hours, then an optional 30-min call.",
+    path: "/",
+  });
+
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
