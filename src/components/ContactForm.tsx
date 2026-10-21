@@ -1,35 +1,60 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { z } from "zod";
-import { supabase } from "@/integrations/supabase/client";
+import { track } from "@vercel/analytics";
+import { submitLead } from "@/lib/submitLead";
+import { OFFER } from "@/data/offer";
 
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 
-const contactSchema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(1, "Name is required")
-    .max(100, "Name is too long"),
-  email: z
-    .string()
-    .trim()
-    .email("Please enter a valid email")
-    .max(255, "Email is too long"),
-  company: z.string().trim().max(100, "Company name is too long").optional(),
-  message: z.string().trim().max(2000, "Message is too long").optional(),
-});
+const AD_SPEND_OPTIONS = [
+  "Under $2K/month",
+  "$2K–$10K/month",
+  "$10K–$50K/month",
+  "$50K+/month",
+];
+const MARKETPLACE_OPTIONS = ["US", "UK", "EU", "Canada", "Other"];
 
-type FormData = z.infer<typeof contactSchema>;
+type FormData = {
+  name: string;
+  email: string;
+  store: string;
+  adSpend: string;
+  marketplace: string;
+  message: string;
+  website: string; // honeypot: real visitors never see or fill this
+};
 type FormErrors = Partial<Record<keyof FormData, string>>;
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const validate = (form: FormData): FormErrors => {
+  const errors: FormErrors = {};
+  const name = form.name.trim();
+  const email = form.email.trim();
+  if (!name) errors.name = "Name is required";
+  else if (name.length > 100) errors.name = "Name is too long";
+  if (!EMAIL_RE.test(email) || email.length > 255)
+    errors.email = "Please enter a valid email";
+  if (!form.store.trim())
+    errors.store = "Add your Amazon store, brand or ASIN link";
+  else if (form.store.length > 300) errors.store = "Link is too long";
+  if (!form.adSpend) errors.adSpend = "Pick your monthly ad spend";
+  if (form.message.length > 2000) errors.message = "Message is too long";
+  return errors;
+};
+
+const emptyForm: FormData = {
+  name: "",
+  email: "",
+  store: "",
+  adSpend: "",
+  marketplace: "US",
+  message: "",
+  website: "",
+};
+
 const ContactForm = () => {
-  const [form, setForm] = useState<FormData>({
-    name: "",
-    email: "",
-    company: "",
-    message: "",
-  });
+  const [form, setForm] = useState<FormData>(emptyForm);
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<
     "idle" | "submitting" | "success" | "error"
@@ -43,32 +68,41 @@ const ContactForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const result = contactSchema.safeParse(form);
-
-    if (!result.success) {
-      const fieldErrors: FormErrors = {};
-      result.error.errors.forEach((err) => {
-        const field = err.path[0] as keyof FormData;
-        fieldErrors[field] = err.message;
-      });
+    const fieldErrors = validate(form);
+    if (Object.keys(fieldErrors).length > 0) {
       setErrors(fieldErrors);
       return;
     }
 
-    setStatus("submitting");
-    setSubmittedName(result.data.name.split(" ")[0]);
+    const name = form.name.trim();
+    setSubmittedName(name.split(" ")[0]);
 
-    const { error } = await supabase.from("contact_submissions").insert({
-      name: result.data.name,
-      email: result.data.email,
-      message: `${result.data.company ? `Company: ${result.data.company}\n\n` : ""}${result.data.message || "(No message — requested callback)"}`,
+    // Bots fill every field; pretend success and send nothing.
+    if (form.website) {
+      setStatus("success");
+      return;
+    }
+
+    setStatus("submitting");
+
+    const ok = await submitLead({
+      name,
+      email: form.email.trim(),
+      message: [
+        `Store: ${form.store.trim()}`,
+        `Monthly ad spend: ${form.adSpend}`,
+        `Marketplace: ${form.marketplace}`,
+        "",
+        form.message.trim() || "(No message)",
+      ].join("\n"),
     });
 
-    if (error) {
-      setStatus("error");
-    } else {
+    if (ok) {
+      track("audit_requested", { adSpend: form.adSpend });
       setStatus("success");
-      setForm({ name: "", email: "", company: "", message: "" });
+      setForm(emptyForm);
+    } else {
+      setStatus("error");
     }
   };
 
@@ -100,10 +134,10 @@ const ContactForm = () => {
           Thanks, {submittedName}! Your audit request is confirmed.
         </h3>
         <p className="text-muted-foreground font-body text-sm mb-1">
-          A senior strategist will email you within 24 hours with a personalized
-          account review.
+          A senior strategist will email your written audit within{" "}
+          {OFFER.turnaround}.
         </p>
-        <p className="text-muted-foreground/60 font-body text-xs mb-6">
+        <p className="text-muted-foreground font-body text-xs mb-6">
           In the meantime, check out how we&apos;ve helped brands like yours.
         </p>
         <div className="flex flex-wrap gap-3 justify-center">
@@ -133,7 +167,7 @@ const ContactForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 text-left">
+    <form onSubmit={handleSubmit} noValidate className="relative space-y-4 text-left">
       {/* Name + Email row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
@@ -148,7 +182,7 @@ const ContactForm = () => {
             type="text"
             value={form.name}
             onChange={(e) => handleChange("name", e.target.value)}
-            className="w-full bg-card/60 border border-border/50 rounded-xl px-4 py-3 text-foreground font-body text-sm placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all form-focus-glow"
+            className="w-full bg-card/60 border border-border/50 rounded-xl px-4 py-3 text-foreground font-body text-sm placeholder:text-muted-foreground/70 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all form-focus-glow"
             placeholder="Jane Smith"
           />
           <AnimatePresence>
@@ -176,7 +210,7 @@ const ContactForm = () => {
             type="email"
             value={form.email}
             onChange={(e) => handleChange("email", e.target.value)}
-            className="w-full bg-card/60 border border-border/50 rounded-xl px-4 py-3 text-foreground font-body text-sm placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all form-focus-glow"
+            className="w-full bg-card/60 border border-border/50 rounded-xl px-4 py-3 text-foreground font-body text-sm placeholder:text-muted-foreground/70 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all form-focus-glow"
             placeholder="jane@brand.com"
           />
           <AnimatePresence>
@@ -194,21 +228,103 @@ const ContactForm = () => {
         </div>
       </div>
 
-      {/* Company — optional, single field row */}
+      {/* Store link — the audit needs to know which account to review */}
       <div>
-        <label
-          htmlFor="company"
-          className="block text-[11px] font-mono tracking-[0.15em] uppercase text-muted-foreground mb-2"
-        >
-          Brand / Company
+        <label htmlFor="store" className="block text-[11px] font-mono tracking-[0.15em] uppercase text-muted-foreground mb-2">
+          Amazon Store, Brand or ASIN Link *
         </label>
         <input
-          id="company"
+          id="store"
           type="text"
-          value={form.company || ""}
-          onChange={(e) => handleChange("company", e.target.value)}
-          className="w-full bg-card/60 border border-border/50 rounded-xl px-4 py-3 text-foreground font-body text-sm placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all form-focus-glow"
-          placeholder="Your brand name (optional)"
+          inputMode="url"
+          value={form.store}
+          onChange={(e) => handleChange("store", e.target.value)}
+          aria-invalid={!!errors.store}
+          aria-describedby={errors.store ? "store-error" : undefined}
+          className="w-full bg-card/60 border border-border/50 rounded-xl px-4 py-3 text-foreground font-body text-sm placeholder:text-muted-foreground/70 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all form-focus-glow"
+          placeholder="Store link, brand link or ASIN"
+        />
+          <AnimatePresence>
+            {errors.store && (
+              <motion.p
+                id="store-error"
+                initial={{ opacity: 0, y: -5 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="text-xs text-red-400 mt-1.5 font-body"
+              >
+                {errors.store}
+              </motion.p>
+            )}
+          </AnimatePresence>
+      </div>
+
+      {/* Ad spend + marketplace */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label htmlFor="adSpend" className="block text-[11px] font-mono tracking-[0.15em] uppercase text-muted-foreground mb-2">
+            Monthly Ad Spend *
+          </label>
+          <select
+            id="adSpend"
+            value={form.adSpend}
+            onChange={(e) => handleChange("adSpend", e.target.value)}
+            aria-invalid={!!errors.adSpend}
+            aria-describedby={errors.adSpend ? "adSpend-error" : undefined}
+            className="w-full bg-card/60 border border-border/50 rounded-xl px-4 py-3 text-foreground font-body text-sm placeholder:text-muted-foreground/70 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all form-focus-glow"
+          >
+            <option value="" disabled>
+              Choose a range
+            </option>
+            {AD_SPEND_OPTIONS.map((o) => (
+              <option key={o} value={o}>
+                {o}
+              </option>
+            ))}
+          </select>
+            <AnimatePresence>
+              {errors.adSpend && (
+                <motion.p
+                  id="adSpend-error"
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="text-xs text-red-400 mt-1.5 font-body"
+                >
+                  {errors.adSpend}
+                </motion.p>
+              )}
+            </AnimatePresence>
+        </div>
+        <div>
+          <label htmlFor="marketplace" className="block text-[11px] font-mono tracking-[0.15em] uppercase text-muted-foreground mb-2">
+            Main Marketplace
+          </label>
+          <select
+            id="marketplace"
+            value={form.marketplace}
+            onChange={(e) => handleChange("marketplace", e.target.value)}
+            className="w-full bg-card/60 border border-border/50 rounded-xl px-4 py-3 text-foreground font-body text-sm placeholder:text-muted-foreground/70 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all form-focus-glow"
+          >
+            {MARKETPLACE_OPTIONS.map((o) => (
+              <option key={o} value={o}>
+                {o}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {/* Honeypot — hidden from people and screen readers, bots fill it */}
+      <div aria-hidden="true" className="absolute -left-[9999px] w-px h-px overflow-hidden">
+        <label htmlFor="website">Website</label>
+        <input
+          id="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={form.website}
+          onChange={(e) => handleChange("website", e.target.value)}
         />
       </div>
 
@@ -222,10 +338,10 @@ const ContactForm = () => {
         </label>
         <textarea
           id="message"
-          value={form.message || ""}
+          value={form.message}
           onChange={(e) => handleChange("message", e.target.value)}
           rows={3}
-          className="w-full bg-card/60 border border-border/50 rounded-xl px-4 py-3 text-foreground font-body text-sm placeholder:text-muted-foreground/40 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all resize-none"
+          className="w-full bg-card/60 border border-border/50 rounded-xl px-4 py-3 text-foreground font-body text-sm placeholder:text-muted-foreground/70 focus:outline-none focus:border-primary/40 focus:ring-1 focus:ring-primary/20 transition-all resize-none"
           placeholder="Optional — or just submit and we'll ask on the call."
         />
       </div>
@@ -237,7 +353,7 @@ const ContactForm = () => {
       >
         <span className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-foreground/10 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
         <span className="relative z-10 flex items-center gap-2">
-          {status === "submitting" ? "Sending..." : "Book Your Free Audit"}
+          {status === "submitting" ? "Sending..." : OFFER.cta}
           {status !== "submitting" && (
             <svg
               className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
@@ -267,7 +383,7 @@ const ContactForm = () => {
         </p>
       )}
 
-      <p className="text-[10px] text-muted-foreground/50 text-center font-body leading-relaxed mt-2">
+      <p className="text-[10px] text-muted-foreground text-center font-body leading-relaxed mt-2">
         By submitting this form, you agree to our{" "}
         <a href="/privacy" className="underline hover:text-muted-foreground">
           privacy policy

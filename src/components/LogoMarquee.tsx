@@ -31,7 +31,7 @@ const LogoBadge = ({
     >
       {letter}
     </span>
-    <span className="text-sm font-body font-medium text-muted-foreground/50 group-hover:text-foreground/70 transition-colors duration-300">
+    <span className="text-sm font-body font-medium text-muted-foreground group-hover:text-foreground/70 transition-colors duration-300">
       {name}
     </span>
   </div>

@@ -1,6 +1,13 @@
 import { useEffect } from "react";
+import { usePageMeta } from "@/lib/usePageMeta";
 
 const Privacy = () => {
+  usePageMeta({
+    title: "Privacy Policy | The Scalio",
+    description: "How The Scalio collects, uses and protects your information.",
+    path: "/privacy",
+  });
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -145,7 +152,7 @@ const Privacy = () => {
       </main>
 
       <footer className="border-t border-border py-6 text-center">
-        <p className="text-xs text-muted-foreground/60 font-body">
+        <p className="text-xs text-muted-foreground font-body">
           &copy; {new Date().getFullYear()} The Scalio. All rights reserved.
         </p>
       </footer>

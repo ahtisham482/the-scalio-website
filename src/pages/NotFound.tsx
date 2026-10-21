@@ -1,7 +1,14 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { usePageMeta } from "@/lib/usePageMeta";
 
 const NotFound = () => {
+  usePageMeta({
+    title: "Page not found | The Scalio",
+    description: "This page does not exist.",
+    path: "/404",
+    noindex: true,
+  });
   const location = useLocation();
 
   useEffect(() => {
@@ -54,7 +61,7 @@ const NotFound = () => {
       </div>
 
       <footer className="border-t border-border py-6 text-center">
-        <p className="text-xs text-muted-foreground/60 font-body">
+        <p className="text-xs text-muted-foreground font-body">
           &copy; {new Date().getFullYear()} The Scalio. All rights reserved.
         </p>
       </footer>

@@ -9,12 +9,14 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { getServiceBySlug } from "@/data/services";
+import { usePageMeta } from "@/lib/usePageMeta";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { OFFER } from "@/data/offer";
 
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 
@@ -25,6 +27,17 @@ const ServicePage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
+
+  usePageMeta({
+    title: service
+      ? `${service.title} for Amazon Sellers | The Scalio`
+      : "Page not found | The Scalio",
+    description: service
+      ? `${service.hook}. ${service.bestFor}. Start with a free PPC audit.`
+      : "",
+    path: `/services/${slug ?? ""}`,
+    noindex: !service,
+  });
 
   if (!service) {
     return <Navigate to="/404" replace />;
@@ -74,7 +87,7 @@ const ServicePage = () => {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-[1.05] mb-4">
             {service.title}
           </h1>
-          <p className="text-xl md:text-2xl italic text-primary/80 font-body mb-6">
+          <p className="text-xl md:text-2xl italic text-primary font-body mb-6">
             {service.hook}
           </p>
           <p className="text-muted-foreground font-body text-base leading-[1.9] font-light max-w-2xl mb-8">
@@ -82,14 +95,16 @@ const ServicePage = () => {
           </p>
 
           <div className="flex flex-wrap gap-4">
-            <div className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-dashed border-primary/20 bg-primary/[0.03]">
-              <TrendingUp className="w-3.5 h-3.5 text-primary/50" />
-              <span className="text-xs font-mono tracking-wider text-primary/60 uppercase">
-                {service.metric}
-              </span>
-            </div>
+            {service.metric && (
+              <div className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-dashed border-primary/20 bg-primary/[0.03]">
+                <TrendingUp className="w-3.5 h-3.5 text-primary" />
+                <span className="text-xs font-mono tracking-wider text-primary uppercase">
+                  {service.metric}
+                </span>
+              </div>
+            )}
             <div className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-border/40 bg-card/30">
-              <Users className="w-3.5 h-3.5 text-muted-foreground/50" />
+              <Users className="w-3.5 h-3.5 text-muted-foreground" />
               <span className="text-xs font-body text-muted-foreground">
                 Best for: {service.bestFor}
               </span>
@@ -171,14 +186,14 @@ const ServicePage = () => {
               className="group flex items-center justify-between p-6 rounded-2xl border border-primary/10 bg-primary/[0.03] transition-all duration-300 hover:border-primary/25 hover:bg-primary/[0.06]"
             >
               <div>
-                <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-primary/60 block mb-1">
+                <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-primary block mb-1">
                   Case Study
                 </span>
                 <span className="text-base font-body font-semibold text-foreground">
                   {service.caseStudyTeaser}
                 </span>
               </div>
-              <ArrowUpRight className="w-5 h-5 text-primary/60 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <ArrowUpRight className="w-5 h-5 text-primary transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
           </motion.section>
         )}
@@ -222,17 +237,16 @@ const ServicePage = () => {
             Ready to get started?
           </h2>
           <p className="text-muted-foreground font-body text-sm mb-8 max-w-md mx-auto">
-            Book a free 30-minute audit. We&apos;ll review your account and show
-            you exactly where the opportunities are.
+            {OFFER.promise}
           </p>
           <a
             href="/#contact"
             className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground font-body font-semibold text-sm tracking-wide rounded-full transition-all duration-500 hover:shadow-[0_0_40px_-8px_hsl(217_91%_60%/0.5)] hover:scale-[1.03]"
           >
-            Book a Free Audit
+            {OFFER.cta}
           </a>
           <div className="mt-6 flex items-center justify-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-primary/60" />
+            <ShieldCheck className="w-4 h-4 text-primary" />
             <span className="text-xs text-muted-foreground font-body">
               30-Day Money-Back Guarantee
             </span>
@@ -242,7 +256,7 @@ const ServicePage = () => {
 
       {/* Footer */}
       <footer className="border-t border-border py-6 text-center">
-        <p className="text-xs text-muted-foreground/60 font-body">
+        <p className="text-xs text-muted-foreground font-body">
           &copy; {new Date().getFullYear()} The Scalio. All rights reserved.
         </p>
       </footer>

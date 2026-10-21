@@ -104,7 +104,7 @@ const MetricPill = ({
       type === "before" ? "bg-muted/40" : "bg-primary/[0.08]"
     }`}
   >
-    <span className="text-[11px] font-mono tracking-[0.1em] uppercase text-muted-foreground/80 shrink-0">
+    <span className="text-[11px] font-mono tracking-[0.1em] uppercase text-muted-foreground shrink-0">
       {label}
     </span>
     <span
@@ -209,7 +209,7 @@ const CaseCard = ({ study, index }: { study: CaseStudy; index: number }) => {
             >
               <div>
                 <div className="flex flex-wrap items-center gap-2 mb-3">
-                  <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground/60">
+                  <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-muted-foreground">
                     Case Study {String(index + 1).padStart(2, "0")}
                   </span>
                   <span
@@ -317,7 +317,7 @@ const CaseCard = ({ study, index }: { study: CaseStudy; index: number }) => {
                   borderRadius: "0.75rem",
                 }}
               >
-                <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground/80 mb-3 block font-medium">
+                <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground mb-3 block font-medium">
                   Before
                 </span>
                 <div className="space-y-2">
@@ -363,7 +363,7 @@ const CaseCard = ({ study, index }: { study: CaseStudy; index: number }) => {
                   borderRadius: "0.75rem",
                 }}
               >
-                <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-primary/80 mb-3 flex items-center gap-1.5 font-medium">
+                <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-primary mb-3 flex items-center gap-1.5 font-medium">
                   After <ArrowUpRight className="w-3 h-3 text-primary" />
                 </span>
                 <div className="space-y-2">
@@ -387,7 +387,7 @@ const CaseCard = ({ study, index }: { study: CaseStudy; index: number }) => {
             </div>
 
             {/* Card CTA */}
-            <span className="inline-flex items-center gap-1.5 text-[13px] font-body font-medium text-primary/75 group-hover:text-primary transition-colors duration-300 mt-1">
+            <span className="inline-flex items-center gap-1.5 text-[13px] font-body font-medium text-primary group-hover:text-primary transition-colors duration-300 mt-1">
               {study.linkText}
               <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </span>

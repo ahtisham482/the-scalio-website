@@ -1,6 +1,13 @@
 import { useEffect } from "react";
+import { usePageMeta } from "@/lib/usePageMeta";
 
 const Terms = () => {
+  usePageMeta({
+    title: "Terms of Service | The Scalio",
+    description: "The terms that apply when you use The Scalio website and services.",
+    path: "/terms",
+  });
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -151,7 +158,7 @@ const Terms = () => {
       </main>
 
       <footer className="border-t border-border py-6 text-center">
-        <p className="text-xs text-muted-foreground/60 font-body">
+        <p className="text-xs text-muted-foreground font-body">
           &copy; {new Date().getFullYear()} The Scalio. All rights reserved.
         </p>
       </footer>
